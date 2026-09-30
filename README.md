@@ -1,4 +1,6 @@
-# 🎮 Geometry Dash Webport
+#  Geometry Dash Webport
+
+<img width="959" height="539" alt="image" src="https://github.com/user-attachments/assets/29f2a16f-8a2c-450f-8d58-47f2303b3991" />
 
 > Geometry Dash Webport es una versión de Geometry Dash diseñada para ejecutarse desde un navegador web.
 
@@ -59,7 +61,7 @@
 
 **Nombre:** Geometry Dash Webport  
 **Tipo:** Webport / HTML  
-**Lenguaje:** Sin suficiente informacion.  
+**Lenguaje:** HTML5.  
 **Versión de Geometry Dash:** 2.2.   
 
 ---
