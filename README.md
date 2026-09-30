@@ -1,24 +1,69 @@
-Geometry Dash Webport
+# 🎮 Geometry Dash Webport
 
-📥 Cómo descargar el archivo
-Entra al repositorio.
-Presiona el boton que se encuentra en la parte superior llamado "Code"
-Haz click en "Download ZIP"
-Luego revisa que se descarge correctamente.
+> Geometry Dash Webport es una versión de Geometry Dash diseñada para ejecutarse desde un navegador web.
+
 ---
-▶ Cómo jugar
-Abre el archivo ZIP y ya estando dentro de el ZIP abre el archivo Geometry Dash Webport
-Presiona load y espera a que cargue
-¡Listo! Ya puedes jugar Geometry Dash Webport
+
+## 📥 Cómo descargar
+
+1. Entra al repositorio.
+2. Presiona el botón **Code** que se encuentra en la parte superior.
+3. Haz clic en **Download ZIP**.
+4. Extrae el archivo ZIP en tu computadora.
+
 ---
-⚠ Requisitos
-Navegador actualizado
-JavaScript activado
-Sin suficiente informacion.
+
+## ▶️ Cómo jugar
+
+### 💻 Desde el archivo
+
+1. Extrae el contenido del ZIP.
+2. Busca y abre el archivo `Geometry Dash Webport` o `Geometry Dash Webport.html`.
+3. Presiona el boton load
+4. Espera a que termine de cargar.
+5. ¡Listo! Ya puedes jugar.
+
 ---
-🌐 Compatibilidad
-Funciona en:
-Chrome
-Edge
-Brave
-Otros navegadores.
+
+## ⚠️ Requisitos
+
+- Un navegador web actualizado.
+- JavaScript activado.
+
+---
+
+## 🌐 Compatibilidad
+
+### Navegadores
+
+- Google Chrome
+- Microsoft Edge
+- Mozilla Firefox
+- Brave
+- Y tambien otros navegadores compatibles.
+
+> La compatibilidad puede variar dependiendo del navegador y del dispositivo utilizado.
+
+---
+
+## 📌 Notas
+
+- El rendimiento puede variar dependiendo de la computadora y del navegador.
+- Ten paciencia al momento en el que Geometry Dash este cargando.
+- Si la pantalla aparece en blanco, intenta actualizar la página o volver a abrir el archivo.
+- Si el problema continúa, podría tratarse de un problema del archivo o del servicio utilizado para ejecutar la versión Web.
+
+---
+
+## 🛠️ Información del archivo
+
+**Nombre:** Geometry Dash Webport  
+**Tipo:** Webport / HTML  
+**Lenguaje:** Sin suficiente informacion.  
+**Versión de Geometry Dash:** 2.2.   
+
+---
+
+## 👤 Autor
+
+El videojuego original pertenece a **RobTop**.
