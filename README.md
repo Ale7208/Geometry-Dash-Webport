@@ -20,7 +20,7 @@
 ### 💻 Desde el archivo
 
 1. Extrae el contenido del ZIP.
-2. Busca y abre el archivo `Geometry Dash Webport` o `Geometry Dash Webport.html`.
+2. Busca y abre el archivo `Geometry Dash webport` o `Geometry Dash webport.html`.
 3. Presiona el boton load
 4. Espera a que termine de cargar.
 5. ¡Listo! Ya puedes jugar.
