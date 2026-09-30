@@ -51,7 +51,7 @@
 ## 📌 Notas
 
 - El rendimiento puede variar dependiendo de la computadora y del navegador.
-- Ten paciencia al momento en el que Geometry Dash este cargando.
+- Es posible que el tiempo de carga dependa de la conexión a Internet.
 - Si la pantalla aparece en blanco, intenta actualizar la página o volver a abrir el archivo.
 - Si el problema continúa, podría tratarse de un problema del archivo o del servicio utilizado para ejecutar la versión Web.
 
