@@ -59,7 +59,7 @@
 
 ## 🛠️ Información del archivo
 
-**Nombre:** Geometry Dash Webport  
+**Nombre:** Geometry Dash webport  
 **Tipo:** Webport / HTML  
 **Lenguaje:** HTML5.  
 **Versión de Geometry Dash:** 2.2.   
