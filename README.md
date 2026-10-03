@@ -5,7 +5,7 @@
 </p>
 
 <p align="center">
-  **Geometry Dash Webport** es una versión de <a href="https://www.robtopgames.com/">Geometry Dash</a> adaptada para ejecutarse desde un navegador web, permitiendo jugar sin necesidad de instalar el juego tradicionalmente.
+> **Geometry Dash webport** es una versión de <a href="https://www.robtopgames.com/">Geometry Dash</a> adaptada para ejecutarse desde un navegador web, permitiendo jugar sin necesidad de instalar el juego tradicionalmente.
 </p>
 
 ---
@@ -31,7 +31,7 @@
 5. Espera a que el juego termine de cargar.
 6. ¡Disfruta de Geometry Dash directamente desde tu navegador!
 
-> 💡 **Consejo:** Se recomienda utilizar un navegador actualizado para obtener una mejor compatibilidad y rendimiento.
+> **Consejo:** Se recomienda utilizar un navegador actualizado para obtener una mejor compatibilidad y rendimiento.
 
 ---
 
@@ -42,7 +42,7 @@ Para ejecutar Geometry Dash Webport, necesitas:
 * 🌐 Un navegador web moderno y actualizado.
 * 🟨 JavaScript habilitado.
 * 💻 Una computadora compatible.
-* 📡 Conexión a Internet, si los recursos del juego requieren cargarse desde servidores externos.
+* 📡 Conexión a Internet, los recursos del juego requieren cargarse desde servidores externos.
 
 ---
 
@@ -72,7 +72,6 @@ Geometry Dash Webport está diseñado para funcionar en navegadores web modernos
 | **Plataforma**               | Navegador web                       |
 | **Lenguaje**                 | HTML5, JavaScript                   |
 | **Ejecución**                | Desde un archivo HTML               |
-| **Instalación**              | No requiere instalación tradicional |
 
 ---
 
@@ -102,15 +101,5 @@ Si experimentas problemas al ejecutar el juego, puedes probar las siguientes sol
 ## 👤 Créditos
 
 * **RobTop Games:** Creador del Geometry Dash original.
-* **Geometry Dash Webport:** Adaptación del juego para su ejecución en navegadores web.
 
 Geometry Dash es propiedad de su respectivo creador. Este proyecto no es una versión oficial de RobTop Games.
-
----
-
-<p align="center">
-  ⭐ **¡Gracias por visitar Geometry Dash Webport!** ⭐
-  <br>
-  ¡Disfruta del juego!
-</p>
-
