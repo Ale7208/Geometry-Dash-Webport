@@ -1,12 +1,11 @@
-# 🎮 Geometry Dash Webport
+# Geometry Dash Webport
 
 <p align="center">
   <img width="959" height="539" alt="Geometry Dash Webport" src="https://github.com/user-attachments/assets/29f2a16f-8a2c-450f-8d58-47f2303b3991" />
 </p>
 
 <p align="center">
-> **Geometry Dash webport** es una versión de <a href="https://www.robtopgames.com/">Geometry Dash</a> adaptada para ejecutarse desde un navegador web, permitiendo jugar sin necesidad de instalar el juego tradicionalmente.
-</p>
+> **Consejo:** Se recomienda utilizar un navegador actualizado para obtener una mejor compatibilidad y rendimiento. Geometry Dash webport es una versión de Geometry Dash adaptada para ejecutarse desde un navegador web, permitiendo jugar sin necesidad de instalar el juego.
 
 ---
 
