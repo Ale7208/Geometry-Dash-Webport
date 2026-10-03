@@ -221,6 +221,7 @@ let safetyTimeout = null;
 let hideTimeout = null;
 let pendingTransitionEnd = null;
 let connectionMessageTimeout = null;
+let connectionMessageHideTimeout = null;
 
 function clearTimer(timerName) {
     if (timerName === 'settle' && settleTimeout !== null) {
@@ -232,25 +233,33 @@ function clearTimer(timerName) {
     } else if (timerName === 'hide' && hideTimeout !== null) {
         clearTimeout(hideTimeout);
         hideTimeout = null;
+    } else if (timerName === 'connection' && connectionMessageTimeout !== null) {
+        clearTimeout(connectionMessageTimeout);
+        connectionMessageTimeout = null;
+    } else if (timerName === 'connection-hide' && connectionMessageHideTimeout !== null) {
+        clearTimeout(connectionMessageHideTimeout);
+        connectionMessageHideTimeout = null;
     }
 }
 
 function showConnectionMessage(message) {
-    if (connectionMessageTimeout !== null) {
-        clearTimeout(connectionMessageTimeout);
-    }
+    clearTimer('connection');
+    clearTimer('connection-hide');
+
     connectionMessage.textContent = message;
     connectionMessage.hidden = false;
     connectionMessage.setAttribute('aria-hidden', 'false');
     requestAnimationFrame(function () {
         connectionMessage.classList.add('visible');
     });
+
     connectionMessageTimeout = setTimeout(function () {
+        connectionMessageTimeout = null;
         connectionMessage.setAttribute('aria-hidden', 'true');
         connectionMessage.classList.remove('visible');
-        connectionMessageTimeout = setTimeout(function () {
+        connectionMessageHideTimeout = setTimeout(function () {
+            connectionMessageHideTimeout = null;
             connectionMessage.hidden = true;
-            connectionMessageTimeout = null;
         }, 180);
     }, 5000);
 }
