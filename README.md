@@ -50,11 +50,11 @@ Geometry Dash Webport está diseñado para funcionar en navegadores web modernos
 
 | Navegador                                | Compatibilidad |
 | ---------------------------------------- | -------------- |
-| 🌐 Google Chrome                         | Compatible     |
-| 🔷 Microsoft Edge                        | Compatible     |
-| 🦊 Mozilla Firefox                       | Compatible     |
-| 🦁 Brave                                 | Compatible     |
-| 🌍 Otros navegadores basados en Chromium | Posible        |
+|  Google Chrome                         | Compatible     |
+|  Microsoft Edge                        | Compatible     |
+|  Mozilla Firefox                       | Compatible     |
+|  Brave                                 | Compatible     |
+|  Otros navegadores basados en Chromium | Posible        |
 
 > ⚠️ La compatibilidad y el rendimiento pueden variar según el navegador, el dispositivo y la configuración utilizada.
 
