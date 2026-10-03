@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Geometry Dash webport</title>
+<title>Geometry Dash</title>
     <link rel="icon" type="image/png" href="https://cdn2.steamgriddb.com/icon/750ed96f0d56d3346cda66d24bc0cbd5/32/256x256.png">
     <style>
 html, body {
@@ -40,5 +40,11 @@ iframe {
 <a href="https://github.com/Ale7208/Geometry-Dash-webport/" target="_blank">
     <img id="github-logo" src="https://thumb.wikimedia.org/wikipedia/commons/thumb/c/c2/GitHub_Invertocat_Logo.svg/250px-GitHub_Invertocat_Logo.svg.png" alt="Github">
 </a>
+<script>
+window.addEventListener("beforeunload", function (event) {
+    event.preventDefault();
+    event.returnValue = "";
+});
+</script>
 </body>
 </html>
