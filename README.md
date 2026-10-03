@@ -64,7 +64,7 @@ Geometry Dash Webport está diseñado para funcionar en navegadores web modernos
 
 | Característica               | Detalles                            |
 | ---------------------------- | ----------------------------------- |
-| **Nombre**                   | Geometry Dash Webport               |
+| **Nombre**                   | Geometry Dash webport               |
 | **Tipo**                     | Webport / HTML                      |
 | **Versión de Geometry Dash** | 2.2081                              |
 | **Plataforma**               | Navegador web                       |
