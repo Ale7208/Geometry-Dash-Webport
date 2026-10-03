@@ -6,45 +6,176 @@
 <title>Geometry Dash</title>
     <link rel="icon" type="image/png" href="https://cdn2.steamgriddb.com/icon/750ed96f0d56d3346cda66d24bc0cbd5/32/256x256.png">
     <style>
+:root {
+    --bg: #0d0d0d;
+    --panel: rgba(255, 255, 255, 0.08);
+    --text: #f4f4f4;
+}
+
 html, body {
     margin: 0;
     padding: 0;
-    width: 1920px;
-    height: 1080px;
+    width: 100%;
+    height: 100%;
     overflow: hidden;
-    background: #ffffff;
+    background: var(--bg);
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+body {
+    position: relative;
 }
 
 iframe {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
+    position: fixed;
+    inset: 0;
+    width: 100vw;
+    height: 100vh;
     border: none;
+    background: var(--bg);
+    z-index: 1;
+}
+
+#loading {
+    position: fixed;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(13, 13, 13, 0.92);
+    color: var(--text);
+    font-size: 1.1rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    z-index: 2;
+    transition: opacity 0.35s ease, visibility 0.35s ease;
+}
+
+#loading::before {
+    content: "";
+    width: 18px;
+    height: 18px;
+    margin-right: 12px;
+    border: 2px solid rgba(244, 244, 244, 0.3);
+    border-top-color: var(--text);
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+
+#loading.hidden {
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+}
+
+#loading.delayed::before {
+    display: none;
+}
+
+#retry-button {
+    margin-left: 12px;
+    padding: 7px 12px;
+    border: 1px solid rgba(255, 255, 255, 0.5);
+    border-radius: 4px;
+    background: transparent;
+    color: var(--text);
+    font: inherit;
+    cursor: pointer;
+}
+
+#retry-button:hover,
+#retry-button:focus-visible {
+    background: rgba(255, 255, 255, 0.12);
 }
 
 #github-logo {
     position: fixed;
-    bottom: 10px;
-    right: 10px;
+    bottom: 14px;
+    right: 14px;
     width: 70px;
     height: 70px;
+    padding: 8px;
     cursor: pointer;
     z-index: 9999;
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transition: opacity 0.2s ease, visibility 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+body.game-loaded #github-logo {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+}
+
+#github-logo:hover {
+    transform: translateY(-2px) scale(1.05);
+}
+
+@media (max-width: 640px) {
+    #loading {
+        font-size: 0.85rem;
+        letter-spacing: 0.06em;
+    }
+
+    #github-logo {
+        width: 54px;
+        height: 54px;
+        bottom: 10px;
+        right: 10px;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    #loading,
+    #loading::before {
+        animation: none;
+        transition: none;
+    }
 }
 </style>
 </head>
 <body>
-<iframe src="https://garbsoftball.com/games/geo/index.html" allowfullscreen></iframe>
-<a href="https://github.com/Ale7208/Geometry-Dash-webport/" target="_blank">
-    <img id="github-logo" src="https://thumb.wikimedia.org/wikipedia/commons/thumb/c/c2/GitHub_Invertocat_Logo.svg/250px-GitHub_Invertocat_Logo.svg.png" alt="Github">
+<div id="loading" role="status" aria-live="polite">
+    <span id="loading-message">Loading...</span>
+    <button id="retry-button" type="button" hidden>Retry</button>
+</div>
+<iframe id="game-frame" src="https://garbsoftball.com/games/geo/index.html" allow="fullscreen; autoplay" allowfullscreen loading="eager" title="Geometry Dash webport"></iframe>
+<a href="https://github.com/Ale7208/Geometry-Dash-webport/" target="_blank" rel="noreferrer noopener">
+    <img id="github-logo" src="https://thumb.wikimedia.org/wikipedia/commons/thumb/c/c2/GitHub_Invertocat_Logo.svg/250px-GitHub_Invertocat_Logo.svg.png" alt="GitHub">
 </a>
 <script>
-window.addEventListener("beforeunload", function (event) {
-    event.preventDefault();
-    event.returnValue = "";
-});
+const frame = document.getElementById('game-frame');
+const loading = document.getElementById('loading');
+const message = document.getElementById('loading-message');
+const retryButton = document.getElementById('retry-button');
+
+if (frame) {
+    const loadTimeout = window.setTimeout(() => {
+        loading.classList.add('delayed');
+        message.textContent = 'The game is taking longer than expected.';
+        retryButton.hidden = false;
+    }, 20000);
+
+    frame.addEventListener('load', () => {
+        window.clearTimeout(loadTimeout);
+        loading.classList.add('hidden');
+        document.body.classList.add('game-loaded');
+    });
+
+    retryButton.addEventListener('click', () => {
+        retryButton.hidden = true;
+        document.body.classList.remove('game-loaded');
+        loading.classList.remove('delayed', 'hidden');
+        message.textContent = 'Loading game...';
+        frame.src = frame.src;
+    });
+}
 </script>
 </body>
 </html>
