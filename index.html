@@ -1,4 +1,4 @@
-<!DOCTYPE html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no"><link rel="preconnect" href="https://cdn.jsdelivr.net"><link rel="preconnect" href="https://raw.githubusercontent.com"><script async src="https://www.googletagmanager.com/gtag/js?id=G-8K9SYB8360"></script><script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-8K9SYB8360');</script><base href="https://cdn.jsdelivr.net/gh/Ale7208/geometry-dash-wasm/">
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no"><link rel="preconnect" href="https://cdn.jsdelivr.net"><link rel="preconnect" href="https://raw.githubusercontent.com"><script async src="https://www.googletagmanager.com/gtag/js?id=G-8K9SYB8360"></script><script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-8K9SYB8360');</script><base href="https://cdn.jsdelivr.net/gh/Ale7208/geometry-dash-wasm/">
 <meta name="description" content="Geometry Dash Webport: unofficial port compiled to WASM, version 2.2091. Runs in your browser with no installation. Online levels, custom songs and automatic saving.">
 <link rel="canonical" href="https://gd-webport.pages.dev/">
 <meta property="og:type" content="website">
@@ -17,7 +17,7 @@
 <meta property="og:image" content="https://cdn.jsdelivr.net/gh/Ale7208/geometry-dash-wasm@main/ref/preview.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
-<meta name="google-site-verification" content="h4_sQV9VhfwF6j7msHwH1gg3wdFLno6LoYl5_wFFZkg" />
+<meta name="google-site-verification" content="h4_sQV9VhfwF6j7msHwH1gg3wdFLno6LoYl5_wFFZkg">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Geometry Dash Webport">
 <meta name="twitter:description" content="Geometry Dash Webport: unofficial port compiled to WASM, version 2.2091. Runs in your browser with no installation. Online levels, custom songs and automatic saving.">
@@ -33,7 +33,7 @@ window.__gdProxyFallbackBases=["https://gdwasmproxy.sutinognic.workers.dev/proxy
 window.__gdProxyBases=(function(){var d=["https://boomlings.ale7208.workers.dev/?url=","https://boomlings.ale728.workers.dev/?url=","https://boomlings.ale720.workers.dev/?url="].concat(window.__gdProxyFallbackBases);try{var q=new URLSearchParams(location.search).get("proxy");if(q&&d.indexOf(q)>=0){try{localStorage.setItem("gdProxyBase",q);}catch(e){}}var s=localStorage.getItem("gdProxyBase");if(s&&d.indexOf(s)<0){try{localStorage.removeItem("gdProxyBase");}catch(e){}}}catch(e){}return d;})();
 window.__gdProxyBase=window.__gdProxyBases[0];
 window.__gdAccountProxyBases=["https://boomlings.ale7208.workers.dev/?url=","https://boomlings.ale728.workers.dev/?url=","https://boomlings.ale720.workers.dev/?url="];
-window.__gdProxyPass=["googletagmanager","cloudflareinsights","jsdelivr","gstatic","googleapis","corsfix","corsproxy","allorigins","workers.dev"];
+window.__gdProxyPass=["googletagmanager","cloudflareinsights","jsdelivr","raw.githubusercontent.com","gstatic","googleapis","corsfix","corsproxy","allorigins","workers.dev"];
 window.__gdProxyTarget=function(u){var k="/__proxy?url=";if(typeof u!=="string")return null;for(var b=0;b<window.__gdProxyBases.length;b++)if(u.indexOf(window.__gdProxyBases[b])===0)return null;var i=u.indexOf(k);if(i>=0){if(i>0){try{var o=new URL(u.slice(0,i)).origin;if(o!==location.origin&&o!==new URL(document.baseURI).origin)return null;}catch(e){return null;}}var s=u.slice(i+k.length);try{return decodeURIComponent(s);}catch(e){return s;}}if(/^https?:\/\//i.test(u)){try{var w=new URL(u);if(w.origin===location.origin)return null;for(var p=0;p<window.__gdProxyPass.length;p++)if(w.hostname.indexOf(window.__gdProxyPass[p])>=0)return null;return u;}catch(e){return null;}}return null;};
 window.__gdProxyBuild=function(base,target){if(base.indexOf("corsfix")>=0)return base+target;return base+encodeURIComponent(target);};
 (function(){
@@ -89,6 +89,549 @@ window.addEventListener("message",function(e){if(e.data==="gd-focus"){window.foc
 document.addEventListener("click",function(){try{if(window.parent!==window)window.parent.postMessage("gd-click","*");}catch(t){}});
 </script>
 <meta name="color-scheme" content="dark"><meta name="theme-color" content="#000000"><link rel="icon" href="ref/favicon.ico"><title>Geometry Dash Webport</title><style>body{background:#000 url("ref/fondo_gd.jpg") center/cover no-repeat fixed;margin:0;height:100%;color:#ddd;font-family:monospace;overflow:hidden;}#app{display:flex;flex-direction:column;height:100vh;}#stage{flex:1 1 auto;min-height:0;display:flex;justify-content:center;align-items:center;}canvas{width:min(100vw,calc(100vh*16/9));height:min(100vh,calc(100vw*9/16));background:#000;image-rendering:auto;outline:none;display:block;user-select:none;}#midbar{flex:0 0 auto;display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:6px;padding:8px 0 6px;font-size:12px;color:#aaa;opacity:0;transform:translateY(120%);transition:transform .55s cubic-bezier(.2,.85,.25,1),opacity .45s;}#midbar.in{opacity:1;transform:translateY(0);}#bars{display:flex;flex-direction:column;gap:5px;transition:transform .5s cubic-bezier(.2,.85,.25,1),opacity .45s;}#bars.fall{transform:translateY(30px);opacity:0;pointer-events:none;}.abrow{display:flex;align-items:center;gap:7px;}.ablabel{width:100px;text-align:right;color:#888;font-size:10px;letter-spacing:.5px;white-space:nowrap;}.abtrack{position:relative;width:220px;height:8px;background:#111;border:1px solid #333;border-radius:4px;overflow:hidden;}.abfill{width:0%;height:100%;background:#ccc;border-radius:3px;transition:width .15s;}.abpct{width:118px;text-align:left;color:#999;font-size:11px;white-space:nowrap;}#bootbars{display:none;align-items:center;gap:7px;}#bootbars.on{display:flex;animation:bootdrop .5s cubic-bezier(.2,.85,.25,1);}@keyframes bootdrop{from{transform:translateY(-16px);opacity:0;}to{transform:translateY(0);opacity:1;}}#bootbars.done{transform:translateY(36px);opacity:0;transition:transform .5s cubic-bezier(.2,.85,.25,1),opacity .45s;pointer-events:none;}#fps{display:flex;align-items:center;gap:5px;color:#999;will-change:transform;}#fps svg{display:block;flex:0 0 auto;}#console{flex:0 0 auto;height:18vh;min-height:90px;max-height:200px;margin:0 8px 8px;padding:6px 8px;overflow-y:auto;font-size:12px;line-height:1.35;color:#999;background:#0a0a0a;border:1px solid #2a2a2a;white-space:pre-wrap;word-break:break-word;user-select:text;cursor:text;transform:translateY(135%);transition:transform .55s cubic-bezier(.2,.85,.25,1);}#console.in{transform:translateY(0);}#fsBtn,#clearBtn,#saveBtn{font:12px/1 monospace;color:#ccc;background:#0a0a0a;border:1px solid #2a2a2a;border-radius:4px;padding:4px 8px;cursor:pointer;transition:color .2s;}#fsBtn:hover,#clearBtn:hover,#saveBtn:hover{color:#fff;}#credit{color:#888;font-size:11px;white-space:nowrap;}#canvas:fullscreen{max-width:none;max-height:none;width:100%;height:100%;}#canvas:-webkit-full-screen{max-width:none;max-height:none;width:100%;height:100%;}#errOverlay{position:fixed;left:50%;top:12px;transform:translateX(-50%);z-index:50;max-width:min(92vw,720px);display:none;background:#1a0000;border:1px solid #a33;color:#ffd7d7;font-size:12px;padding:8px 12px;border-radius:6px;white-space:pre-wrap;}#errOverlay.on{display:block;}canvas{touch-action:none;}#midbar,#console{display:none!important}#gdLoad{position:fixed;inset:0;z-index:40;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;background:#000;color:#ddd;font:600 22px/1 system-ui,sans-serif;transition:opacity .7s}#gdLoad.off{opacity:0;pointer-events:none}#gdLoad i{box-sizing:border-box;width:48px;height:48px;border:4px solid #333;border-top-color:#fff;border-radius:50%;animation:gdspin .9s linear infinite}@keyframes gdspin{to{transform:rotate(360deg)}}#gdLoadPct{counter-reset:p var(--p);font:400 16px Arial,Helvetica,sans-serif;color:#fff;text-align:center}#gdLoadPct::after{content:counter(p) "%"}</style></head><body><div id="gdLoad"><i></i><span id="gdLoadPct"></span></div><div id="errOverlay" role="alert"></div><div id="app"><div id="stage"><canvas id="canvas" width="1920" height="1080"></canvas></div><div id="midbar"><div id="bars"><div class="abrow"><span class="ablabel" id="wasmLabel">WASM</span><div class="abtrack"><div class="abfill" id="wasmFill"></div></div><span class="abpct" id="wasmPct">0%</span></div><div class="abrow"><span class="ablabel" id="dataLabel">DATA</span><div class="abtrack"><div class="abfill" id="dataFill"></div></div><span class="abpct" id="dataPct">0%</span></div></div><div id="bootbars"><div class="abtrack"><div class="abfill" id="bootFill"></div></div><span class="abpct" id="bootPct">0%</span></div><div id="fps"><svg width="13" height="13" viewBox="0 0 16 16" aria-hidden="true"><rect x="1.2" y="2" width="13.6" height="9" rx="1.6" fill="none" stroke="#888" stroke-width="1.4"/><rect x="6.5" y="12" width="3" height="2" fill="#888"/><rect x="4.5" y="14.2" width="7" height="1.3" rx="0.6" fill="#888"/></svg><span id="fpsval">-- fps</span></div><span id="perfval" style="font-size:10px" title="Queue delay is event-to-game polling, not total display latency"></span><button id="fsBtn" type="button">Fullscreen</button><button id="saveBtn" type="button" title="Save game progress and local levels">Save progress</button><button id="clearBtn" type="button" title="Delete saved progress and login">Reset progress</button></div><div id="console"></div></div><script>(function(){var WASM_URL="https://raw.githubusercontent.com/Ale7208/geometry-dash-wasm/main/payload/wasm-523d9362955eba27a8ce64ec.gz";var f=window.fetch;function fixed(r){return r.clone().json().then(function(j){if(WASM_URL&&j&&j.wasm)j.wasm.url=WASM_URL;return new Response(JSON.stringify(j),{status:200,headers:{"Content-Type":"application/json"}});});}window.fetch=function(i,o){var u=typeof i==='string'?i:(i&&i.url)||'';if(u.indexOf('gd_assets.json')<0)return f.apply(this,arguments);var k=new URL(u,document.baseURI).href.split('?')[0];return f.apply(this,arguments).then(function(r){if(!r.ok)return r;return fixed(r).then(function(n){var copy=n.clone();if(window.caches)caches.open('gdwasm-assets').then(function(c){return c.put(k,copy);}).catch(function(){});return n;});}).catch(function(e){if(!window.caches)throw e;return caches.open('gdwasm-assets').then(function(c){return c.match(k);}).then(function(r){if(r)return r;throw e;});});};})();</script><script>
+(function () {
+  'use strict';
+  var menuOpen = false;
+  var activeKeys = Object.create(null);
+  var blockedUntilUp = Object.create(null);
+  var menu = null;
+  var statusTimer = null;
+  var menuVisibilityTimer = null;
+  var menuTransitionId = 0;
+  var busy = false;
+  var savedFocus = null;
+
+  function stopKeyEvent(event) {
+    event.preventDefault();
+    event.stopImmediatePropagation();
+  }
+  function focusMenuButton(index) {
+    if (!menu) return;
+    var buttons = menu.querySelectorAll('button:not(:disabled)');
+    if (!buttons.length) return;
+    var current = Array.prototype.indexOf.call(buttons, document.activeElement);
+    if (index !== undefined)
+      current = index < 0 ? 0 : (index % buttons.length + buttons.length) % buttons.length;
+    else current = 0;
+    buttons[current].focus();
+  }
+  function setMenuOpen(open) {
+    if (menuOpen === open) return;
+    if (open) {
+      Object.keys(activeKeys).forEach(function (code) {
+        var key = activeKeys[code];
+        window.dispatchEvent(new KeyboardEvent('keyup', {
+          key: key.key, code: key.code, bubbles: true, cancelable: true
+        }));
+      });
+      activeKeys = Object.create(null);
+      savedFocus = document.activeElement;
+    }
+    menuOpen = open;
+    window.__gdMenuOpen = open;
+    if (!menu) return;
+    if (menuVisibilityTimer) {
+      clearTimeout(menuVisibilityTimer);
+      menuVisibilityTimer = null;
+    }
+    var transitionId = ++menuTransitionId;
+    if (open) {
+      menu.hidden = false;
+      menu.offsetWidth;
+      menu.classList.add('is-open');
+      focusMenuButton(0);
+    } else {
+      menu.classList.remove('is-open');
+      menuVisibilityTimer = setTimeout(function () {
+        if (!menuOpen && transitionId === menuTransitionId)
+          menu.hidden = true;
+        menuVisibilityTimer = null;
+      }, 400);
+      if (savedFocus && typeof savedFocus.focus === 'function') {
+        try { savedFocus.focus({ preventScroll: true }); }
+        catch (error) { savedFocus.focus(); }
+      }
+    }
+  }
+  function keydown(event) {
+    if (blockedUntilUp[event.code]) {
+      stopKeyEvent(event);
+      return;
+    }
+    if (menuOpen) {
+      stopKeyEvent(event);
+      if (event.repeat) return;
+      if (event.code === 'Tab' || event.code === 'Escape') {
+        blockedUntilUp[event.code] = true;
+        setMenuOpen(false);
+      } else if (event.code === 'ArrowDown' || event.code === 'ArrowRight') {
+        var buttons = menu.querySelectorAll('button:not(:disabled)');
+        var current = Array.prototype.indexOf.call(buttons, document.activeElement);
+        focusMenuButton(current + 1);
+      } else if (event.code === 'ArrowUp' || event.code === 'ArrowLeft') {
+        var previousButtons = menu.querySelectorAll('button:not(:disabled)');
+        var previous = Array.prototype.indexOf.call(previousButtons, document.activeElement);
+        focusMenuButton(previous < 0 ? previousButtons.length - 1 : previous - 1);
+      } else if ((event.code === 'Enter' || event.code === 'Space') &&
+                 menu.contains(document.activeElement)) {
+        document.activeElement.click();
+      }
+      return;
+    }
+    if (event.code === 'Tab') {
+      stopKeyEvent(event);
+      blockedUntilUp.Tab = true;
+      setMenuOpen(true);
+      return;
+    }
+    if (event.code) activeKeys[event.code] = { key: event.key, code: event.code };
+  }
+  function keyup(event) {
+    if (menuOpen || blockedUntilUp[event.code]) {
+      stopKeyEvent(event);
+      delete blockedUntilUp[event.code];
+      return;
+    }
+    delete activeKeys[event.code];
+  }
+  function keypress(event) {
+    if (menuOpen) stopKeyEvent(event);
+  }
+  window.addEventListener('keydown', keydown, true);
+  window.addEventListener('keyup', keyup, true);
+  window.addEventListener('keypress', keypress, true);
+
+  function setStatus(message, isError) {
+    var status = document.getElementById('gdMenuStatus');
+    if (!status) return;
+    if (statusTimer) clearTimeout(statusTimer);
+    status.textContent = message;
+    status.classList.toggle('error', !!isError);
+    if (message && !isError) {
+      statusTimer = setTimeout(function () {
+        status.textContent = '';
+        statusTimer = null;
+      }, 3000);
+    }
+  }
+  function setBusy(value) {
+    busy = value;
+    if (!menu) return;
+    menu.setAttribute('aria-busy', value ? 'true' : 'false');
+    menu.querySelectorAll('button').forEach(function (button) {
+      button.disabled = value;
+    });
+  }
+  function openDatabase(name) {
+    return new Promise(function (resolve, reject) {
+      var request, settled = false;
+      try { request = indexedDB.open(name, 1); }
+      catch (error) { reject(error); return; }
+      request.onupgradeneeded = function () {
+        if (!request.result.objectStoreNames.contains('files'))
+          request.result.createObjectStore('files');
+      };
+      request.onerror = function () {
+        if (settled) return;
+        settled = true;
+        reject(request.error || new Error('Could not open the database.'));
+      };
+      request.onblocked = function () {
+        if (settled) return;
+        settled = true;
+        reject(new Error('The database is busy.'));
+      };
+      request.onsuccess = function () {
+        if (settled) { request.result.close(); return; }
+        settled = true;
+        resolve(request.result);
+      };
+    });
+  }
+  function readRecords(database, keys) {
+    return openDatabase(database).then(function (db) {
+      return new Promise(function (resolve, reject) {
+        var tx, values = Object.create(null), pending = keys.length, failed = false;
+        try {
+          tx = db.transaction('files', 'readonly');
+          var store = tx.objectStore('files');
+          keys.forEach(function (key) {
+            var request = store.get(key);
+            request.onsuccess = function () {
+              values[key] = request.result;
+              pending--;
+            };
+            request.onerror = function () {
+              failed = true;
+              reject(request.error || new Error('Could not read the data.'));
+            };
+          });
+          tx.oncomplete = function () {
+            if (!failed && pending === 0) resolve(values);
+          };
+          tx.onerror = tx.onabort = function () {
+            if (failed) return;
+            failed = true;
+            reject(tx.error || new Error('Could not read the data.'));
+          };
+        } catch (error) {
+          failed = true;
+          reject(error);
+        }
+      }).then(function (values) {
+        db.close();
+        return values;
+      }, function (error) {
+        db.close();
+        throw error;
+      });
+    });
+  }
+  function writeRecords(database, records) {
+    return openDatabase(database).then(function (db) {
+      return new Promise(function (resolve, reject) {
+        var tx;
+        try {
+          tx = db.transaction('files', 'readwrite');
+          var store = tx.objectStore('files');
+          Object.keys(records).forEach(function (key) {
+            if (records[key] === undefined) store.delete(key);
+            else store.put(records[key], key);
+          });
+          tx.oncomplete = resolve;
+          tx.onerror = tx.onabort = function () {
+            reject(tx.error || new Error('Could not write the data.'));
+          };
+        } catch (error) {
+          if (tx) try { tx.abort(); } catch (ignored) {}
+          reject(error);
+        }
+      }).then(function (value) {
+        db.close();
+        return value;
+      }, function (error) {
+        db.close();
+        throw error;
+      });
+    });
+  }
+  function asBytes(value) {
+    if (value instanceof ArrayBuffer) return new Uint8Array(value);
+    if (ArrayBuffer.isView(value))
+      return new Uint8Array(value.buffer, value.byteOffset, value.byteLength);
+    throw new Error('The save file is invalid.');
+  }
+  function encodeBase64(bytes) {
+    var binary = '';
+    for (var offset = 0; offset < bytes.length; offset += 0x8000)
+      binary += String.fromCharCode.apply(null, bytes.subarray(offset, offset + 0x8000));
+    return btoa(binary);
+  }
+  function decodeBase64(value) {
+    if (typeof value !== 'string' ||
+        !/^(?:[A-Za-z0-9+/]{4})*(?:[A-Za-z0-9+/]{2}==|[A-Za-z0-9+/]{3}=)?$/.test(value))
+      throw new Error('Invalid Base64.');
+    var binary;
+    try { binary = atob(value); }
+    catch (error) { throw new Error('Invalid Base64.'); }
+    var bytes = new Uint8Array(binary.length);
+    for (var i = 0; i < binary.length; ++i) bytes[i] = binary.charCodeAt(i);
+    if (encodeBase64(bytes) !== value) throw new Error('Invalid Base64.');
+    return bytes;
+  }
+  var saveKeys = {
+    'CCGameManager.dat': 'AppData/CCGameManager.dat',
+    'CCLocalLevels.dat': 'AppData/CCLocalLevels.dat'
+  };
+  var backupKeys = [
+    'cur:CCGameManager.dat', 'prev:CCGameManager.dat',
+    'cur:CCLocalLevels.dat', 'prev:CCLocalLevels.dat'
+  ];
+  function fileBytesFrom(value) {
+    if (value === undefined || value === null)
+      throw new Error('A save file is missing.');
+    return asBytes(value);
+  }
+  async function exportProgress() {
+    var names = Object.keys(saveKeys);
+    var records = await readRecords('gdwasm_saves', names.map(function (name) {
+      return saveKeys[name];
+    }));
+    var files = {};
+    names.forEach(function (name) {
+      files[name] = encodeBase64(fileBytesFrom(records[saveKeys[name]]));
+    });
+    var payload = {
+      app: 'GeometryDashWebport',
+      version: 1,
+      exportedAt: new Date().toISOString(),
+      files: files
+    };
+    var date = new Date();
+    var datePart = date.getFullYear() + '-' +
+      String(date.getMonth() + 1).padStart(2, '0') + '-' +
+      String(date.getDate()).padStart(2, '0');
+    var url = URL.createObjectURL(new Blob([JSON.stringify(payload)], {
+      type: 'application/json'
+    }));
+    var link = document.createElement('a');
+    link.href = url;
+    link.download = 'geometry_dash_save_' + datePart + '.json';
+    document.body.appendChild(link);
+    link.click();
+    link.remove();
+    setTimeout(function () { URL.revokeObjectURL(url); }, 1000);
+  }
+  function parseImport(text) {
+    var data;
+    try { data = JSON.parse(text); }
+    catch (error) { throw new Error('Invalid JSON file.'); }
+    var names = Object.keys(saveKeys);
+    if (!data || data.app !== 'GeometryDashWebport' || data.version !== 1 ||
+        !data.files || typeof data.files !== 'object' || Array.isArray(data.files))
+      throw new Error('Unsupported save format.');
+    var fileNames = Object.keys(data.files);
+    if (fileNames.length !== names.length ||
+        names.some(function (name) { return fileNames.indexOf(name) < 0; }))
+      throw new Error('Invalid save files.');
+    var decoded = {};
+    names.forEach(function (name) {
+      decoded[name] = decodeBase64(data.files[name]);
+    });
+    return decoded;
+  }
+  async function pauseSaves() {
+    window.__gdProgressMutation = true;
+    window.__gdSkipBeforeUnloadSave = true;
+    if (typeof gdSaveTimer !== 'undefined' && gdSaveTimer) {
+      clearTimeout(gdSaveTimer);
+      gdSaveTimer = null;
+    }
+    try {
+      if (window.Module && Module._gd_autosave_set)
+        Module._gd_autosave_set(0);
+    } catch (error) {
+      window.__gdProgressMutation = false;
+      window.__gdSkipBeforeUnloadSave = false;
+      throw error;
+    }
+    if (typeof gdSavePromise !== 'undefined' && gdSavePromise)
+      await gdSavePromise;
+  }
+  function resumeSaves() {
+    window.__gdProgressMutation = false;
+    window.__gdSkipBeforeUnloadSave = false;
+    if (!/[?&]noauto(?:=|&|$)/.test(location.search) &&
+        window.Module && Module._gd_autosave_set)
+      Module._gd_autosave_set(1);
+  }
+  function reloadWithoutSaving() {
+    window.__gdProgressMutation = true;
+    window.__gdSkipBeforeUnloadSave = true;
+    if (typeof gdSaveTimer !== 'undefined' && gdSaveTimer) {
+      clearTimeout(gdSaveTimer);
+      gdSaveTimer = null;
+    }
+    location.reload();
+  }
+  async function importProgress(file) {
+    var decoded;
+    try { decoded = parseImport(await file.text()); }
+    catch (error) {
+      var validationErrors = [
+        'Unsupported save format.', 'Invalid save files.',
+        'Invalid JSON file.', 'Invalid Base64.'
+      ];
+      setStatus(validationErrors.indexOf(error.message) >= 0 ? error.message :
+        'Invalid or incompatible file.', true);
+      return;
+    }
+    if (!confirm('Import this progress? Current data will be replaced.')) return;
+    setBusy(true);
+    try {
+      await pauseSaves();
+      var saveKeysList = Object.keys(saveKeys).map(function (name) {
+        return saveKeys[name];
+      });
+      var oldSaves = await readRecords('gdwasm_saves', saveKeysList);
+      var oldBackups = await readRecords('gdwasm_backup', backupKeys);
+      var newSaves = {};
+      var newBackups = {};
+      Object.keys(saveKeys).forEach(function (name) {
+        var bytes = decoded[name];
+        newSaves[saveKeys[name]] = bytes.slice().buffer;
+        newBackups['cur:' + name] = {
+          bytes: bytes.slice().buffer,
+          ts: Date.now()
+        };
+        newBackups['prev:' + name] = undefined;
+      });
+      try {
+        await writeRecords('gdwasm_saves', newSaves);
+        await writeRecords('gdwasm_backup', newBackups);
+      } catch (error) {
+        try {
+          await writeRecords('gdwasm_saves', oldSaves);
+          await writeRecords('gdwasm_backup', oldBackups);
+        } catch (rollbackError) {
+          throw new Error('Could not complete the import.');
+        }
+        throw error;
+      }
+      reloadWithoutSaving();
+    } catch (error) {
+      try { resumeSaves(); }
+      catch (resumeError) { setStatus('Autosave could not be resumed.', true); }
+      setBusy(false);
+      setStatus('Could not import progress.', true);
+    }
+  }
+  async function resetProgress() {
+    if (!confirm('Delete game progress?')) return;
+    if (!confirm('Confirm permanent deletion of game progress.')) return;
+    setBusy(true);
+    try {
+      await pauseSaves();
+      var saveKeysList = Object.keys(saveKeys).map(function (name) {
+        return saveKeys[name];
+      });
+      var oldSaves = await readRecords('gdwasm_saves', saveKeysList);
+      var oldBackups = await readRecords('gdwasm_backup', backupKeys);
+      try {
+        await writeRecords('gdwasm_saves', {
+          'AppData/CCGameManager.dat': undefined,
+          'AppData/CCLocalLevels.dat': undefined
+        });
+        await writeRecords('gdwasm_backup', {
+          'cur:CCGameManager.dat': undefined,
+          'prev:CCGameManager.dat': undefined,
+          'cur:CCLocalLevels.dat': undefined,
+          'prev:CCLocalLevels.dat': undefined
+        });
+      } catch (error) {
+        try {
+          await writeRecords('gdwasm_saves', oldSaves);
+          await writeRecords('gdwasm_backup', oldBackups);
+        } catch (rollbackError) {
+          throw new Error('Could not complete the deletion.');
+        }
+        throw error;
+      }
+      reloadWithoutSaving();
+    } catch (error) {
+      try { resumeSaves(); }
+      catch (resumeError) { setStatus('Autosave could not be resumed.', true); }
+      setBusy(false);
+      setStatus('Could not delete progress.', true);
+    }
+  }
+  async function clearAssetCache() {
+    if (!confirm('Clear the asset cache? Game progress will not be affected.')) return;
+    setBusy(true);
+    try {
+      if (!window.caches) throw new Error('Cache API is unavailable.');
+      await caches.delete('gdwasm-assets');
+      setStatus('Cache cleared.');
+    } catch (error) {
+      setStatus('Could not clear the cache.', true);
+    } finally { setBusy(false); }
+  }
+  async function toggleFullscreen() {
+    var doc = document;
+    var request = document.documentElement.requestFullscreen ||
+      document.documentElement.webkitRequestFullscreen ||
+      document.documentElement.mozRequestFullScreen ||
+      document.documentElement.msRequestFullscreen;
+    var exit = doc.exitFullscreen || doc.webkitExitFullscreen ||
+      doc.mozCancelFullScreen || doc.msExitFullscreen;
+    try {
+      if (doc.fullscreenElement || doc.webkitFullscreenElement ||
+          doc.mozFullScreenElement || doc.msFullscreenElement) {
+        if (!exit) throw new Error('Fullscreen is unavailable.');
+        await exit.call(doc);
+      } else {
+        if (!request) throw new Error('Fullscreen is unavailable.');
+        await request.call(document.documentElement);
+        if (navigator.keyboard && navigator.keyboard.lock)
+          await navigator.keyboard.lock(['Escape']);
+      }
+    } catch (error) {
+      setStatus('Could not change fullscreen mode.', true);
+    }
+  }
+  function buildMenu() {
+    var style = document.createElement('style');
+    style.textContent = '#gdUtilityMenu{position:fixed;top:14px;right:14px;z-index:70;width:min(270px,calc(100vw - 28px));box-sizing:border-box;padding:14px;background:rgba(15,15,18,.97);border:1px solid #34343a;border-radius:8px;box-shadow:0 8px 28px #0009;color:#ddd;font:12px/1.45 monospace;opacity:0;pointer-events:none;transition:opacity .4s ease}#gdUtilityMenu.is-open{opacity:1;pointer-events:auto}#gdUtilityMenu[hidden]{display:none}#gdUtilityMenu,#gdUtilityMenu *{font-family:monospace!important}#gdUtilityMenu h2{margin:0 0 10px;color:#eee;font:12px monospace}#gdUtilityMenu .gdMenuButtons{display:grid;gap:6px}#gdUtilityMenu button{width:100%;padding:7px 9px;border:1px solid #38383e;border-radius:5px;background:#1b1b20;color:#ddd;text-align:left;font:12px monospace;cursor:pointer}#gdUtilityMenu button:hover:not(:disabled),#gdUtilityMenu button:focus-visible{background:#292930;border-color:#666;outline:none}#gdUtilityMenu button:disabled{opacity:.55;cursor:wait}#gdMenuHint{margin-top:9px;color:#85858c;font-size:10px}#gdMenuStatus{min-height:0;margin-top:0;color:#b9d8b9;font-size:11px}#gdMenuStatus:not(:empty){margin-top:8px}#gdMenuStatus.error{color:#ffaaaa}#gdMenuFile{display:none}';
+    document.head.appendChild(style);
+    menu = document.createElement('section');
+    menu.id = 'gdUtilityMenu';
+    menu.hidden = true;
+    menu.setAttribute('data-noscramble', '');
+    menu.setAttribute('role', 'dialog');
+    menu.setAttribute('aria-labelledby', 'gdMenuTitle');
+    menu.setAttribute('aria-busy', 'false');
+    menu.innerHTML = '<div class="gdMenuButtons">' +
+      '<button type="button" data-action="save">Save progress</button>' +
+      '<button type="button" data-action="export">Export progress</button>' +
+      '<button type="button" data-action="import">Import progress</button>' +
+      '<button type="button" data-action="reset">Reset progress</button>' +
+      '<button type="button" data-action="cache">Clear cache</button>' +
+      '<button type="button" data-action="fullscreen">Fullscreen</button>' +
+      '</div><div id="gdMenuHint">Tab or Esc to close</div>' +
+      '<div id="gdMenuStatus" role="status" aria-live="polite"></div>' +
+      '<input id="gdMenuFile" type="file" accept="application/json,.json">';
+    var title = document.createElement('h2');
+    title.id = 'gdMenuTitle';
+    title.textContent = 'Tools Menu';
+    menu.insertBefore(title, menu.firstChild);
+    document.body.insertBefore(menu, document.body.firstChild);
+    menu.addEventListener('click', function (event) {
+      var button = event.target.closest('button[data-action]');
+      if (!button || busy) return;
+      var action = button.getAttribute('data-action');
+      if (action === 'save') {
+        setBusy(true);
+        if (!window.__gdRuntimeReady) {
+          setBusy(false);
+          setStatus('The game is not ready yet.', true);
+          return;
+        }
+        Promise.all([Promise.resolve(gdPersist()), Promise.resolve(performSave())])
+          .then(function () { setStatus('Saved.'); })
+          .catch(function () { setStatus('Could not save.', true); })
+          .then(function () { setBusy(false); });
+      } else if (action === 'export') {
+        setBusy(true);
+        exportProgress().then(function () { setStatus('Exported.'); })
+          .catch(function () { setStatus('Could not export progress.', true); })
+          .then(function () { setBusy(false); });
+      } else if (action === 'import') {
+        document.getElementById('gdMenuFile').click();
+      } else if (action === 'reset') {
+        resetProgress();
+      } else if (action === 'cache') {
+        clearAssetCache();
+      } else if (action === 'fullscreen') {
+        toggleFullscreen();
+      }
+    });
+    document.getElementById('gdMenuFile').addEventListener('change', function (event) {
+      var file = event.target.files && event.target.files[0];
+      event.target.value = '';
+      if (file) importProgress(file);
+    });
+    if (menuOpen) {
+      menu.hidden = false;
+      ++menuTransitionId;
+      menu.offsetWidth;
+      menu.classList.add('is-open');
+      focusMenuButton(0);
+    }
+  }
+  if (document.readyState === 'loading')
+    document.addEventListener('DOMContentLoaded', buildMenu, { once: true });
+  else buildMenu();
+})();
 (function () {
   'use strict';
   var manifestPromise;
@@ -885,7 +1428,8 @@ return gdSavePromise;
 return runSave();
 }
 function scheduleSave(now) {
-if (!window.__gdRuntimeReady || !window.__gdSavesRestored) return;
+if (window.__gdProgressMutation || !window.__gdRuntimeReady ||
+    !window.__gdSavesRestored) return;
 if (gdSaveTimer) clearTimeout(gdSaveTimer);
 gdSaveTimer = setTimeout(function () {
 gdSaveTimer = null;
@@ -2043,6 +2587,128 @@ window.addEventListener('error',function(e){ if(e&&e.message&&/JSPI|WebAssembly|
 <script>(function(){
 var load=document.getElementById('gdLoad');
 var pct=document.getElementById('gdLoadPct');
+var tip=document.createElement('div');
+tip.id='gdLoadTip';
+tip.style.position='fixed';
+tip.style.left='50%';
+tip.style.bottom='8%';
+tip.style.transform='translateX(-50%)';
+tip.style.width='calc(100vw - 32px)';
+tip.style.maxWidth='720px';
+tip.style.textAlign='center';
+tip.style.font='400 14.4px/1.5 system-ui,sans-serif';
+tip.style.color='#8aa6d4';
+tip.style.opacity='1';
+tip.style.transition='opacity .22s ease';
+tip.style.pointerEvents='auto';
+tip.style.cursor='pointer';
+tip.style.userSelect='none';
+load.appendChild(tip);
+var tips=[
+{text:'Press Tab to open the tools menu (export, import, clear cache).',weight:2},
+{text:'Lagging? Add ?quality=low at the end of the URL.'},
+{text:'The downloaded version works offline after the first load.'},
+{text:"The game saves your progress automatically, so you don't have to."},
+{text:'Your progress is saved in this browser. Export a backup from the Tab menu.'},
+{text:'Clearing your browser data also deletes your progress.'},
+{text:'Click once to go fullscreen. Hold Esc to exit.'},
+{text:'Progress is saved per website address, so always play from the same one.'},
+{text:'Use Import in the Tab menu to move your progress to another browser or device.'},
+{text:'The first load is the slowest. After that, the game files are cached.'},
+{text:'Online levels failing? Wait a moment and try again.'},
+{text:'Press Save progress in the Tab menu to force a save.'},
+{text:'Feedback and bug reports are welcome on GitHub (Issues tab):',link:'https://github.com/Ale7208/Geometry-Dash-webport',weight:2},
+{text:'Pro tip: Avoid the pointy triangles.'},
+{text:'Remember: The 99% fail is part of the experience.'},
+{text:'Your spacebar is crying for help.'},
+{text:"Practice mode is not cheating, it's therapy."},
+{text:'Tip: Blame the hitbox, never yourself.'},
+{text:'Counting your attempts... Error: Number too big.'},
+{text:'Pro tip: Blink after you beat the level.'},
+{text:'Tip: If the screen turns upside down, just flip your monitor.'},
+{text:'Have you tried turning your skill off and on again?'},
+{text:'Do not trust the first jump of any level.'},
+{text:'Wave mode: Where straight lines go to die.'},
+{text:"Tip: Don't look at the percentage."},
+{text:'Please do not feed the Clubstep monsters.'},
+{text:'Never celebrate before the end wall.'},
+{text:'RubRub added one extra spike just to mess with you.'},
+{text:'Geometry Dash belongs to RobTop. Buy the original game to support him.'},
+{text:'Downloaded songs are stored in your browser, so you only download them once.'},
+{text:'Cloud saving and loading work with your Geometry Dash account.'},
+{text:"Login failed? Try again. The error often comes from RobTop's servers."},
+{text:'You can paste text into the game with Ctrl+V.'},
+{text:'Reset progress in the Tab menu deletes your save. Export a backup first.'},
+{text:"If your browser asks before closing the page, it's protecting your save."},
+{text:'Questions? Ask in the Q&A section of GitHub Discussions ',link:'https://github.com/Ale7208/Geometry-Dash-webport/discussions/categories/q-a',linkText:'https://github.com/Ale7208/Geometry-Dash-webport/discussions/categories/q-a',inlineLink:true},
+{text:'The official address is gd-webport.pages.dev. Any similar one is a copy made by someone else.'},
+{text:'Port by Bog. Modded by Ale7208.'},
+{text:'You can see my GitHub repositories at ',link:'https://github.com/Ale7208/',linkText:'https://github.com/Ale7208/',after:' I have very few repositories for now, but I may make more webports in the future.',inlineLink:true}
+];
+var previousTip=-1;
+var tipHovered=false;
+var tipTimer=null;
+var tipFadeTimer=null;
+function chooseTip(){
+var totalWeight=0;
+for(var i=0;i<tips.length;i++){
+if(i!==previousTip)totalWeight+=tips[i].weight||1;
+}
+var roll=Math.random()*totalWeight;
+for(var j=0;j<tips.length;j++){
+if(j===previousTip)continue;
+var weight=tips[j].weight||1;
+if(roll<weight)return j;
+roll-=weight;
+}
+throw new Error('Unable to select a loading tip.');
+}
+function showTip(){
+var next=chooseTip();
+previousTip=next;
+var item=tips[next];
+while(tip.firstChild)tip.removeChild(tip.firstChild);
+tip.appendChild(document.createTextNode(item.text));
+if(item.link){
+if(!item.inlineLink)tip.appendChild(document.createElement('br'));
+var link=document.createElement('a');
+link.href=item.link;
+link.target='_blank';
+link.rel='noopener noreferrer';
+link.textContent=item.linkText||'github.com/Ale7208/Geometry-Dash-webport';
+link.style.color='#6fc3ff';
+link.style.textDecoration='underline';
+link.style.pointerEvents='auto';
+tip.appendChild(link);
+if(item.after)tip.appendChild(document.createTextNode(item.after));
+}
+}
+function advanceTip(){
+if(tipFadeTimer!==null)clearTimeout(tipFadeTimer);
+tip.style.opacity='0';
+tipFadeTimer=setTimeout(function(){
+showTip();
+tip.style.opacity='1';
+tipFadeTimer=null;
+},220);
+}
+function startTipTimer(){
+if(tipTimer!==null)clearInterval(tipTimer);
+tipTimer=setInterval(function(){
+if(failed||tipHovered)return;
+advanceTip();
+},6000);
+}
+showTip();
+tip.addEventListener('mouseenter',function(){tipHovered=true;});
+tip.addEventListener('mouseleave',function(){tipHovered=false;});
+tip.addEventListener('click',function(e){
+e.stopPropagation();
+if(e.target.closest&&e.target.closest('a'))return;
+advanceTip();
+startTipTimer();
+});
+startTipTimer();
 var totals={wasm:123481510,data:322237583};
 var loaded={wasm:0,data:0};
 var shown=1;
@@ -2069,78 +2735,13 @@ return originalSetAssetBar.apply(this,arguments);
 function hide(){
 if(failed)return;
 if(completionTimer!==null)clearTimeout(completionTimer);
+if(tipTimer!==null)clearInterval(tipTimer);
+if(tipFadeTimer!==null)clearTimeout(tipFadeTimer);
 pct.style.setProperty('--p',100);
 load.classList.add('off');
 hideTimer=setTimeout(function(){
 load.style.display='none';
-showInfo();
 },700);
-}
-function showInfo(){
-if(failed||overlay.classList.contains('on'))return;
-while(overlay.firstChild)overlay.removeChild(overlay.firstChild);
-overlay.appendChild(document.createTextNode('Feedback and bug reports are welcome on GitHub (Issues tab):'));
-overlay.appendChild(document.createElement('br'));
-var link=document.createElement('a');
-link.href='https://github.com/Ale7208/Geometry-Dash-webport';
-link.target='_blank';
-link.rel='noopener noreferrer';
-link.textContent='github.com/Ale7208/Geometry-Dash-webport';
-link.style.pointerEvents='auto';
-link.style.color='#8fdcff';
-link.style.textDecoration='underline';
-overlay.appendChild(link);
-var closeButton=document.createElement('button');
-closeButton.type='button';
-closeButton.setAttribute('aria-label','Close notification');
-closeButton.title='Close notification';
-closeButton.textContent='×';
-closeButton.style.position='absolute';
-closeButton.style.top='3px';
-closeButton.style.right='6px';
-closeButton.style.padding='0';
-closeButton.style.border='0';
-closeButton.style.background='transparent';
-closeButton.style.color='#ccc';
-closeButton.style.font='16px/1 monospace';
-closeButton.style.cursor='pointer';
-closeButton.style.pointerEvents='auto';
-overlay.appendChild(closeButton);
-overlay.setAttribute('role','status');
-overlay.style.backgroundColor='rgba(24,24,24,.92)';
-overlay.style.borderColor='rgba(110,110,110,.7)';
-overlay.style.color='#dce7f2';
-overlay.style.pointerEvents='none';
-overlay.style.paddingRight='30px';
-overlay.style.opacity='0';
-overlay.style.transform='translateX(-50%) translateY(-6px)';
-overlay.style.transition='opacity .3s ease, transform .3s ease';
-overlay.classList.add('info','on');
-var dismissing=false;
-function dismissInfo(){
-if(dismissing)return;
-dismissing=true;
-clearTimeout(autoCloseTimer);
-overlay.style.opacity='0';
-overlay.style.transform='translateX(-50%) translateY(-6px)';
-setTimeout(function(){
-overlay.classList.remove('info','on');
-overlay.style.cssText='';
-overlay.setAttribute('role','alert');
-while(overlay.firstChild)overlay.removeChild(overlay.firstChild);
-},300);
-}
-closeButton.addEventListener('click',function(e){
-e.preventDefault();
-e.stopPropagation();
-dismissInfo();
-});
-requestAnimationFrame(function(){
-if(failed||dismissing)return;
-overlay.style.opacity='1';
-overlay.style.transform='translateX(-50%)';
-});
-var autoCloseTimer=setTimeout(dismissInfo,12000);
 }
 function complete(){
 if(completed||failed)return;
@@ -2162,10 +2763,12 @@ function hideForError(){
 failed=true;
 if(completionTimer!==null)clearTimeout(completionTimer);
 if(hideTimer!==null)clearTimeout(hideTimer);
+if(tipTimer!==null)clearInterval(tipTimer);
+if(tipFadeTimer!==null)clearTimeout(tipFadeTimer);
 load.style.display='none';
 }
 var errorObserver=new MutationObserver(function(){
-if(overlay.classList.contains('on')&&!overlay.classList.contains('info'))hideForError();
+if(overlay.classList.contains('on'))hideForError();
 });
 errorObserver.observe(overlay,{attributes:true,attributeFilter:['class']});
 if(overlay.classList.contains('on'))hideForError();
@@ -2174,6 +2777,7 @@ if (document.readyState === 'loading')
 document.addEventListener('DOMContentLoaded', gdStart, { once: true });
 else gdStart();
 window.addEventListener('beforeunload',function(e){
+if(window.__gdSkipBeforeUnloadSave)return;
 if(!window.__gdRuntimeReady)return;
 if(gdSaveTimer)clearTimeout(gdSaveTimer);
 gdSaveTimer=null;
@@ -2183,8 +2787,12 @@ e.returnValue='';
 });
 document.addEventListener('contextmenu',function(e){e.preventDefault();});
 function firstPointerDown(e){
+var loadTip=document.getElementById('gdLoadTip');
+if(loadTip&&loadTip.contains(e.target)){e.stopImmediatePropagation();return;}
 var notice=document.getElementById('errOverlay');
 if(notice&&notice.contains(e.target))return;
+var menu=document.getElementById('gdUtilityMenu');
+if(menu&&menu.contains(e.target))return;
 document.removeEventListener('pointerdown',firstPointerDown,true);
 var audio=window.Module&&window.Module.gdAudioContext;
 if(audio&&audio.state==='suspended')audio.resume();
