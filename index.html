@@ -219,8 +219,127 @@ document.addEventListener("click",function(){try{if(window.parent!==window)windo
     if (!menu) return;
     menu.setAttribute('aria-busy', value ? 'true' : 'false');
     menu.querySelectorAll('button').forEach(function (button) {
-      button.disabled = value;
+      button.disabled = value || button.getAttribute('data-current') === 'true';
     });
+  }
+  function songRecordName(key, database) {
+    var value = String(key).replace(/\\/g, '/');
+    var match;
+    if (database === 'gdwasm_saves') {
+      match = /^\/?AppData\/([^/]+\.mp3)$/i.exec(value);
+    } else {
+      match = /^(?:\/?AppData\/|(?:cur|prev):)([^/:]+\.mp3)$/i.exec(value);
+    }
+    return match ? match[1].toLowerCase() : null;
+  }
+  function deleteDownloadedSongRecords(database) {
+    return openDatabase(database).then(function (db) {
+      return new Promise(function (resolve, reject) {
+        var tx;
+        var names = Object.create(null);
+        try {
+          tx = db.transaction('files', 'readwrite');
+          var store = tx.objectStore('files');
+          var request = store.getAllKeys();
+          request.onsuccess = function () {
+            var keys = request.result || [];
+            for (var i = 0; i < keys.length; ++i) {
+              var name = songRecordName(keys[i], database);
+              if (!name) continue;
+              names[name] = true;
+              store.delete(keys[i]);
+            }
+          };
+          request.onerror = function () {
+            reject(request.error || new Error('Could not list downloaded songs.'));
+          };
+          tx.oncomplete = function () { resolve(Object.keys(names)); };
+          tx.onerror = tx.onabort = function () {
+            reject(tx.error || new Error('Could not delete downloaded songs.'));
+          };
+        } catch (error) {
+          if (tx) try { tx.abort(); } catch (ignored) {}
+          reject(error);
+        }
+      }).then(function (names) {
+        db.close();
+        return names;
+      }, function (error) {
+        db.close();
+        throw error;
+      });
+    });
+  }
+  async function clearDownloadedSongs() {
+    setBusy(true);
+    try {
+      var names = Object.create(null);
+      var fs = window.Module && Module.FS;
+      if (fs && fs.analyzePath && fs.analyzePath('/AppData').exists) {
+        if (window.__gdInstallSongDeleteHook) window.__gdInstallSongDeleteHook();
+        var entries = fs.readdir('/AppData');
+        for (var i = 0; i < entries.length; ++i) {
+          var filename = entries[i];
+          if (filename === '.' || filename === '..' || !/\.mp3$/i.test(filename))
+            continue;
+          var path = '/AppData/' + filename;
+          var stat = fs.lstat ? fs.lstat(path) : fs.stat(path);
+          if (!fs.isFile(stat.mode)) continue;
+          names[filename.toLowerCase()] = true;
+          fs.unlink(path);
+        }
+      }
+      var databases = ['gdwasm_saves', 'gdwasm_backup'];
+      for (var dbIndex = 0; dbIndex < databases.length; ++dbIndex) {
+        var removedNames = await deleteDownloadedSongRecords(databases[dbIndex]);
+        for (var nameIndex = 0; nameIndex < removedNames.length; ++nameIndex)
+          names[removedNames[nameIndex]] = true;
+      }
+      var count = Object.keys(names).length;
+      alert('Deleted ' + count + ' downloaded song' +
+        (count === 1 ? '.' : 's.'));
+    } catch (error) {
+      console.error('Could not clear downloaded songs:', error);
+      alert('Could not clear downloaded songs.');
+    } finally { setBusy(false); }
+  }
+  function currentQuality() {
+    var quality = new URLSearchParams(location.search).get('quality');
+    if (quality === 'low' || quality === 'high') return quality;
+    return navigator.deviceMemory > 0 && navigator.deviceMemory <= 4 ? 'low' : 'high';
+  }
+  async function changeQuality(quality) {
+    setBusy(true);
+    try {
+      if (!window.__gdRuntimeReady || !window.__gdSavesRestored)
+        throw new Error('The game is not ready to save.');
+      if (typeof gdSaveTimer !== 'undefined' && gdSaveTimer) {
+        clearTimeout(gdSaveTimer);
+        gdSaveTimer = null;
+      }
+      await Promise.all([
+        Promise.resolve(gdPersist()),
+        Promise.resolve(performSave())
+      ]);
+      var target = new URL(location.href);
+      target.searchParams.set('quality', quality);
+      window.__gdSkipBeforeUnloadSave = true;
+      location.assign(target.href);
+    } catch (error) {
+      console.error('Could not save before changing quality:', error);
+      window.__gdSkipBeforeUnloadSave = false;
+      setBusy(false);
+      alert('Could not save progress before reloading.');
+    }
+  }
+  function reportBug() {
+    var body = 'Page URL: ' + location.href +
+      '\nBrowser: ' + navigator.userAgent +
+      '\nQuality: ' + currentQuality() +
+      '\n\nDescribe the bug:\n';
+    var url = 'https://github.com/Ale7208/Geometry-Dash-webport/issues/new?body=' +
+      encodeURIComponent(body);
+    window.open(url, '_blank', 'noopener,noreferrer');
   }
   function openDatabase(name) {
     return new Promise(function (resolve, reject) {
@@ -536,32 +655,10 @@ document.addEventListener("click",function(){try{if(window.parent!==window)windo
       setStatus('Could not clear the cache.', true);
     } finally { setBusy(false); }
   }
-  async function toggleFullscreen() {
-    var doc = document;
-    var request = document.documentElement.requestFullscreen ||
-      document.documentElement.webkitRequestFullscreen ||
-      document.documentElement.mozRequestFullScreen ||
-      document.documentElement.msRequestFullscreen;
-    var exit = doc.exitFullscreen || doc.webkitExitFullscreen ||
-      doc.mozCancelFullScreen || doc.msExitFullscreen;
-    try {
-      if (doc.fullscreenElement || doc.webkitFullscreenElement ||
-          doc.mozFullScreenElement || doc.msFullscreenElement) {
-        if (!exit) throw new Error('Fullscreen is unavailable.');
-        await exit.call(doc);
-      } else {
-        if (!request) throw new Error('Fullscreen is unavailable.');
-        await request.call(document.documentElement);
-        if (navigator.keyboard && navigator.keyboard.lock)
-          await navigator.keyboard.lock(['Escape']);
-      }
-    } catch (error) {
-      setStatus('Could not change fullscreen mode.', true);
-    }
-  }
   function buildMenu() {
     var style = document.createElement('style');
     style.textContent = '#gdUtilityMenu{position:fixed;top:14px;right:14px;z-index:70;width:min(270px,calc(100vw - 28px));box-sizing:border-box;padding:14px;background:rgba(15,15,18,.97);border:1px solid #34343a;border-radius:8px;box-shadow:0 8px 28px #0009;color:#ddd;font:12px/1.45 monospace;opacity:0;pointer-events:none;transition:opacity .18s ease}#gdUtilityMenu.is-open{opacity:1;pointer-events:auto;transition-duration:.23s}#gdUtilityMenu[hidden]{display:none}#gdUtilityMenu,#gdUtilityMenu *{font-family:monospace!important}#gdUtilityMenu h2{margin:0 0 10px;color:#eee;font:12px monospace}#gdUtilityMenu .gdMenuButtons{display:grid;gap:6px}#gdUtilityMenu button{width:100%;padding:7px 9px;border:1px solid #38383e;border-radius:5px;background:#1b1b20;color:#ddd;text-align:left;font:12px monospace;cursor:pointer}#gdUtilityMenu button:hover:not(:disabled),#gdUtilityMenu button:focus-visible{background:#292930;border-color:#666;outline:none}#gdUtilityMenu button:disabled{opacity:.55;cursor:wait}#gdMenuHint{margin-top:9px;color:#85858c;font-size:10px}#gdMenuStatus{min-height:0;margin-top:0;color:#b9d8b9;font-size:11px}#gdMenuStatus:not(:empty){margin-top:8px}#gdMenuStatus.error{color:#ffaaaa}#gdMenuFile{display:none}';
+    style.textContent += '#gdUtilityMenu button[aria-pressed="true"]{background:#292930;border-color:#777;color:#fff}';
     document.head.appendChild(style);
     menu = document.createElement('section');
     menu.id = 'gdUtilityMenu';
@@ -570,16 +667,25 @@ document.addEventListener("click",function(){try{if(window.parent!==window)windo
     menu.setAttribute('role', 'dialog');
     menu.setAttribute('aria-labelledby', 'gdMenuTitle');
     menu.setAttribute('aria-busy', 'false');
+    var activeQuality = currentQuality();
     menu.innerHTML = '<div class="gdMenuButtons">' +
-      '<button type="button" data-action="save">Save progress</button>' +
       '<button type="button" data-action="export">Export progress</button>' +
       '<button type="button" data-action="import">Import progress</button>' +
       '<button type="button" data-action="reset">Reset progress</button>' +
       '<button type="button" data-action="cache">Clear cache</button>' +
-      '<button type="button" data-action="fullscreen">Fullscreen</button>' +
+      '<button type="button" data-action="clear-songs">Clear songs</button>' +
+      '<button type="button" data-action="report-bug">Report bug</button>' +
+      '<button type="button" data-action="quality" data-quality="low">Quality: Low</button>' +
+      '<button type="button" data-action="quality" data-quality="high">Quality: High</button>' +
       '</div><div id="gdMenuHint">Tab or Esc to close</div>' +
       '<div id="gdMenuStatus" role="status" aria-live="polite"></div>' +
       '<input id="gdMenuFile" type="file" accept="application/json,.json">';
+    menu.querySelectorAll('button[data-quality]').forEach(function (button) {
+      var selected = button.getAttribute('data-quality') === activeQuality;
+      button.setAttribute('data-current', selected ? 'true' : 'false');
+      button.setAttribute('aria-pressed', selected ? 'true' : 'false');
+      button.disabled = selected;
+    });
     var title = document.createElement('h2');
     title.id = 'gdMenuTitle';
     title.textContent = 'Tools Menu';
@@ -589,18 +695,7 @@ document.addEventListener("click",function(){try{if(window.parent!==window)windo
       var button = event.target.closest('button[data-action]');
       if (!button || busy) return;
       var action = button.getAttribute('data-action');
-      if (action === 'save') {
-        setBusy(true);
-        if (!window.__gdRuntimeReady) {
-          setBusy(false);
-          setStatus('The game is not ready yet.', true);
-          return;
-        }
-        Promise.all([Promise.resolve(gdPersist()), Promise.resolve(performSave())])
-          .then(function () { setStatus('Saved.'); })
-          .catch(function () { setStatus('Could not save.', true); })
-          .then(function () { setBusy(false); });
-      } else if (action === 'export') {
+      if (action === 'export') {
         setBusy(true);
         exportProgress().then(function () { setStatus('Exported.'); })
           .catch(function () { setStatus('Could not export progress.', true); })
@@ -611,8 +706,16 @@ document.addEventListener("click",function(){try{if(window.parent!==window)windo
         resetProgress();
       } else if (action === 'cache') {
         clearAssetCache();
-      } else if (action === 'fullscreen') {
-        toggleFullscreen();
+      } else if (action === 'clear-songs') {
+        if (confirm('Delete all downloaded songs? Your progress will not be affected.'))
+          clearDownloadedSongs();
+      } else if (action === 'report-bug') {
+        reportBug();
+      } else if (action === 'quality') {
+        var quality = button.getAttribute('data-quality');
+        if (confirm('This will reload the page to apply the quality change. ' +
+            'Your progress will be saved first. Continue?'))
+          changeQuality(quality);
       }
     });
     document.getElementById('gdMenuFile').addEventListener('change', function (event) {
