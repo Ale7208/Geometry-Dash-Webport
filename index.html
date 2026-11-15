@@ -146,7 +146,7 @@ document.addEventListener("click",function(){try{if(window.parent!==window)windo
         if (!menuOpen && transitionId === menuTransitionId)
           menu.hidden = true;
         menuVisibilityTimer = null;
-      }, 400);
+      }, 180);
       if (savedFocus && typeof savedFocus.focus === 'function') {
         try { savedFocus.focus({ preventScroll: true }); }
         catch (error) { savedFocus.focus(); }
@@ -561,7 +561,7 @@ document.addEventListener("click",function(){try{if(window.parent!==window)windo
   }
   function buildMenu() {
     var style = document.createElement('style');
-    style.textContent = '#gdUtilityMenu{position:fixed;top:14px;right:14px;z-index:70;width:min(270px,calc(100vw - 28px));box-sizing:border-box;padding:14px;background:rgba(15,15,18,.97);border:1px solid #34343a;border-radius:8px;box-shadow:0 8px 28px #0009;color:#ddd;font:12px/1.45 monospace;opacity:0;pointer-events:none;transition:opacity .4s ease}#gdUtilityMenu.is-open{opacity:1;pointer-events:auto}#gdUtilityMenu[hidden]{display:none}#gdUtilityMenu,#gdUtilityMenu *{font-family:monospace!important}#gdUtilityMenu h2{margin:0 0 10px;color:#eee;font:12px monospace}#gdUtilityMenu .gdMenuButtons{display:grid;gap:6px}#gdUtilityMenu button{width:100%;padding:7px 9px;border:1px solid #38383e;border-radius:5px;background:#1b1b20;color:#ddd;text-align:left;font:12px monospace;cursor:pointer}#gdUtilityMenu button:hover:not(:disabled),#gdUtilityMenu button:focus-visible{background:#292930;border-color:#666;outline:none}#gdUtilityMenu button:disabled{opacity:.55;cursor:wait}#gdMenuHint{margin-top:9px;color:#85858c;font-size:10px}#gdMenuStatus{min-height:0;margin-top:0;color:#b9d8b9;font-size:11px}#gdMenuStatus:not(:empty){margin-top:8px}#gdMenuStatus.error{color:#ffaaaa}#gdMenuFile{display:none}';
+    style.textContent = '#gdUtilityMenu{position:fixed;top:14px;right:14px;z-index:70;width:min(270px,calc(100vw - 28px));box-sizing:border-box;padding:14px;background:rgba(15,15,18,.97);border:1px solid #34343a;border-radius:8px;box-shadow:0 8px 28px #0009;color:#ddd;font:12px/1.45 monospace;opacity:0;pointer-events:none;transition:opacity .18s ease}#gdUtilityMenu.is-open{opacity:1;pointer-events:auto;transition-duration:.23s}#gdUtilityMenu[hidden]{display:none}#gdUtilityMenu,#gdUtilityMenu *{font-family:monospace!important}#gdUtilityMenu h2{margin:0 0 10px;color:#eee;font:12px monospace}#gdUtilityMenu .gdMenuButtons{display:grid;gap:6px}#gdUtilityMenu button{width:100%;padding:7px 9px;border:1px solid #38383e;border-radius:5px;background:#1b1b20;color:#ddd;text-align:left;font:12px monospace;cursor:pointer}#gdUtilityMenu button:hover:not(:disabled),#gdUtilityMenu button:focus-visible{background:#292930;border-color:#666;outline:none}#gdUtilityMenu button:disabled{opacity:.55;cursor:wait}#gdMenuHint{margin-top:9px;color:#85858c;font-size:10px}#gdMenuStatus{min-height:0;margin-top:0;color:#b9d8b9;font-size:11px}#gdMenuStatus:not(:empty){margin-top:8px}#gdMenuStatus.error{color:#ffaaaa}#gdMenuFile{display:none}';
     document.head.appendChild(style);
     menu = document.createElement('section');
     menu.id = 'gdUtilityMenu';
