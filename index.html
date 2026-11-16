@@ -1,4 +1,49 @@
 <!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no"><link rel="preconnect" href="https://cdn.jsdelivr.net"><link rel="preconnect" href="https://raw.githubusercontent.com"><script async src="https://www.googletagmanager.com/gtag/js?id=G-8K9SYB8360"></script><script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-8K9SYB8360');</script><base href="https://cdn.jsdelivr.net/gh/Ale7208/geometry-dash-wasm/">
+<script>
+(function () {
+  window.gdInLevel = false;
+  var soundNames = new WeakMap();
+  function setInLevel(value) {
+    if (window.gdInLevel === value) return;
+    window.gdInLevel = value;
+    window.dispatchEvent(new Event('gd-inlevel'));
+  }
+  var prototype = window.AudioBufferSourceNode && window.AudioBufferSourceNode.prototype;
+  if (!prototype || typeof prototype.start !== 'function') return;
+  var original = prototype.start;
+  if (original.__gdInLevelInstrumented) return;
+  var wrapped = function () {
+    try {
+      var buffer = this.buffer;
+      if (buffer) {
+        var name;
+        if (soundNames.has(buffer)) {
+          name = soundNames.get(buffer);
+        } else {
+          var audio = window.Module && window.Module.__gdAudio;
+          var sounds = audio && audio.sounds;
+          var soundIds = sounds ? Object.keys(sounds) : [];
+          name = '';
+          for (var i = 0; i < soundIds.length; i++) {
+            var sound = sounds[soundIds[i]];
+            if (sound && sound.buf === buffer && typeof sound.name === 'string') {
+              name = sound.name.replace(/^.*[\\/]/, '').toLowerCase();
+              break;
+            }
+          }
+          if (name) soundNames.set(buffer, name);
+        }
+        if (name === 'playsound_01.ogg') setInLevel(true);
+        else if (name === 'quitsound_01.ogg' || name === 'menuloop.mp3')
+          setInLevel(false);
+      }
+    } catch (e) {}
+    return original.apply(this, arguments);
+  };
+  wrapped.__gdInLevelInstrumented = true;
+  prototype.start = wrapped;
+})();
+</script>
 <meta name="description" content="Geometry Dash Webport: unofficial port compiled to WASM, version 2.2091. Runs in your browser with no installation. Online levels, custom songs and automatic saving.">
 <link rel="canonical" href="https://gd-webport.pages.dev/">
 <meta property="og:type" content="website">
@@ -527,8 +572,11 @@ document.addEventListener("click",function(){try{if(window.parent!==window)windo
       gdSaveTimer = null;
     }
     try {
-      if (window.Module && Module._gd_autosave_set)
+      if (window.Module && Module._gd_autosave_set) {
+        if (GD_DEBUG)
+          console.info('[save] _gd_autosave_set disabled; reason: progress operation');
         Module._gd_autosave_set(0);
+      }
     } catch (error) {
       window.__gdProgressMutation = false;
       window.__gdSkipBeforeUnloadSave = false;
@@ -540,9 +588,7 @@ document.addEventListener("click",function(){try{if(window.parent!==window)windo
   function resumeSaves() {
     window.__gdProgressMutation = false;
     window.__gdSkipBeforeUnloadSave = false;
-    if (!/[?&]noauto(?:=|&|$)/.test(location.search) &&
-        window.Module && Module._gd_autosave_set)
-      Module._gd_autosave_set(1);
+    updateGameAutosave('progress operation');
   }
   function reloadWithoutSaving() {
     window.__gdProgressMutation = true;
@@ -1116,7 +1162,13 @@ function gdClearCache() {
 if (!confirm('Clear saved progress and login on this site?\n' +
 'The game reloads afterwards.'))
 return;
-try { if (Module && Module._gd_autosave_set) Module._gd_autosave_set(0); }
+try {
+if (Module && Module._gd_autosave_set) {
+if (GD_DEBUG)
+console.info('[save] _gd_autosave_set disabled; reason: progress operation');
+Module._gd_autosave_set(0);
+}
+}
 catch (e) {}
 var jobs = [];
 if (window.caches) jobs.push(caches.delete(GD_ASSET_CACHE));
@@ -1508,6 +1560,17 @@ var gdSaveTimer = null;
 var gdLastSave = 0;
 var gdSavePromise = null;
 var gdSavePending = false;
+var gdDeferredLevelSave = false;
+function updateGameAutosave(reason) {
+if (window.Module && Module._gd_autosave_set) {
+var enabled = !/[?&]noauto(?:=|&|$)/.test(location.search) &&
+!window.__gdProgressMutation && window.gdInLevel !== true;
+if (GD_DEBUG)
+console.info('[save] _gd_autosave_set ' + (enabled ? 'enabled' : 'disabled') +
+'; reason: ' + reason);
+Module._gd_autosave_set(enabled ? 1 : 0);
+}
+}
 function performSave() {
 try {
 if (Module._gd_request_save) Module._gd_request_save();
@@ -1530,18 +1593,42 @@ return gdSavePromise;
 }
 return runSave();
 }
-function scheduleSave(now) {
+function scheduleSave(now, allowInLevel) {
 if (window.__gdProgressMutation || !window.__gdRuntimeReady ||
     !window.__gdSavesRestored) return;
+if (!allowInLevel && window.gdInLevel === true) {
+if (!gdDeferredLevelSave) {
+gdDeferredLevelSave = true;
+if (GD_DEBUG) console.info('[save] Deferred automatic save while in a level');
+}
+if (gdSaveTimer) {
+clearTimeout(gdSaveTimer);
+gdSaveTimer = null;
+}
+return;
+}
 if (gdSaveTimer) clearTimeout(gdSaveTimer);
 gdSaveTimer = setTimeout(function () {
 gdSaveTimer = null;
+if (!allowInLevel && window.gdInLevel === true) {
+scheduleSave(false);
+return;
+}
 if (!now && Date.now() - gdLastSave < 180000) return;
+if (now && gdDeferredLevelSave) {
+gdDeferredLevelSave = false;
+if (GD_DEBUG) console.info('[save] Executing deferred save after leaving the level');
+}
 performSave();
 }, now ? 0 : 4000);
 }
+window.addEventListener('gd-inlevel', function () {
+updateGameAutosave(window.gdInLevel === true ? 'level entry' : 'level exit');
+if (window.gdInLevel !== true && gdDeferredLevelSave)
+scheduleSave(true, false);
+});
 document.addEventListener('visibilitychange', function () {
-if (document.hidden) scheduleSave(true);
+if (document.hidden) scheduleSave(true, true);
 });
 function gdProgressTick() {
 if (!window.__gdLoadStarted || gdProgDone) return;
@@ -2040,8 +2127,11 @@ window.__gdRuntimeReady = true;
 if (!/[?&]noauto/.test(location.search))
 setInterval(function () { scheduleSave(false); }, 30000);
 if (Module._gd_log_set) Module._gd_log_set(GD_DEBUG ? 1 : 0);
-if (/[?&]noauto/.test(location.search) && Module._gd_autosave_set)
+if (/[?&]noauto/.test(location.search) && Module._gd_autosave_set) {
+if (GD_DEBUG)
+console.info('[save] _gd_autosave_set disabled; reason: noauto');
 Module._gd_autosave_set(0);
+}
 setProgress(82);
 try {
 Module.FS.chdir('/Resources');
@@ -2615,56 +2705,53 @@ gdStart();
     lastFrame = 0;
     if (frameSamples) frameSamples.length = 0;
   }
-  var autoPauseRequested = false;
-  function isLevelMusicPlaying() {
-    var audio = window.Module && window.Module.__gdAudio;
-    if (!audio || !audio.channels || !audio.sounds) return false;
-    for (var channelId in audio.channels) {
-      var channel = audio.channels[channelId];
-      var sound = channel && audio.sounds[channel.sound];
-      if (
-        sound &&
-        sound.len > 15000 &&
-        !channel.ended &&
-        !/menuLoop/i.test(String(sound.name || sound.path || ""))
-      ) {
-        if (!channel.paused && !channel.pausedByGroup) return true;
+  var autoPauseSent = false;
+  function maybeAutoPause() {
+    if (autoPauseSent || !ready() || !document.body.classList.contains('playing') || window.gdInLevel !== true) return;
+    var audio = Module.__gdAudio;
+    var channels = audio && audio.channels;
+    var sounds = audio && audio.sounds;
+    if (!channels || !sounds) return;
+    var channelIds = Object.keys(channels);
+    var soundIds = Object.keys(sounds);
+    for (var i = 0; i < channelIds.length; i++) {
+      var channel = channels[channelIds[i]];
+      if (!channel || channel.group !== 1) continue;
+      var sound = channel.sound;
+      if (sound != null && typeof sound !== 'object') sound = sounds[sound];
+      if (!sound && channel.soundId != null) sound = sounds[channel.soundId];
+      if (!sound) {
+        var source = channel.source || channel.node;
+        var buffer = source && source.buffer;
+        for (var j = 0; buffer && j < soundIds.length; j++) {
+          var candidate = sounds[soundIds[j]];
+          if (candidate && candidate.buf === buffer) {
+            sound = candidate;
+            break;
+          }
+        }
       }
+      if (!sound || typeof sound.name !== 'string') continue;
+      var name = sound.name.replace(/^.*[\\/]/, '').toLowerCase();
+      if (!/\.mp3$/.test(name) || name.replace(/\.mp3$/, '') === 'menuloop') continue;
+      if (channel.paused === true || channel.ended === true) return;
+      autoPauseSent = true;
+      window.dispatchEvent(new KeyboardEvent('keydown', {key: 'Escape', code: 'Escape', keyCode: 27, which: 27, bubbles: true}));
+      window.dispatchEvent(new KeyboardEvent('keyup', {key: 'Escape', code: 'Escape', keyCode: 27, which: 27, bubbles: true}));
+      return;
     }
-    return false;
-  }
-  function autoPause() {
-    if (autoPauseRequested || !ready() ||
-        !document.body.classList.contains('playing') ||
-        !isLevelMusicPlaying()) return;
-    autoPauseRequested = true;
-    var escapeEvent = {
-      key: 'Escape',
-      code: 'Escape',
-      keyCode: 27,
-      which: 27,
-      bubbles: true,
-      cancelable: true
-    };
-    window.dispatchEvent(new KeyboardEvent('keydown', escapeEvent));
-    window.dispatchEvent(new KeyboardEvent('keyup', escapeEvent));
-  }
-  function resetAutoPause() {
-    autoPauseRequested = false;
   }
   window.addEventListener('blur', function () {
     releaseAll();
-    autoPause();
+    maybeAutoPause();
   });
-  window.addEventListener('focus', resetAutoPause);
   document.addEventListener('visibilitychange', function () {
     if (document.hidden) {
       releaseAll();
-      autoPause();
-    } else {
-      resetAutoPause();
+      maybeAutoPause();
     }
   });
+  window.addEventListener('focus', function () { autoPauseSent = false; });
   el.tabIndex = 0;
   var canvasRect = el.getBoundingClientRect();
   function updateCanvasRect() { canvasRect = el.getBoundingClientRect(); }
