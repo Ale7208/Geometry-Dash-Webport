@@ -3029,4 +3029,23 @@ document.addEventListener('pointerdown',firstPointerDown,true);
   ['gesturestart', 'gesturechange', 'gestureend'].forEach(function (name) {
     document.addEventListener(name, function (e) { e.preventDefault(); }, { passive: false });
   });
+})();</script>
+<script>(function () {
+  'use strict';
+  /* Audio unlock: the boot path calls resume() before any user gesture, which
+     browsers reject. firstPointerDown retries exactly once and then removes
+     itself, so a tap that lands before the AudioContext exists (or a webview
+     that drops the gesture) leaves the game silent for the whole session.
+     Keep asking on every gesture until the context is actually running. */
+  function unlockAudio() {
+    var a = window.Module && window.Module.gdAudioContext;
+    if (!a || a.state !== 'suspended') return;
+    try {
+      var p = a.resume();
+      if (p && p.then) p.catch(function () {});
+    } catch (e) {}
+  }
+  ['pointerdown', 'keydown', 'click'].forEach(function (name) {
+    document.addEventListener(name, unlockAudio, true);
+  });
 })();</script></body></html>
