@@ -3175,4 +3175,25 @@ document.addEventListener('pointerdown',firstPointerDown,true);
   }
   window.__gdWatchInLevel = watchInLevel;
   watchInLevel(btn, false);
+})();</script>
+<script>(function () {
+  'use strict';
+  /* Mobile browsers drop the WebGL context when memory gets tight (or when the
+     app has been backgrounded a long time). The canvas then stays black and the
+     only recovery is a manual reload. Save first, then reload automatically -
+     rate-limited so a genuine driver bug cannot turn into a reload loop. */
+  var KEY = 'gdContextReloadAt';
+  var canvas = document.getElementById('canvas');
+  canvas.addEventListener('webglcontextlost', function (e) {
+    e.preventDefault();
+    try {
+      if (window.__gdRuntimeReady && typeof performSave === 'function') performSave();
+    } catch (err) {}
+    var now = Date.now(), last = 0;
+    try { last = parseInt(sessionStorage.getItem(KEY) || '0', 10) || 0; } catch (err) {}
+    if (now - last < 60000) return;
+    try { sessionStorage.setItem(KEY, String(now)); } catch (err) {}
+    window.__gdSkipBeforeUnloadSave = true;
+    setTimeout(function () { location.reload(); }, 1200);
+  });
 })();</script></body></html>
