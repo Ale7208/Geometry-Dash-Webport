@@ -3196,4 +3196,57 @@ document.addEventListener('pointerdown',firstPointerDown,true);
     window.__gdSkipBeforeUnloadSave = true;
     setTimeout(function () { location.reload(); }, 1200);
   });
+})();</script>
+<script>(function () {
+  'use strict';
+  /* Fullscreen on Android: keep the screen awake during a level and ask for
+     landscape. Both APIs are no-ops or rejected where unsupported, so every
+     call is guarded. The wake lock is dropped whenever the page is hidden and
+     re-requested on the next gesture/focus, which is how the platform expects
+     it to be used. */
+  var wake = null;
+  var orientationLocked = false;
+  function isFullscreen() {
+    return !!(document.fullscreenElement || document.webkitFullscreenElement);
+  }
+  function requestWake() {
+    if (!navigator.wakeLock || wake || !isFullscreen()) return;
+    try {
+      navigator.wakeLock.request('screen').then(function (lock) {
+        wake = lock;
+        lock.addEventListener('release', function () { wake = null; });
+      }).catch(function () {});
+    } catch (e) {}
+  }
+  function dropWake() {
+    if (!wake) return;
+    try { wake.release(); } catch (e) {}
+    wake = null;
+  }
+  function lockLandscape() {
+    if (orientationLocked || !isFullscreen()) return;
+    if (!screen.orientation || !screen.orientation.lock) return;
+    try {
+      var p = screen.orientation.lock('landscape');
+      if (p && p.then) p.then(function () { orientationLocked = true; }).catch(function () {});
+      else orientationLocked = true;
+    } catch (e) {}
+  }
+  function unlockOrientation() {
+    if (!orientationLocked) return;
+    try { screen.orientation.unlock(); } catch (e) {}
+    orientationLocked = false;
+  }
+  function sync() {
+    if (isFullscreen()) { requestWake(); lockLandscape(); }
+    else { dropWake(); unlockOrientation(); }
+  }
+  ['fullscreenchange', 'webkitfullscreenchange'].forEach(function (name) {
+    document.addEventListener(name, sync);
+  });
+  document.addEventListener('visibilitychange', function () {
+    /* the platform releases the wake lock when hidden; take it again on return */
+    if (!document.hidden) sync();
+  });
+  document.addEventListener('pointerdown', function () { if (isFullscreen()) sync(); }, true);
 })();</script></body></html>
