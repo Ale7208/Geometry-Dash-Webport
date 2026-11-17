@@ -3280,4 +3280,34 @@ document.addEventListener('pointerdown',firstPointerDown,true);
     setInterval(syncPause, 800);
     function syncPause() { b.classList.toggle('on', window.gdInLevel === true); }
   }
+})();</script>
+<script>(function () {
+  'use strict';
+  /* The loader already keeps every game chunk in Cache Storage, but the page
+     itself was only reachable online. Registering a shell worker makes the
+     cached game usable with no connection (sw.js). A downloaded copy opened
+     from disk cannot use service workers, which is why this is guarded by
+     protocol. ?sw=0 opts out. */
+  if (!('serviceWorker' in navigator)) return;
+  if (new URLSearchParams(location.search).get('sw') === '0') return;
+  if (!(location.protocol === 'https:' || location.hostname === 'localhost' || location.hostname === '127.0.0.1')) return;
+  try {
+    /* Absolute: <base href> points at the asset CDN, so even a leading-slash
+       path would resolve to cdn.jsdelivr.net and be rejected as cross-origin. */
+    navigator.serviceWorker.register(location.origin + '/sw.js', {
+      scope: location.origin + '/',
+      updateViaCache: 'none'
+    }).catch(function () {});
+  } catch (e) {}
+  /* Cache Storage is evictable under disk pressure unless the origin asks for
+     persistent storage. Ask once per browser, after the first load so it never
+     competes with the boot. */
+  window.addEventListener('load', function () {
+    if (!navigator.storage || !navigator.storage.persist) return;
+    try {
+      if (localStorage.getItem('gdPersistAsked') === '1') return;
+      localStorage.setItem('gdPersistAsked', '1');
+      navigator.storage.persist().catch(function () {});
+    } catch (e) {}
+  });
 })();</script></body></html>
