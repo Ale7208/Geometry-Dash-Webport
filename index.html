@@ -3249,4 +3249,35 @@ document.addEventListener('pointerdown',firstPointerDown,true);
     if (!document.hidden) sync();
   });
   document.addEventListener('pointerdown', function () { if (isFullscreen()) sync(); }, true);
+})();</script>
+<style id="gd-mobile-pause">
+#gdPauseBtn{position:fixed;right:calc(10px + var(--gd-r));top:calc(10px + var(--gd-t));z-index:30;width:42px;height:42px;border-radius:50%;border:1px solid #555;background:rgba(10,10,10,.55);color:#eee;font:13px/1 monospace;display:none;padding:0;touch-action:manipulation;}
+#gdPauseBtn.on{display:block;}
+</style>
+<script>(function () {
+  'use strict';
+  /* Phones have no Esc key, and the pause menu is driven by Esc (that is what
+     the auto-pause path above already relies on). A floating button sends the
+     same synthetic Esc, and only appears while a level is actually running. */
+  var b = document.createElement('button');
+  b.id = 'gdPauseBtn';
+  b.type = 'button';
+  b.textContent = '\u23F8';
+  b.setAttribute('aria-label', 'Pause');
+  document.body.appendChild(b);
+  b.addEventListener('click', function (e) {
+    e.preventDefault();
+    e.stopPropagation();
+    window.dispatchEvent(new KeyboardEvent('keydown', { key: 'Escape', code: 'Escape', keyCode: 27, which: 27, bubbles: true }));
+    window.dispatchEvent(new KeyboardEvent('keyup', { key: 'Escape', code: 'Escape', keyCode: 27, which: 27, bubbles: true }));
+    b.blur();
+  });
+  if (typeof window.__gdWatchInLevel === 'function') {
+    window.__gdWatchInLevel(b, true);
+  } else {
+    /* keyboard-bridge helper not present: fall back to a slow poll */
+    syncPause();
+    setInterval(syncPause, 800);
+    function syncPause() { b.classList.toggle('on', window.gdInLevel === true); }
+  }
 })();</script></body></html>
