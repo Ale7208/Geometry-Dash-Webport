@@ -2996,6 +2996,16 @@ performSave();
 e.preventDefault();
 e.returnValue='';
 });
+/* iOS Safari never fires beforeunload, so a swipe-away or tab close could lose
+   the current run. pagehide does fire there (and on desktop it does not prompt),
+   so flush the save from both without the dialog. */
+window.addEventListener('pagehide',function(){
+if(window.__gdSkipBeforeUnloadSave)return;
+if(!window.__gdRuntimeReady)return;
+if(gdSaveTimer)clearTimeout(gdSaveTimer);
+gdSaveTimer=null;
+performSave();
+});
 document.addEventListener('contextmenu',function(e){e.preventDefault();});
 function firstPointerDown(e){
 var loadTip=document.getElementById('gdLoadTip');
