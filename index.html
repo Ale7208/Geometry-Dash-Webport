@@ -3010,4 +3010,13 @@ if(audio&&audio.state==='suspended')audio.resume();
 if(!document.fullscreenElement){var button=document.getElementById('fsBtn');if(button)button.click();}
 }
 document.addEventListener('pointerdown',firstPointerDown,true);
+})();</script>
+<script>(function () {
+  'use strict';
+  /* iOS Safari ignores user-scalable=no, so a two-finger gesture still zooms the
+     page (and often leaves it zoomed mid-level). These events exist only on
+     WebKit/iOS and canceling them is the documented workaround. */
+  ['gesturestart', 'gesturechange', 'gestureend'].forEach(function (name) {
+    document.addEventListener(name, function (e) { e.preventDefault(); }, { passive: false });
+  });
 })();</script></body></html>
