@@ -3048,4 +3048,91 @@ document.addEventListener('pointerdown',firstPointerDown,true);
   ['pointerdown', 'keydown', 'click'].forEach(function (name) {
     document.addEventListener(name, unlockAudio, true);
   });
+})();</script>
+<style id="gd-mobile-keyboard">
+#gdKeyBtn{position:fixed;right:calc(10px + var(--gd-r));top:calc(10px + var(--gd-t));z-index:30;width:42px;height:42px;border-radius:50%;border:1px solid #555;background:rgba(10,10,10,.55);color:#eee;font:16px/1 monospace;display:none;padding:0;touch-action:manipulation;}
+#gdKeyBtn.on{display:block;}
+#gdKeyField{position:fixed;left:0;top:0;width:2px;height:2px;opacity:.01;border:0;padding:0;margin:0;background:transparent;color:transparent;caret-color:transparent;outline:none;z-index:-1;}
+</style>
+<script>(function () {
+  'use strict';
+  /* On-canvas text fields: the search bar, level name, account login etc. are
+     drawn inside the canvas, so mobile browsers never open the system
+     keyboard. A hidden <input> is focused on demand; whatever is typed into it
+     is forwarded to the page as the same key events a physical keyboard would
+     produce (their handler listens on window in the capture phase, so the
+     synthesized events go through the normal input queue). */
+  var btn = document.createElement('button');
+  btn.id = 'gdKeyBtn';
+  btn.type = 'button';
+  btn.textContent = '\u2328';
+  btn.setAttribute('aria-label', 'Open keyboard');
+  var field = document.createElement('input');
+  field.id = 'gdKeyField';
+  field.type = 'text';
+  field.setAttribute('autocomplete', 'off');
+  field.setAttribute('autocapitalize', 'none');
+  field.setAttribute('autocorrect', 'off');
+  field.setAttribute('spellcheck', 'false');
+  field.setAttribute('inputmode', 'text');
+  field.setAttribute('tabindex', '-1');
+  document.body.appendChild(field);
+  document.body.appendChild(btn);
+
+  function keyEv(type, code, key, keyCode) {
+    document.body.dispatchEvent(new KeyboardEvent(type, {
+      code: code, key: key, keyCode: keyCode, which: keyCode, bubbles: true, cancelable: true
+    }));
+  }
+  var prev = '';
+  field.addEventListener('input', function () {
+    var v = field.value, s = 0, i;
+    /* diff against what was already forwarded; IME-safe */
+    while (s < prev.length && s < v.length && prev.charCodeAt(s) === v.charCodeAt(s)) s++;
+    var removed = prev.length - s, added = v.length - s;
+    for (i = 0; i < removed; i++) {
+      keyEv('keydown', 'Backspace', 'Backspace', 8);
+      keyEv('keyup', 'Backspace', 'Backspace', 8);
+    }
+    for (i = 0; i < added; i++) {
+      var ch = v.charAt(s + i);
+      keyEv('keydown', '', ch, v.charCodeAt(s + i));
+      keyEv('keyup', '', ch, v.charCodeAt(s + i));
+    }
+    prev = v;
+    if (v.length > 200) { field.value = v.slice(-100); prev = field.value; }
+  });
+  field.addEventListener('keydown', function (e) {
+    if (e.key === 'Enter') {
+      e.preventDefault();
+      keyEv('keydown', 'Enter', 'Enter', 13);
+      setTimeout(function () { keyEv('keyup', 'Enter', 'Enter', 13); }, 40);
+    } else if (e.key === 'Escape') {
+      e.preventDefault();
+      field.blur();
+    }
+    /* Backspace arrives through the input diff above */
+  });
+  field.addEventListener('blur', function () { prev = field.value = ''; });
+  btn.addEventListener('click', function (e) {
+    e.stopPropagation();
+    field.focus({ preventScroll: true });
+    btn.blur();
+  });
+
+  /* The keyboard is only needed in menus; hide it during a run. The
+     gd-inlevel event is dispatched by the existing audio instrumentation; the
+     slow interval is only a fallback if that instrumentation is unavailable. */
+  function watchInLevel(el, visibleInLevel) {
+    var seen = false;
+    function sync() { el.classList.toggle('on', window.gdInLevel === visibleInLevel); }
+    window.addEventListener('gd-inlevel', function () { seen = true; sync(); });
+    sync();
+    var iv = setInterval(function () {
+      if (seen) { clearInterval(iv); return; }
+      sync();
+    }, 1500);
+  }
+  window.__gdWatchInLevel = watchInLevel;
+  watchInLevel(btn, false);
 })();</script></body></html>
