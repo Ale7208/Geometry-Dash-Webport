@@ -154,7 +154,28 @@ body{position:fixed;inset:0;width:100%;height:100dvh;-webkit-tap-highlight-color
 }
 button,input,textarea{touch-action:manipulation;}
 *{-webkit-tap-highlight-color:transparent;}
-</style></head><body><div id="gdLoad"><i></i><span id="gdLoadPct"></span></div><div id="errOverlay" role="alert"></div><div id="app"><div id="stage"><canvas id="canvas" width="1920" height="1080"></canvas></div><div id="midbar"><div id="bars"><div class="abrow"><span class="ablabel" id="wasmLabel">WASM</span><div class="abtrack"><div class="abfill" id="wasmFill"></div></div><span class="abpct" id="wasmPct">0%</span></div><div class="abrow"><span class="ablabel" id="dataLabel">DATA</span><div class="abtrack"><div class="abfill" id="dataFill"></div></div><span class="abpct" id="dataPct">0%</span></div></div><div id="bootbars"><div class="abtrack"><div class="abfill" id="bootFill"></div></div><span class="abpct" id="bootPct">0%</span></div><div id="fps"><svg width="13" height="13" viewBox="0 0 16 16" aria-hidden="true"><rect x="1.2" y="2" width="13.6" height="9" rx="1.6" fill="none" stroke="#888" stroke-width="1.4"/><rect x="6.5" y="12" width="3" height="2" fill="#888"/><rect x="4.5" y="14.2" width="7" height="1.3" rx="0.6" fill="#888"/></svg><span id="fpsval">-- fps</span></div><span id="perfval" style="font-size:10px" title="Queue delay is event-to-game polling, not total display latency"></span><button id="fsBtn" type="button">Fullscreen</button><button id="saveBtn" type="button" title="Save game progress and local levels">Save progress</button><button id="clearBtn" type="button" title="Delete saved progress and login">Reset progress</button></div><div id="console"></div></div><script>(function(){var WASM_URL="https://raw.githubusercontent.com/Ale7208/geometry-dash-wasm/main/payload/wasm-523d9362955eba27a8ce64ec.gz";var f=window.fetch;function fixed(r){return r.clone().json().then(function(j){if(WASM_URL&&j&&j.wasm)j.wasm.url=WASM_URL;return new Response(JSON.stringify(j),{status:200,headers:{"Content-Type":"application/json"}});});}window.fetch=function(i,o){var u=typeof i==='string'?i:(i&&i.url)||'';if(u.indexOf('gd_assets.json')<0)return f.apply(this,arguments);var k=new URL(u,document.baseURI).href.split('?')[0];return f.apply(this,arguments).then(function(r){if(!r.ok)return r;return fixed(r).then(function(n){var copy=n.clone();if(window.caches)caches.open('gdwasm-assets').then(function(c){return c.put(k,copy);}).catch(function(){});return n;});}).catch(function(e){if(!window.caches)throw e;return caches.open('gdwasm-assets').then(function(c){return c.match(k);}).then(function(r){if(r)return r;throw e;});});};})();</script><script>
+</style>
+<script id="gd-gl-tuning">(function () {
+  'use strict';
+  /* The engine asks for a canvas context with browser defaults, which means
+     4x MSAA on the 1920x1080 backbuffer. That is the most expensive thing on
+     mobile GPUs and is barely visible at this pixel density. Disable it and ask
+     for the high-performance GPU; ?aa=1 restores the old behaviour. */
+  var q = new URLSearchParams(location.search);
+  if (q.get('aa') === '1') return;
+  try {
+    var get = HTMLCanvasElement.prototype.getContext;
+    HTMLCanvasElement.prototype.getContext = function (type, attrs) {
+      var t = String(type);
+      if (this.id === 'canvas' && (t === 'webgl2' || t === 'webgl' || t === 'experimental-webgl')) {
+        attrs = Object.assign({}, attrs || {});
+        attrs.antialias = false;
+        attrs.powerPreference = 'high-performance';
+      }
+      return get.call(this, type, attrs);
+    };
+  } catch (e) {}
+})();</script></head><body><div id="gdLoad"><i></i><span id="gdLoadPct"></span></div><div id="errOverlay" role="alert"></div><div id="app"><div id="stage"><canvas id="canvas" width="1920" height="1080"></canvas></div><div id="midbar"><div id="bars"><div class="abrow"><span class="ablabel" id="wasmLabel">WASM</span><div class="abtrack"><div class="abfill" id="wasmFill"></div></div><span class="abpct" id="wasmPct">0%</span></div><div class="abrow"><span class="ablabel" id="dataLabel">DATA</span><div class="abtrack"><div class="abfill" id="dataFill"></div></div><span class="abpct" id="dataPct">0%</span></div></div><div id="bootbars"><div class="abtrack"><div class="abfill" id="bootFill"></div></div><span class="abpct" id="bootPct">0%</span></div><div id="fps"><svg width="13" height="13" viewBox="0 0 16 16" aria-hidden="true"><rect x="1.2" y="2" width="13.6" height="9" rx="1.6" fill="none" stroke="#888" stroke-width="1.4"/><rect x="6.5" y="12" width="3" height="2" fill="#888"/><rect x="4.5" y="14.2" width="7" height="1.3" rx="0.6" fill="#888"/></svg><span id="fpsval">-- fps</span></div><span id="perfval" style="font-size:10px" title="Queue delay is event-to-game polling, not total display latency"></span><button id="fsBtn" type="button">Fullscreen</button><button id="saveBtn" type="button" title="Save game progress and local levels">Save progress</button><button id="clearBtn" type="button" title="Delete saved progress and login">Reset progress</button></div><div id="console"></div></div><script>(function(){var WASM_URL="https://raw.githubusercontent.com/Ale7208/geometry-dash-wasm/main/payload/wasm-523d9362955eba27a8ce64ec.gz";var f=window.fetch;function fixed(r){return r.clone().json().then(function(j){if(WASM_URL&&j&&j.wasm)j.wasm.url=WASM_URL;return new Response(JSON.stringify(j),{status:200,headers:{"Content-Type":"application/json"}});});}window.fetch=function(i,o){var u=typeof i==='string'?i:(i&&i.url)||'';if(u.indexOf('gd_assets.json')<0)return f.apply(this,arguments);var k=new URL(u,document.baseURI).href.split('?')[0];return f.apply(this,arguments).then(function(r){if(!r.ok)return r;return fixed(r).then(function(n){var copy=n.clone();if(window.caches)caches.open('gdwasm-assets').then(function(c){return c.put(k,copy);}).catch(function(){});return n;});}).catch(function(e){if(!window.caches)throw e;return caches.open('gdwasm-assets').then(function(c){return c.match(k);}).then(function(r){if(r)return r;throw e;});});};})();</script><script>
 (function () {
   'use strict';
   var menuOpen = false;
@@ -1083,8 +1104,27 @@ button,input,textarea{touch-action:manipulation;}
 </script><script>var consoleEl = document.getElementById('console');
 var gdQuality = new URLSearchParams(location.search).get('quality');
 var gdLowMemory = gdQuality === 'low' || (gdQuality !== 'high' && navigator.deviceMemory > 0 && navigator.deviceMemory <= 4);
-if (gdLowMemory) {
 var gdCanvas = document.getElementById('canvas');
+/* ?res= render-buffer scale. The engine reads the canvas size once at boot, so
+   this has to be applied here; changing it later re-zooms and cuts off the
+   level. Keywords map to the sizes people already use:
+   low=1280x720 (same as ?quality=low), med=1440x810, high=1920x1080. */
+var gdResParam = new URLSearchParams(location.search).get('res');
+if (gdResParam) {
+var gdResKey = String(gdResParam).toLowerCase();
+var gdResScale = gdResKey === 'low' ? 2 / 3
+: gdResKey === 'med' || gdResKey === 'medium' ? 0.75
+: gdResKey === 'high' ? 1
+: gdResKey === 'auto' || gdResKey === 'default' ? 0
+: parseFloat(gdResParam);
+if (isFinite(gdResScale) && gdResScale > 0) {
+var gdScale = Math.min(1, Math.max(0.25, gdResScale));
+gdCanvas.width = Math.max(2, 2 * Math.round(1920 * gdScale / 2));
+gdCanvas.height = Math.max(2, 2 * Math.round(1080 * gdScale / 2));
+gdLowMemory = false;
+}
+}
+if (gdLowMemory) {
 gdCanvas.width = 1280; gdCanvas.height = 720;
 }
 
