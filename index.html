@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no"><link rel="preconnect" href="https://cdn.jsdelivr.net"><link rel="preconnect" href="https://raw.githubusercontent.com"><script async src="https://www.googletagmanager.com/gtag/js?id=G-8K9SYB8360"></script><script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-8K9SYB8360');</script><base href="https://cdn.jsdelivr.net/gh/Ale7208/geometry-dash-wasm/">
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"><link rel="preconnect" href="https://cdn.jsdelivr.net"><link rel="preconnect" href="https://raw.githubusercontent.com"><script async src="https://www.googletagmanager.com/gtag/js?id=G-8K9SYB8360"></script><script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-8K9SYB8360');</script><base href="https://cdn.jsdelivr.net/gh/Ale7208/geometry-dash-wasm/">
 <script>
 (function () {
   window.gdInLevel = false;
@@ -133,7 +133,49 @@ window.__framed=window.self!==window.top;
 window.addEventListener("message",function(e){if(e.data==="gd-focus"){window.focus();var c=document.getElementById("canvas");if(c)try{c.focus({preventScroll:true});}catch(t){}}if(e.data==="gd-fullscreen"){var c2=document.getElementById("canvas");try{if(document.fullscreenElement)document.exitFullscreen();else if(c2){var r=c2.requestFullscreen||c2.webkitRequestFullscreen;if(r)r.call(c2);}}catch(t){}}});
 document.addEventListener("click",function(){try{if(window.parent!==window)window.parent.postMessage("gd-click","*");}catch(t){}});
 </script>
-<meta name="color-scheme" content="dark"><meta name="theme-color" content="#000000"><link rel="icon" href="ref/favicon.ico"><title>Geometry Dash Webport</title><style>body{background:#000 url("ref/fondo_gd.jpg") center/cover no-repeat fixed;margin:0;height:100%;color:#ddd;font-family:monospace;overflow:hidden;}#app{display:flex;flex-direction:column;height:100vh;}#stage{flex:1 1 auto;min-height:0;display:flex;justify-content:center;align-items:center;}canvas{width:min(100vw,calc(100vh*16/9));height:min(100vh,calc(100vw*9/16));background:#000;image-rendering:auto;outline:none;display:block;user-select:none;}#midbar{flex:0 0 auto;display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:6px;padding:8px 0 6px;font-size:12px;color:#aaa;opacity:0;transform:translateY(120%);transition:transform .55s cubic-bezier(.2,.85,.25,1),opacity .45s;}#midbar.in{opacity:1;transform:translateY(0);}#bars{display:flex;flex-direction:column;gap:5px;transition:transform .5s cubic-bezier(.2,.85,.25,1),opacity .45s;}#bars.fall{transform:translateY(30px);opacity:0;pointer-events:none;}.abrow{display:flex;align-items:center;gap:7px;}.ablabel{width:100px;text-align:right;color:#888;font-size:10px;letter-spacing:.5px;white-space:nowrap;}.abtrack{position:relative;width:220px;height:8px;background:#111;border:1px solid #333;border-radius:4px;overflow:hidden;}.abfill{width:0%;height:100%;background:#ccc;border-radius:3px;transition:width .15s;}.abpct{width:118px;text-align:left;color:#999;font-size:11px;white-space:nowrap;}#bootbars{display:none;align-items:center;gap:7px;}#bootbars.on{display:flex;animation:bootdrop .5s cubic-bezier(.2,.85,.25,1);}@keyframes bootdrop{from{transform:translateY(-16px);opacity:0;}to{transform:translateY(0);opacity:1;}}#bootbars.done{transform:translateY(36px);opacity:0;transition:transform .5s cubic-bezier(.2,.85,.25,1),opacity .45s;pointer-events:none;}#fps{display:flex;align-items:center;gap:5px;color:#999;will-change:transform;}#fps svg{display:block;flex:0 0 auto;}#console{flex:0 0 auto;height:18vh;min-height:90px;max-height:200px;margin:0 8px 8px;padding:6px 8px;overflow-y:auto;font-size:12px;line-height:1.35;color:#999;background:#0a0a0a;border:1px solid #2a2a2a;white-space:pre-wrap;word-break:break-word;user-select:text;cursor:text;transform:translateY(135%);transition:transform .55s cubic-bezier(.2,.85,.25,1);}#console.in{transform:translateY(0);}#fsBtn,#clearBtn,#saveBtn{font:12px/1 monospace;color:#ccc;background:#0a0a0a;border:1px solid #2a2a2a;border-radius:4px;padding:4px 8px;cursor:pointer;transition:color .2s;}#fsBtn:hover,#clearBtn:hover,#saveBtn:hover{color:#fff;}#credit{color:#888;font-size:11px;white-space:nowrap;}#canvas:fullscreen{max-width:none;max-height:none;width:100%;height:100%;}#canvas:-webkit-full-screen{max-width:none;max-height:none;width:100%;height:100%;}#errOverlay{position:fixed;left:50%;top:12px;transform:translateX(-50%);z-index:50;max-width:min(92vw,720px);display:none;background:#1a0000;border:1px solid #a33;color:#ffd7d7;font-size:12px;padding:8px 12px;border-radius:6px;white-space:pre-wrap;}#errOverlay.on{display:block;}canvas{touch-action:none;}#midbar,#console{display:none!important}#gdLoad{position:fixed;inset:0;z-index:40;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;background:#000;color:#ddd;font:600 22px/1 system-ui,sans-serif;transition:opacity .7s}#gdLoad.off{opacity:0;pointer-events:none}#gdLoad i{box-sizing:border-box;width:48px;height:48px;border:4px solid #333;border-top-color:#fff;border-radius:50%;animation:gdspin .9s linear infinite}@keyframes gdspin{to{transform:rotate(360deg)}}#gdLoadPct{counter-reset:p var(--p);font:400 16px Arial,Helvetica,sans-serif;color:#fff;text-align:center}#gdLoadPct::after{content:counter(p) "%"}</style></head><body><div id="gdLoad"><i></i><span id="gdLoadPct"></span></div><div id="errOverlay" role="alert"></div><div id="app"><div id="stage"><canvas id="canvas" width="1920" height="1080"></canvas></div><div id="midbar"><div id="bars"><div class="abrow"><span class="ablabel" id="wasmLabel">WASM</span><div class="abtrack"><div class="abfill" id="wasmFill"></div></div><span class="abpct" id="wasmPct">0%</span></div><div class="abrow"><span class="ablabel" id="dataLabel">DATA</span><div class="abtrack"><div class="abfill" id="dataFill"></div></div><span class="abpct" id="dataPct">0%</span></div></div><div id="bootbars"><div class="abtrack"><div class="abfill" id="bootFill"></div></div><span class="abpct" id="bootPct">0%</span></div><div id="fps"><svg width="13" height="13" viewBox="0 0 16 16" aria-hidden="true"><rect x="1.2" y="2" width="13.6" height="9" rx="1.6" fill="none" stroke="#888" stroke-width="1.4"/><rect x="6.5" y="12" width="3" height="2" fill="#888"/><rect x="4.5" y="14.2" width="7" height="1.3" rx="0.6" fill="#888"/></svg><span id="fpsval">-- fps</span></div><span id="perfval" style="font-size:10px" title="Queue delay is event-to-game polling, not total display latency"></span><button id="fsBtn" type="button">Fullscreen</button><button id="saveBtn" type="button" title="Save game progress and local levels">Save progress</button><button id="clearBtn" type="button" title="Delete saved progress and login">Reset progress</button></div><div id="console"></div></div><script>(function(){var WASM_URL="https://raw.githubusercontent.com/Ale7208/geometry-dash-wasm/main/payload/wasm-523d9362955eba27a8ce64ec.gz";var f=window.fetch;function fixed(r){return r.clone().json().then(function(j){if(WASM_URL&&j&&j.wasm)j.wasm.url=WASM_URL;return new Response(JSON.stringify(j),{status:200,headers:{"Content-Type":"application/json"}});});}window.fetch=function(i,o){var u=typeof i==='string'?i:(i&&i.url)||'';if(u.indexOf('gd_assets.json')<0)return f.apply(this,arguments);var k=new URL(u,document.baseURI).href.split('?')[0];return f.apply(this,arguments).then(function(r){if(!r.ok)return r;return fixed(r).then(function(n){var copy=n.clone();if(window.caches)caches.open('gdwasm-assets').then(function(c){return c.put(k,copy);}).catch(function(){});return n;});}).catch(function(e){if(!window.caches)throw e;return caches.open('gdwasm-assets').then(function(c){return c.match(k);}).then(function(r){if(r)return r;throw e;});});};})();</script><script>
+<meta name="color-scheme" content="dark"><meta name="theme-color" content="#000000"><link rel="icon" href="ref/favicon.ico"><title>Geometry Dash Webport</title><style>body{background:#000 url("ref/fondo_gd.jpg") center/cover no-repeat fixed;margin:0;height:100%;color:#ddd;font-family:monospace;overflow:hidden;}#app{display:flex;flex-direction:column;height:100vh;}#stage{flex:1 1 auto;min-height:0;display:flex;justify-content:center;align-items:center;}canvas{width:min(100vw,calc(100vh*16/9));height:min(100vh,calc(100vw*9/16));background:#000;image-rendering:auto;outline:none;display:block;user-select:none;}#midbar{flex:0 0 auto;display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:6px;padding:8px 0 6px;font-size:12px;color:#aaa;opacity:0;transform:translateY(120%);transition:transform .55s cubic-bezier(.2,.85,.25,1),opacity .45s;}#midbar.in{opacity:1;transform:translateY(0);}#bars{display:flex;flex-direction:column;gap:5px;transition:transform .5s cubic-bezier(.2,.85,.25,1),opacity .45s;}#bars.fall{transform:translateY(30px);opacity:0;pointer-events:none;}.abrow{display:flex;align-items:center;gap:7px;}.ablabel{width:100px;text-align:right;color:#888;font-size:10px;letter-spacing:.5px;white-space:nowrap;}.abtrack{position:relative;width:220px;height:8px;background:#111;border:1px solid #333;border-radius:4px;overflow:hidden;}.abfill{width:0%;height:100%;background:#ccc;border-radius:3px;transition:width .15s;}.abpct{width:118px;text-align:left;color:#999;font-size:11px;white-space:nowrap;}#bootbars{display:none;align-items:center;gap:7px;}#bootbars.on{display:flex;animation:bootdrop .5s cubic-bezier(.2,.85,.25,1);}@keyframes bootdrop{from{transform:translateY(-16px);opacity:0;}to{transform:translateY(0);opacity:1;}}#bootbars.done{transform:translateY(36px);opacity:0;transition:transform .5s cubic-bezier(.2,.85,.25,1),opacity .45s;pointer-events:none;}#fps{display:flex;align-items:center;gap:5px;color:#999;will-change:transform;}#fps svg{display:block;flex:0 0 auto;}#console{flex:0 0 auto;height:18vh;min-height:90px;max-height:200px;margin:0 8px 8px;padding:6px 8px;overflow-y:auto;font-size:12px;line-height:1.35;color:#999;background:#0a0a0a;border:1px solid #2a2a2a;white-space:pre-wrap;word-break:break-word;user-select:text;cursor:text;transform:translateY(135%);transition:transform .55s cubic-bezier(.2,.85,.25,1);}#console.in{transform:translateY(0);}#fsBtn,#clearBtn,#saveBtn{font:12px/1 monospace;color:#ccc;background:#0a0a0a;border:1px solid #2a2a2a;border-radius:4px;padding:4px 8px;cursor:pointer;transition:color .2s;}#fsBtn:hover,#clearBtn:hover,#saveBtn:hover{color:#fff;}#credit{color:#888;font-size:11px;white-space:nowrap;}#canvas:fullscreen{max-width:none;max-height:none;width:100%;height:100%;}#canvas:-webkit-full-screen{max-width:none;max-height:none;width:100%;height:100%;}#errOverlay{position:fixed;left:50%;top:12px;transform:translateX(-50%);z-index:50;max-width:min(92vw,720px);display:none;background:#1a0000;border:1px solid #a33;color:#ffd7d7;font-size:12px;padding:8px 12px;border-radius:6px;white-space:pre-wrap;}#errOverlay.on{display:block;}canvas{touch-action:none;}#midbar,#console{display:none!important}#gdLoad{position:fixed;inset:0;z-index:40;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;background:#000;color:#ddd;font:600 22px/1 system-ui,sans-serif;transition:opacity .7s}#gdLoad.off{opacity:0;pointer-events:none}#gdLoad i{box-sizing:border-box;width:48px;height:48px;border:4px solid #333;border-top-color:#fff;border-radius:50%;animation:gdspin .9s linear infinite}@keyframes gdspin{to{transform:rotate(360deg)}}#gdLoadPct{counter-reset:p var(--p);font:400 16px Arial,Helvetica,sans-serif;color:#fff;text-align:center}#gdLoadPct::after{content:counter(p) "%"}</style>
+<style id="gd-mobile-layout">
+/* ---- mobile layout: safe areas, dynamic viewport, no pull-to-refresh ----
+   Phones report their usable area with env(safe-area-inset-*), and the visible
+   height changes while the URL bar collapses. Using 100dvh + those insets keeps
+   the frame from jumping or drawing under the notch/gesture bar. */
+html,body{overscroll-behavior:none;overscroll-behavior-y:none;}
+body{position:fixed;inset:0;width:100%;height:100dvh;-webkit-tap-highlight-color:transparent;}
+:root{
+  --gd-t:env(safe-area-inset-top,0px);
+  --gd-r:env(safe-area-inset-right,0px);
+  --gd-b:env(safe-area-inset-bottom,0px);
+  --gd-l:env(safe-area-inset-left,0px);
+}
+#app{height:100dvh;box-sizing:border-box;padding:var(--gd-t) var(--gd-r) var(--gd-b) var(--gd-l);}
+#stage canvas{
+  width:min(calc(100vw - var(--gd-l) - var(--gd-r)),calc((100dvh - var(--gd-t) - var(--gd-b))*16/9));
+  height:min(calc(100dvh - var(--gd-t) - var(--gd-b)),calc((100vw - var(--gd-l) - var(--gd-r))*9/16));
+}
+button,input,textarea{touch-action:manipulation;}
+*{-webkit-tap-highlight-color:transparent;}
+</style>
+<script id="gd-gl-tuning">(function () {
+  'use strict';
+  /* The engine asks for a canvas context with browser defaults, which means
+     4x MSAA on the 1920x1080 backbuffer. That is the most expensive thing on
+     mobile GPUs and is barely visible at this pixel density. Disable it and ask
+     for the high-performance GPU; ?aa=1 restores the old behaviour. */
+  var q = new URLSearchParams(location.search);
+  if (q.get('aa') === '1') return;
+  try {
+    var get = HTMLCanvasElement.prototype.getContext;
+    HTMLCanvasElement.prototype.getContext = function (type, attrs) {
+      var t = String(type);
+      if (this.id === 'canvas' && (t === 'webgl2' || t === 'webgl' || t === 'experimental-webgl')) {
+        attrs = Object.assign({}, attrs || {});
+        attrs.antialias = false;
+        attrs.powerPreference = 'high-performance';
+      }
+      return get.call(this, type, attrs);
+    };
+  } catch (e) {}
+})();</script></head><body><div id="gdLoad"><i></i><span id="gdLoadPct"></span></div><div id="errOverlay" role="alert"></div><div id="app"><div id="stage"><canvas id="canvas" width="1920" height="1080"></canvas></div><div id="midbar"><div id="bars"><div class="abrow"><span class="ablabel" id="wasmLabel">WASM</span><div class="abtrack"><div class="abfill" id="wasmFill"></div></div><span class="abpct" id="wasmPct">0%</span></div><div class="abrow"><span class="ablabel" id="dataLabel">DATA</span><div class="abtrack"><div class="abfill" id="dataFill"></div></div><span class="abpct" id="dataPct">0%</span></div></div><div id="bootbars"><div class="abtrack"><div class="abfill" id="bootFill"></div></div><span class="abpct" id="bootPct">0%</span></div><div id="fps"><svg width="13" height="13" viewBox="0 0 16 16" aria-hidden="true"><rect x="1.2" y="2" width="13.6" height="9" rx="1.6" fill="none" stroke="#888" stroke-width="1.4"/><rect x="6.5" y="12" width="3" height="2" fill="#888"/><rect x="4.5" y="14.2" width="7" height="1.3" rx="0.6" fill="#888"/></svg><span id="fpsval">-- fps</span></div><span id="perfval" style="font-size:10px" title="Queue delay is event-to-game polling, not total display latency"></span><button id="fsBtn" type="button">Fullscreen</button><button id="saveBtn" type="button" title="Save game progress and local levels">Save progress</button><button id="clearBtn" type="button" title="Delete saved progress and login">Reset progress</button></div><div id="console"></div></div><script>(function(){var WASM_URL="https://raw.githubusercontent.com/Ale7208/geometry-dash-wasm/main/payload/wasm-523d9362955eba27a8ce64ec.gz";var f=window.fetch;function fixed(r){return r.clone().json().then(function(j){if(WASM_URL&&j&&j.wasm)j.wasm.url=WASM_URL;return new Response(JSON.stringify(j),{status:200,headers:{"Content-Type":"application/json"}});});}window.fetch=function(i,o){var u=typeof i==='string'?i:(i&&i.url)||'';if(u.indexOf('gd_assets.json')<0)return f.apply(this,arguments);var k=new URL(u,document.baseURI).href.split('?')[0];return f.apply(this,arguments).then(function(r){if(!r.ok)return r;return fixed(r).then(function(n){var copy=n.clone();if(window.caches)caches.open('gdwasm-assets').then(function(c){return c.put(k,copy);}).catch(function(){});return n;});}).catch(function(e){if(!window.caches)throw e;return caches.open('gdwasm-assets').then(function(c){return c.match(k);}).then(function(r){if(r)return r;throw e;});});};})();</script><script>
 (function () {
   'use strict';
   var menuOpen = false;
@@ -1062,8 +1104,27 @@ document.addEventListener("click",function(){try{if(window.parent!==window)windo
 </script><script>var consoleEl = document.getElementById('console');
 var gdQuality = new URLSearchParams(location.search).get('quality');
 var gdLowMemory = gdQuality === 'low' || (gdQuality !== 'high' && navigator.deviceMemory > 0 && navigator.deviceMemory <= 4);
-if (gdLowMemory) {
 var gdCanvas = document.getElementById('canvas');
+/* ?res= render-buffer scale. The engine reads the canvas size once at boot, so
+   this has to be applied here; changing it later re-zooms and cuts off the
+   level. Keywords map to the sizes people already use:
+   low=1280x720 (same as ?quality=low), med=1440x810, high=1920x1080. */
+var gdResParam = new URLSearchParams(location.search).get('res');
+if (gdResParam) {
+var gdResKey = String(gdResParam).toLowerCase();
+var gdResScale = gdResKey === 'low' ? 2 / 3
+: gdResKey === 'med' || gdResKey === 'medium' ? 0.75
+: gdResKey === 'high' ? 1
+: gdResKey === 'auto' || gdResKey === 'default' ? 0
+: parseFloat(gdResParam);
+if (isFinite(gdResScale) && gdResScale > 0) {
+var gdScale = Math.min(1, Math.max(0.25, gdResScale));
+gdCanvas.width = Math.max(2, 2 * Math.round(1920 * gdScale / 2));
+gdCanvas.height = Math.max(2, 2 * Math.round(1080 * gdScale / 2));
+gdLowMemory = false;
+}
+}
+if (gdLowMemory) {
 gdCanvas.width = 1280; gdCanvas.height = 720;
 }
 
@@ -2975,6 +3036,16 @@ performSave();
 e.preventDefault();
 e.returnValue='';
 });
+/* iOS Safari never fires beforeunload, so a swipe-away or tab close could lose
+   the current run. pagehide does fire there (and on desktop it does not prompt),
+   so flush the save from both without the dialog. */
+window.addEventListener('pagehide',function(){
+if(window.__gdSkipBeforeUnloadSave)return;
+if(!window.__gdRuntimeReady)return;
+if(gdSaveTimer)clearTimeout(gdSaveTimer);
+gdSaveTimer=null;
+performSave();
+});
 document.addEventListener('contextmenu',function(e){e.preventDefault();});
 function firstPointerDown(e){
 var loadTip=document.getElementById('gdLoadTip');
@@ -2989,4 +3060,254 @@ if(audio&&audio.state==='suspended')audio.resume();
 if(!document.fullscreenElement){var button=document.getElementById('fsBtn');if(button)button.click();}
 }
 document.addEventListener('pointerdown',firstPointerDown,true);
+})();</script>
+<script>(function () {
+  'use strict';
+  /* iOS Safari ignores user-scalable=no, so a two-finger gesture still zooms the
+     page (and often leaves it zoomed mid-level). These events exist only on
+     WebKit/iOS and canceling them is the documented workaround. */
+  ['gesturestart', 'gesturechange', 'gestureend'].forEach(function (name) {
+    document.addEventListener(name, function (e) { e.preventDefault(); }, { passive: false });
+  });
+})();</script>
+<script>(function () {
+  'use strict';
+  /* Audio unlock: the boot path calls resume() before any user gesture, which
+     browsers reject. firstPointerDown retries exactly once and then removes
+     itself, so a tap that lands before the AudioContext exists (or a webview
+     that drops the gesture) leaves the game silent for the whole session.
+     Keep asking on every gesture until the context is actually running. */
+  function unlockAudio() {
+    var a = window.Module && window.Module.gdAudioContext;
+    if (!a || a.state !== 'suspended') return;
+    try {
+      var p = a.resume();
+      if (p && p.then) p.catch(function () {});
+    } catch (e) {}
+  }
+  ['pointerdown', 'keydown', 'click'].forEach(function (name) {
+    document.addEventListener(name, unlockAudio, true);
+  });
+})();</script>
+<style id="gd-mobile-keyboard">
+#gdKeyBtn{position:fixed;right:calc(10px + var(--gd-r));top:calc(10px + var(--gd-t));z-index:30;width:42px;height:42px;border-radius:50%;border:1px solid #555;background:rgba(10,10,10,.55);color:#eee;font:16px/1 monospace;display:none;padding:0;touch-action:manipulation;}
+#gdKeyBtn.on{display:block;}
+#gdKeyField{position:fixed;left:0;top:0;width:2px;height:2px;opacity:.01;border:0;padding:0;margin:0;background:transparent;color:transparent;caret-color:transparent;outline:none;z-index:-1;}
+</style>
+<script>(function () {
+  'use strict';
+  /* On-canvas text fields: the search bar, level name, account login etc. are
+     drawn inside the canvas, so mobile browsers never open the system
+     keyboard. A hidden <input> is focused on demand; whatever is typed into it
+     is forwarded to the page as the same key events a physical keyboard would
+     produce (their handler listens on window in the capture phase, so the
+     synthesized events go through the normal input queue). */
+  var btn = document.createElement('button');
+  btn.id = 'gdKeyBtn';
+  btn.type = 'button';
+  btn.textContent = '\u2328';
+  btn.setAttribute('aria-label', 'Open keyboard');
+  var field = document.createElement('input');
+  field.id = 'gdKeyField';
+  field.type = 'text';
+  field.setAttribute('autocomplete', 'off');
+  field.setAttribute('autocapitalize', 'none');
+  field.setAttribute('autocorrect', 'off');
+  field.setAttribute('spellcheck', 'false');
+  field.setAttribute('inputmode', 'text');
+  field.setAttribute('tabindex', '-1');
+  document.body.appendChild(field);
+  document.body.appendChild(btn);
+
+  function keyEv(type, code, key, keyCode) {
+    document.body.dispatchEvent(new KeyboardEvent(type, {
+      code: code, key: key, keyCode: keyCode, which: keyCode, bubbles: true, cancelable: true
+    }));
+  }
+  var prev = '';
+  field.addEventListener('input', function () {
+    var v = field.value, s = 0, i;
+    /* diff against what was already forwarded; IME-safe */
+    while (s < prev.length && s < v.length && prev.charCodeAt(s) === v.charCodeAt(s)) s++;
+    var removed = prev.length - s, added = v.length - s;
+    for (i = 0; i < removed; i++) {
+      keyEv('keydown', 'Backspace', 'Backspace', 8);
+      keyEv('keyup', 'Backspace', 'Backspace', 8);
+    }
+    for (i = 0; i < added; i++) {
+      var ch = v.charAt(s + i);
+      keyEv('keydown', '', ch, v.charCodeAt(s + i));
+      keyEv('keyup', '', ch, v.charCodeAt(s + i));
+    }
+    prev = v;
+    if (v.length > 200) { field.value = v.slice(-100); prev = field.value; }
+  });
+  field.addEventListener('keydown', function (e) {
+    if (e.key === 'Enter') {
+      e.preventDefault();
+      keyEv('keydown', 'Enter', 'Enter', 13);
+      setTimeout(function () { keyEv('keyup', 'Enter', 'Enter', 13); }, 40);
+    } else if (e.key === 'Escape') {
+      e.preventDefault();
+      field.blur();
+    }
+    /* Backspace arrives through the input diff above */
+  });
+  field.addEventListener('blur', function () { prev = field.value = ''; });
+  btn.addEventListener('click', function (e) {
+    e.stopPropagation();
+    field.focus({ preventScroll: true });
+    btn.blur();
+  });
+
+  /* The keyboard is only needed in menus; hide it during a run. The
+     gd-inlevel event is dispatched by the existing audio instrumentation; the
+     slow interval is only a fallback if that instrumentation is unavailable. */
+  function watchInLevel(el, visibleInLevel) {
+    var seen = false;
+    function sync() { el.classList.toggle('on', window.gdInLevel === visibleInLevel); }
+    window.addEventListener('gd-inlevel', function () { seen = true; sync(); });
+    sync();
+    var iv = setInterval(function () {
+      if (seen) { clearInterval(iv); return; }
+      sync();
+    }, 1500);
+  }
+  window.__gdWatchInLevel = watchInLevel;
+  watchInLevel(btn, false);
+})();</script>
+<script>(function () {
+  'use strict';
+  /* Mobile browsers drop the WebGL context when memory gets tight (or when the
+     app has been backgrounded a long time). The canvas then stays black and the
+     only recovery is a manual reload. Save first, then reload automatically -
+     rate-limited so a genuine driver bug cannot turn into a reload loop. */
+  var KEY = 'gdContextReloadAt';
+  var canvas = document.getElementById('canvas');
+  canvas.addEventListener('webglcontextlost', function (e) {
+    e.preventDefault();
+    try {
+      if (window.__gdRuntimeReady && typeof performSave === 'function') performSave();
+    } catch (err) {}
+    var now = Date.now(), last = 0;
+    try { last = parseInt(sessionStorage.getItem(KEY) || '0', 10) || 0; } catch (err) {}
+    if (now - last < 60000) return;
+    try { sessionStorage.setItem(KEY, String(now)); } catch (err) {}
+    window.__gdSkipBeforeUnloadSave = true;
+    setTimeout(function () { location.reload(); }, 1200);
+  });
+})();</script>
+<script>(function () {
+  'use strict';
+  /* Fullscreen on Android: keep the screen awake during a level and ask for
+     landscape. Both APIs are no-ops or rejected where unsupported, so every
+     call is guarded. The wake lock is dropped whenever the page is hidden and
+     re-requested on the next gesture/focus, which is how the platform expects
+     it to be used. */
+  var wake = null;
+  var orientationLocked = false;
+  function isFullscreen() {
+    return !!(document.fullscreenElement || document.webkitFullscreenElement);
+  }
+  function requestWake() {
+    if (!navigator.wakeLock || wake || !isFullscreen()) return;
+    try {
+      navigator.wakeLock.request('screen').then(function (lock) {
+        wake = lock;
+        lock.addEventListener('release', function () { wake = null; });
+      }).catch(function () {});
+    } catch (e) {}
+  }
+  function dropWake() {
+    if (!wake) return;
+    try { wake.release(); } catch (e) {}
+    wake = null;
+  }
+  function lockLandscape() {
+    if (orientationLocked || !isFullscreen()) return;
+    if (!screen.orientation || !screen.orientation.lock) return;
+    try {
+      var p = screen.orientation.lock('landscape');
+      if (p && p.then) p.then(function () { orientationLocked = true; }).catch(function () {});
+      else orientationLocked = true;
+    } catch (e) {}
+  }
+  function unlockOrientation() {
+    if (!orientationLocked) return;
+    try { screen.orientation.unlock(); } catch (e) {}
+    orientationLocked = false;
+  }
+  function sync() {
+    if (isFullscreen()) { requestWake(); lockLandscape(); }
+    else { dropWake(); unlockOrientation(); }
+  }
+  ['fullscreenchange', 'webkitfullscreenchange'].forEach(function (name) {
+    document.addEventListener(name, sync);
+  });
+  document.addEventListener('visibilitychange', function () {
+    /* the platform releases the wake lock when hidden; take it again on return */
+    if (!document.hidden) sync();
+  });
+  document.addEventListener('pointerdown', function () { if (isFullscreen()) sync(); }, true);
+})();</script>
+<style id="gd-mobile-pause">
+#gdPauseBtn{position:fixed;right:calc(10px + var(--gd-r));top:calc(10px + var(--gd-t));z-index:30;width:42px;height:42px;border-radius:50%;border:1px solid #555;background:rgba(10,10,10,.55);color:#eee;font:13px/1 monospace;display:none;padding:0;touch-action:manipulation;}
+#gdPauseBtn.on{display:block;}
+</style>
+<script>(function () {
+  'use strict';
+  /* Phones have no Esc key, and the pause menu is driven by Esc (that is what
+     the auto-pause path above already relies on). A floating button sends the
+     same synthetic Esc, and only appears while a level is actually running. */
+  var b = document.createElement('button');
+  b.id = 'gdPauseBtn';
+  b.type = 'button';
+  b.textContent = '\u23F8';
+  b.setAttribute('aria-label', 'Pause');
+  document.body.appendChild(b);
+  b.addEventListener('click', function (e) {
+    e.preventDefault();
+    e.stopPropagation();
+    window.dispatchEvent(new KeyboardEvent('keydown', { key: 'Escape', code: 'Escape', keyCode: 27, which: 27, bubbles: true }));
+    window.dispatchEvent(new KeyboardEvent('keyup', { key: 'Escape', code: 'Escape', keyCode: 27, which: 27, bubbles: true }));
+    b.blur();
+  });
+  if (typeof window.__gdWatchInLevel === 'function') {
+    window.__gdWatchInLevel(b, true);
+  } else {
+    /* keyboard-bridge helper not present: fall back to a slow poll */
+    syncPause();
+    setInterval(syncPause, 800);
+    function syncPause() { b.classList.toggle('on', window.gdInLevel === true); }
+  }
+})();</script>
+<script>(function () {
+  'use strict';
+  /* The loader already keeps every game chunk in Cache Storage, but the page
+     itself was only reachable online. Registering a shell worker makes the
+     cached game usable with no connection (sw.js). A downloaded copy opened
+     from disk cannot use service workers, which is why this is guarded by
+     protocol. ?sw=0 opts out. */
+  if (!('serviceWorker' in navigator)) return;
+  if (new URLSearchParams(location.search).get('sw') === '0') return;
+  if (!(location.protocol === 'https:' || location.hostname === 'localhost' || location.hostname === '127.0.0.1')) return;
+  try {
+    /* Absolute: <base href> points at the asset CDN, so even a leading-slash
+       path would resolve to cdn.jsdelivr.net and be rejected as cross-origin. */
+    navigator.serviceWorker.register(location.origin + '/sw.js', {
+      scope: location.origin + '/',
+      updateViaCache: 'none'
+    }).catch(function () {});
+  } catch (e) {}
+  /* Cache Storage is evictable under disk pressure unless the origin asks for
+     persistent storage. Ask once per browser, after the first load so it never
+     competes with the boot. */
+  window.addEventListener('load', function () {
+    if (!navigator.storage || !navigator.storage.persist) return;
+    try {
+      if (localStorage.getItem('gdPersistAsked') === '1') return;
+      localStorage.setItem('gdPersistAsked', '1');
+      navigator.storage.persist().catch(function () {});
+    } catch (e) {}
+  });
 })();</script></body></html>

@@ -54,6 +54,40 @@ The webport is intended for modern browsers on both desktop and mobile devices.
 
 The game can also be played on mobile phones. Performance, controls, and compatibility may vary depending on your device and browser.
 
+## Mobile Support
+
+The port runs on phones and tablets with touch controls, plus these
+mobile-specific behaviours:
+
+* **Safe areas and dynamic viewport:** the frame accounts for notches, rounded
+  corners and gesture bars, and no longer jumps when the mobile URL bar
+  collapses. Pull-to-refresh and iOS rubber-banding are disabled so they cannot
+  interrupt a run.
+* **Pinch-zoom:** suppressed on iOS, where `user-scalable=no` is ignored.
+* **Keyboard button (⌨):** the search bar, level names and account login are
+  drawn inside the canvas, so mobile browsers never show a keyboard. Tap ⌨ to
+  open the system keyboard and type; Backspace, Enter and Escape work as usual.
+* **Pause button (⏸):** phones have no Esc key, so a floating button opens the
+  pause menu while a level is running.
+* **Saving:** progress is also flushed on `pagehide`, which is the only reliable
+  hook on iOS Safari.
+* **Recovery:** a lost WebGL context saves the run and reloads once instead of
+  leaving a black screen; fullscreen holds a wake lock and requests landscape.
+* **Performance:** MSAA is disabled (the largest avoidable GPU cost at 1080p)
+  and the render buffer can be scaled down before boot.
+
+| Parameter | Effect |
+| --- | --- |
+| `?res=low` | 1280x720 render buffer (same as `?quality=low`). |
+| `?res=med` | 1440x810 render buffer. |
+| `?res=high` | 1920x1080 render buffer (default). |
+| `?res=0.5` | Any scale from 0.25 to 1.0, e.g. `?res=0.5` = 960x540. |
+| `?aa=1` | Keep WebGL antialiasing (MSAA); it is off by default. |
+| `?sw=0` | Do not install the offline shell service worker. |
+
+The buffer size is fixed for the session: the engine scales its world once at
+boot, so changing it later would re-zoom and crop the level.
+
 ## Game Information
 
 | Feature               | Details               |
@@ -82,7 +116,7 @@ If the problem continues, it could be related to your browser or the service hos
 
 ## Offline Mode and Limitations
 
-Offline mode applies only to the downloaded `index.html` file opened directly from your device's storage. It does not apply to the online version hosted on Cloudflare Pages, which always requires an Internet connection.
+Offline mode works for the downloaded `index.html` file and, since the mobile update, for the hosted version too: after one complete online load the page installs a small service worker (skip it with `?sw=0`) that keeps the game shell available, so the cached chapters can be opened with no connection.
 
 Keep these limitations in mind:
 
