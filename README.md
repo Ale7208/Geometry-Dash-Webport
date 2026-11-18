@@ -12,7 +12,11 @@
 
 Open the link, wait for the game to load, and start playing.
 
-The first load requires an Internet connection. To play offline, download index.html, open it in your browser once while online, and let the game finish loading. After that, you can open the same file without a connection. The online version at the link above always needs an Internet connection.
+**Offline support:**
+- **Downloaded version:** The first load requires an Internet connection. Download `index.html`, open it in your browser while online, and let the game finish loading. After that, you can reopen the same file without an Internet connection.
+- **Hosted version:** After the first complete online load, a Service Worker caches the necessary game files, allowing you to play offline. This requires the browser to retain the cached files.
+
+Online features, such as searching for and accessing online levels, still require an Internet connection.
 
 ### Official URL
 
@@ -136,6 +140,25 @@ Found a bug while playing? You can report it in the repository's Issues section 
 
 When reporting a bug, please explain what happened and, if possible, how to reproduce it. **If the bug is visual, please include a screenshot** to help identify the issue.
 
+### Contributing
+
+I cannot guarantee that I will be able to fix every reported issue, as some problems may be beyond my programming knowledge or available resources.
+
+If you have programming experience, you are welcome to contribute by submitting a Pull Request with fixes or improvements.
+
+If you have a subscription to an AI coding tool such as **Claude Code**, you can also help me fix issues and develop improvements for the project.
+
+If you don't have access to a paid tool, you can use a capable AI specialized in coding. Not all AI tools have the same programming abilities, so I recommend using reliable tools that can properly work with existing codebases.
+
+All contributions are appreciated and will be reviewed before being merged into the project.
+
+### Response times
+
+I usually take about 1 day to reply to issues. If you posted one and it's been more than a day without an answer, it could be for a few reasons: I might be inactive for a while, or I may have already read it and added it to my list of issues to fix later.
+
+Fixing an issue can take me up to 2 weeks at most. I love seeing people enjoy my modded version of Bog's port, so every report matters, even if I don't reply right away.
+
+**Note:** I speak Spanish, so if your issue is written in another language, I will use a translator to understand and review it. However, reports in Spanish are preferred.
 ### Response times
 
 I usually take about 1 day to reply to issues. If you posted one and it's been more than a day without an answer, it could be for a few reasons: I might be inactive for a while, or I may have already read it and added it to my list of issues to fix later.
