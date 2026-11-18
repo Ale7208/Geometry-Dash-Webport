@@ -78,18 +78,6 @@ mobile-specific behaviours:
 * **Performance:** MSAA is disabled (the largest avoidable GPU cost at 1080p)
   and the render buffer can be scaled down before boot.
 
-| Parameter | Effect |
-| --- | --- |
-| `?res=low` | 1280x720 render buffer (same as `?quality=low`). |
-| `?res=med` | 1440x810 render buffer. |
-| `?res=high` | 1920x1080 render buffer (default). |
-| `?res=0.5` | Any scale from 0.25 to 1.0, e.g. `?res=0.5` = 960x540. |
-| `?aa=1` | Re-enable WebGL antialiasing (MSAA); `antialias: false` is now the default on all devices. |
-| `?sw=0` | Do not install the offline shell service worker. |
-
-The buffer size is fixed for the session: the engine scales its world once at
-boot, so changing it later would re-zoom and crop the level.
-
 ## Game Information
 
 | Feature               | Details               |
@@ -108,13 +96,45 @@ boot, so changing it later would re-zoom and crop the level.
 
 **The game won't load offline:** Make sure you have previously opened the game while connected to the Internet and allowed it to finish loading completely. If you're using the downloaded version, open `index.html`. If you're using the hosted version, open the game through the official URL using the same browser you used for the initial load.
 
-**Low performance:** Close other applications or try another browser. If the game still lags, add `?quality=low` to the end of the address you normally use to open it. For example, if you play online, it would look like `https://gd-webport.pages.dev/?quality=low`. If you use a downloaded copy, add it to the end of that file's address instead. If you don't add `?quality=`, the game always runs at high quality by default.
+**Low performance:** Close other applications or try another browser. If the game still lags, add `?res=low` to the end of the address you normally use to open it. For example, if you play online, it would look like `https://gd-webport.pages.dev/?res=low`. If you use a downloaded copy, add it to the end of that file's address instead. If you don't add `?res=`, the game always runs at high quality by default.
 
 **Changes aren't showing up:** Force a reload with `Ctrl + F5`.
 
 **An old downloaded copy isn't working:** Try the online version or download the latest `index.html` file.
 
 If the problem continues, it could be related to your browser or the service hosting the game.
+
+## URL parameters
+
+Parameters are small options you add to the end of the game's web address to change how it runs. You don't need to install anything. Just add them to the link and press Enter.
+
+The first one starts with `?`. If you want to use more than one, join them with `&`. Example: `https://gd-webport.pages.dev/?res=low&noauto`
+
+### For players
+
+| Parameter | What it does |
+|---|---|
+| `?res=low` | Lowers the game's resolution to about two thirds of normal. The image looks a bit less sharp, but the game runs faster. Use this first if the game lags. |
+| `?res=med` | Same idea, but a lighter reduction (three quarters of normal). |
+| `?res=high` | Full resolution. |
+| `?res=0.5` | Sets the resolution yourself. Use any number from 0.25 to 1, where 1 is full resolution and lower numbers are faster but blurrier. |
+| `?res=auto` | Lets the game choose by itself (this is what happens if you don't add `?res`). |
+| `?noauto` | Turns off the automatic saving that happens every so often. Use it only if you notice small freezes caused by autosave. Be careful: you may lose progress if the page closes. |
+| `?perf` | Shows performance numbers on screen (useful to check how well the game runs on your device). |
+| `?aa=1` | By default the game turns off edge smoothing (antialiasing) and asks your browser to use your high-performance graphics card, to run faster. This brings back your browser's normal behavior, which can look a bit smoother but may run slower. |
+
+### Advanced and debugging
+
+| Parameter | What it does |
+|---|---|
+| `?debug` | Turns on debug mode: shows a console on screen and records detailed technical messages. Useful when you report a bug in the Issues section. |
+| `?debug&hostlog` | Only works together with `?debug`. Also sends some of the debug messages to the page's debug log. Meant for developers. |
+| `?proxy=<address>` | Chooses which of the project's proxy servers (the intermediate servers the game uses to reach Geometry Dash's servers) you want to use. Only addresses from the project's built-in list are accepted, and your choice is saved in your browser. |
+| `?jobs=4` | Sets how many tasks the game runs at the same time, from 1 to 8 (default is 2). For advanced users. |
+| `?noscramjet` | Turns off Scramjet, an extra tool the page can use to route its connections. Only try it if something fails to load. |
+| `?sw=0` | Stops the page from registering its service worker (a background helper that browsers use, for example, to keep files saved for offline use). |
+
+If you don't add `?res`, the game picks a resolution by itself depending on your device (devices with 4 GB of RAM or less get a lower one). If the game lags, try `?res=low`.
 
 ## Offline Mode and Limitations
 
