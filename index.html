@@ -160,7 +160,7 @@ button,input,textarea{touch-action:manipulation;}
   /* The engine asks for a canvas context with browser defaults, which means
      4x MSAA on the 1920x1080 backbuffer. That is the most expensive thing on
      mobile GPUs and is barely visible at this pixel density. Disable it and ask
-     for the high-performance GPU; ?aa=1 restores the old behaviour. */
+     for the high-performance GPU; ?aa=1 enables it and ?aa=0 disables it. */
   var q = new URLSearchParams(location.search);
   if (q.get('aa') === '1') return;
   try {
@@ -390,12 +390,18 @@ button,input,textarea{touch-action:manipulation;}
       alert('Could not clear downloaded songs.');
     } finally { setBusy(false); }
   }
-  function currentQuality() {
-    var quality = new URLSearchParams(location.search).get('quality');
-    if (quality === 'low' || quality === 'high') return quality;
+  function currentResolution() {
+    var params = new URLSearchParams(location.search);
+    var resolution = params.get('res');
+    if (resolution === null) resolution = params.get('quality');
+    if (resolution === 'medium') resolution = 'med';
+    if (resolution === 'low' || resolution === 'med' || resolution === 'high') return resolution;
     return navigator.deviceMemory > 0 && navigator.deviceMemory <= 4 ? 'low' : 'high';
   }
-  async function changeQuality(quality) {
+  function currentAntialiasing() {
+    return new URLSearchParams(location.search).get('aa') === '1';
+  }
+  async function reloadWithParameter(name, value, setting) {
     setBusy(true);
     try {
       if (!window.__gdRuntimeReady || !window.__gdSavesRestored)
@@ -409,20 +415,27 @@ button,input,textarea{touch-action:manipulation;}
         Promise.resolve(performSave())
       ]);
       var target = new URL(location.href);
-      target.searchParams.set('quality', quality);
+      if (name === 'res') target.searchParams.delete('quality');
+      target.searchParams.set(name, value);
       window.__gdSkipBeforeUnloadSave = true;
       location.assign(target.href);
     } catch (error) {
-      console.error('Could not save before changing quality:', error);
+      console.error('Could not save before changing ' + setting + ':', error);
       window.__gdSkipBeforeUnloadSave = false;
       setBusy(false);
       alert('Could not save progress before reloading.');
     }
   }
+  function changeResolution(resolution) {
+    return reloadWithParameter('res', resolution, 'resolution');
+  }
+  function changeAntialiasing(enabled) {
+    return reloadWithParameter('aa', enabled ? '1' : '0', 'antialiasing');
+  }
   function reportBug() {
     var body = 'Page URL: ' + location.href +
       '\nBrowser: ' + navigator.userAgent +
-      '\nQuality: ' + currentQuality() +
+      '\nResolution: ' + currentResolution() +
       '\n\nDescribe the bug:\n';
     var url = 'https://github.com/Ale7208/Geometry-Dash-webport/issues/new?body=' +
       encodeURIComponent(body);
@@ -755,7 +768,8 @@ button,input,textarea{touch-action:manipulation;}
     menu.setAttribute('role', 'dialog');
     menu.setAttribute('aria-labelledby', 'gdMenuTitle');
     menu.setAttribute('aria-busy', 'false');
-    var activeQuality = currentQuality();
+    var activeResolution = currentResolution();
+    var antialiasingEnabled = currentAntialiasing();
     menu.innerHTML = '<div class="gdMenuButtons">' +
       '<button type="button" data-action="export">Export progress</button>' +
       '<button type="button" data-action="import">Import progress</button>' +
@@ -763,13 +777,17 @@ button,input,textarea{touch-action:manipulation;}
       '<button type="button" data-action="cache">Clear cache</button>' +
       '<button type="button" data-action="clear-songs">Clear songs</button>' +
       '<button type="button" data-action="report-bug">Report bug</button>' +
-      '<button type="button" data-action="quality" data-quality="low">Quality: Low</button>' +
-      '<button type="button" data-action="quality" data-quality="high">Quality: High</button>' +
+      '<button type="button" data-action="antialiasing" aria-pressed="' +
+        (antialiasingEnabled ? 'true' : 'false') + '">Antialiasing: ' +
+        (antialiasingEnabled ? 'On' : 'Off') + '</button>' +
+      '<button type="button" data-action="resolution" data-resolution="low">Resolution: Low</button>' +
+      '<button type="button" data-action="resolution" data-resolution="med">Resolution: Medium</button>' +
+      '<button type="button" data-action="resolution" data-resolution="high">Resolution: High</button>' +
       '</div><div id="gdMenuHint">Tab or Esc to close</div>' +
       '<div id="gdMenuStatus" role="status" aria-live="polite"></div>' +
       '<input id="gdMenuFile" type="file" accept="application/json,.json">';
-    menu.querySelectorAll('button[data-quality]').forEach(function (button) {
-      var selected = button.getAttribute('data-quality') === activeQuality;
+    menu.querySelectorAll('button[data-resolution]').forEach(function (button) {
+      var selected = button.getAttribute('data-resolution') === activeResolution;
       button.setAttribute('data-current', selected ? 'true' : 'false');
       button.setAttribute('aria-pressed', selected ? 'true' : 'false');
       button.disabled = selected;
@@ -799,11 +817,16 @@ button,input,textarea{touch-action:manipulation;}
           clearDownloadedSongs();
       } else if (action === 'report-bug') {
         reportBug();
-      } else if (action === 'quality') {
-        var quality = button.getAttribute('data-quality');
-        if (confirm('This will reload the page to apply the quality change. ' +
+      } else if (action === 'antialiasing') {
+        var enabled = !currentAntialiasing();
+        if (confirm('This will reload the page to apply the antialiasing change. ' +
             'Your progress will be saved first. Continue?'))
-          changeQuality(quality);
+          changeAntialiasing(enabled);
+      } else if (action === 'resolution') {
+        var resolution = button.getAttribute('data-resolution');
+        if (confirm('This will reload the page to apply the resolution change. ' +
+            'Your progress will be saved first. Continue?'))
+          changeResolution(resolution);
       }
     });
     document.getElementById('gdMenuFile').addEventListener('change', function (event) {
@@ -1102,16 +1125,17 @@ button,input,textarea{touch-action:manipulation;}
 })();
 
 </script><script>var consoleEl = document.getElementById('console');
-var gdQuality = new URLSearchParams(location.search).get('quality');
-var gdLowMemory = gdQuality === 'low' || (gdQuality !== 'high' && navigator.deviceMemory > 0 && navigator.deviceMemory <= 4);
+var gdParams = new URLSearchParams(location.search);
+var gdResParam = gdParams.get('res');
+if (gdResParam === null) gdResParam = gdParams.get('quality');
+var gdResKey = gdResParam === null ? '' : String(gdResParam).toLowerCase();
+var gdLowMemory = gdResKey === 'low' || (gdResKey !== 'high' && navigator.deviceMemory > 0 && navigator.deviceMemory <= 4);
 var gdCanvas = document.getElementById('canvas');
 /* ?res= render-buffer scale. The engine reads the canvas size once at boot, so
    this has to be applied here; changing it later re-zooms and cuts off the
-   level. Keywords map to the sizes people already use:
-   low=1280x720 (same as ?quality=low), med=1440x810, high=1920x1080. */
-var gdResParam = new URLSearchParams(location.search).get('res');
+   level. Resolution keywords map to these sizes: low=1280x720,
+   med=1440x810, high=1920x1080. */
 if (gdResParam) {
-var gdResKey = String(gdResParam).toLowerCase();
 var gdResScale = gdResKey === 'low' ? 2 / 3
 : gdResKey === 'med' || gdResKey === 'medium' ? 0.75
 : gdResKey === 'high' ? 1
@@ -1713,8 +1737,14 @@ if (!document.hidden) gdProgressTick();
 });
 (function () {
 var fpsEl = document.getElementById('fpsval');
+var perfOverlay;
 var benchmarkButton, benchmarkResult;
 if (GD_PERF) {
+perfOverlay = document.createElement('div');
+perfOverlay.id = 'gdPerfOverlay';
+perfOverlay.style.cssText = 'position:fixed;top:env(safe-area-inset-top,0px);left:0;right:0;z-index:35;box-sizing:border-box;padding:3px 6px;background:rgba(0,0,0,.65);color:#ddd;font:10px/1.35 monospace;text-align:center;pointer-events:none';
+perfOverlay.textContent = '-- fps';
+document.body.appendChild(perfOverlay);
 benchmarkButton = document.createElement('button');
 benchmarkButton.textContent = '20s test';
 benchmarkButton.disabled = true;
@@ -1770,6 +1800,7 @@ details+=' | audio '+audio.ctx.state;
 if(audio.metrics) details+=' (starts '+audio.metrics.starts+', seeks '+audio.metrics.seeks+')';
 }
 perf.textContent=details;
+if(perfOverlay) perfOverlay.textContent=fpsEl.textContent+' | '+details;
 if(stats.pointerClient) perf.title='Pointer client '+stats.pointerClient.join(',')+'; game '+stats.pointerGame.join(',');
 }
 lastN = n;
@@ -2770,6 +2801,7 @@ gdStart();
   function maybeAutoPause() {
     if (autoPauseSent || !ready() || !document.body.classList.contains('playing') || window.gdInLevel !== true) return;
     var audio = Module.__gdAudio;
+    if (audio && audio.groups && audio.groups[1] && audio.groups[1].paused === true) return;
     var channels = audio && audio.channels;
     var sounds = audio && audio.sounds;
     if (!channels || !sounds) return;
@@ -2795,7 +2827,7 @@ gdStart();
       if (!sound || typeof sound.name !== 'string') continue;
       var name = sound.name.replace(/^.*[\\/]/, '').toLowerCase();
       if (!/\.mp3$/.test(name) || name.replace(/\.mp3$/, '') === 'menuloop') continue;
-      if (channel.paused === true || channel.ended === true) return;
+      if (channel.paused || channel.pausedByGroup || channel.ended) continue;
       autoPauseSent = true;
       window.dispatchEvent(new KeyboardEvent('keydown', {key: 'Escape', code: 'Escape', keyCode: 27, which: 27, bubbles: true}));
       window.dispatchEvent(new KeyboardEvent('keyup', {key: 'Escape', code: 'Escape', keyCode: 27, which: 27, bubbles: true}));
@@ -2857,7 +2889,7 @@ tip.style.userSelect='none';
 load.appendChild(tip);
 var tips=[
 {text:'Press Tab to open the tools menu (export, import, clear cache).',weight:2},
-{text:'Lagging? Add ?quality=low at the end of the URL.'},
+{text:'Lagging? Add ?res=low at the end of the URL.'},
 {text:'The downloaded version works offline after the first load.'},
 {text:"The game saves your progress automatically, so you don't have to."},
 {text:'Your progress is saved in this browser. Export a backup from the Tab menu.'},
