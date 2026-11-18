@@ -3096,6 +3096,11 @@ document.addEventListener('pointerdown',firstPointerDown,true);
 </style>
 <script>(function () {
   'use strict';
+  var isMobile = navigator.userAgentData
+    ? navigator.userAgentData.mobile
+    : /Android|iPhone|iPad|iPod|Mobile|IEMobile|Windows Phone/i.test(navigator.userAgent) ||
+      (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+  if (!isMobile || !window.matchMedia('(pointer: coarse)').matches) return;
   /* On-canvas text fields: the search bar, level name, account login etc. are
      drawn inside the canvas, so mobile browsers never open the system
      keyboard. A hidden <input> is focused on demand; whatever is typed into it
@@ -3261,7 +3266,11 @@ document.addEventListener('pointerdown',firstPointerDown,true);
 </style>
 <script>(function () {
   'use strict';
-  if (!window.matchMedia('(pointer: coarse)').matches) return;
+  var isMobile = navigator.userAgentData
+    ? navigator.userAgentData.mobile
+    : /Android|iPhone|iPad|iPod|Mobile|IEMobile|Windows Phone/i.test(navigator.userAgent) ||
+      (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+  if (!isMobile || !window.matchMedia('(pointer: coarse)').matches) return;
   var b = document.createElement('div');
   b.id = 'gdEscBtn';
   b.setAttribute('role', 'button');
