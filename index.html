@@ -3091,7 +3091,7 @@ document.addEventListener('pointerdown',firstPointerDown,true);
 })();</script>
 <style id="gd-mobile-keyboard">
 #gdKeyBtn{position:fixed;right:calc(10px + var(--gd-r));top:calc(10px + var(--gd-t));z-index:30;width:42px;height:42px;border-radius:50%;border:1px solid #555;background:rgba(10,10,10,.55);color:#eee;font:16px/1 monospace;display:none;padding:0;touch-action:manipulation;}
-#gdKeyBtn.on{display:block;}
+@media (pointer:coarse){#gdKeyBtn.on{display:block;}}
 #gdKeyField{position:fixed;left:0;top:0;width:2px;height:2px;opacity:.01;border:0;padding:0;margin:0;background:transparent;color:transparent;caret-color:transparent;outline:none;z-index:-1;}
 </style>
 <script>(function () {
