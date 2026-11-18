@@ -75,8 +75,6 @@ mobile-specific behaviours:
   including menus, levels and the editor.
 * **Saving:** progress is also flushed on `pagehide`, which is the only reliable
   hook on iOS Safari.
-* **Recovery:** a lost WebGL context saves the run and reloads once instead of
-  leaving a black screen; fullscreen holds a wake lock and requests landscape.
 * **Performance:** MSAA is disabled (the largest avoidable GPU cost at 1080p)
   and the render buffer can be scaled down before boot.
 
@@ -108,7 +106,7 @@ boot, so changing it later would re-zoom and crop the level.
 
 **The game gets stuck loading on the first visit:** Check your Internet connection and try again.
 
-**The game won't load offline:** Make sure you're opening the downloaded `index.html` file and that you've already opened it once with an Internet connection and let the game finish loading.
+**The game won't load offline:** Make sure you have previously opened the game while connected to the Internet and allowed it to finish loading completely. If you're using the downloaded version, open `index.html`. If you're using the hosted version, open the game through the official URL using the same browser you used for the initial load.
 
 **Low performance:** Close other applications or try another browser. If the game still lags, add `?quality=low` to the end of the address you normally use to open it. For example, if you play online, it would look like `https://gd-webport.pages.dev/?quality=low`. If you use a downloaded copy, add it to the end of that file's address instead. If you don't add `?quality=`, the game always runs at high quality by default.
 
