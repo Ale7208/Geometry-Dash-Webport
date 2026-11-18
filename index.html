@@ -3173,28 +3173,33 @@ document.addEventListener('pointerdown',firstPointerDown,true);
       sync();
     }, 1500);
   }
-  window.__gdWatchInLevel = watchInLevel;
   watchInLevel(btn, false);
 })();</script>
 <script>(function () {
   'use strict';
-  /* Mobile browsers drop the WebGL context when memory gets tight (or when the
-     app has been backgrounded a long time). The canvas then stays black and the
-     only recovery is a manual reload. Save first, then reload automatically -
-     rate-limited so a genuine driver bug cannot turn into a reload loop. */
-  var KEY = 'gdContextReloadAt';
+  /* A lost WebGL context cannot be restored by the game. Report it like other
+     crashes and leave recovery to the user instead of reloading automatically. */
   var canvas = document.getElementById('canvas');
+  var reported = false;
   canvas.addEventListener('webglcontextlost', function (e) {
     e.preventDefault();
+    if (reported) return;
+    reported = true;
+    var overlay = document.getElementById('errOverlay');
+    if (overlay) {
+      overlay.textContent = 'The game lost its WebGL context, so the browser can no longer render it. ' +
+        'This can happen when graphics memory runs low or the tab is suspended. Reload the page to recover; ' +
+        'saved progress may be restored, but the current run may be lost. Open with ?debug to see logs.';
+      overlay.classList.add('on');
+    }
+    if (!window.__gdRuntimeReady || typeof performSave !== 'function') return;
     try {
-      if (window.__gdRuntimeReady && typeof performSave === 'function') performSave();
-    } catch (err) {}
-    var now = Date.now(), last = 0;
-    try { last = parseInt(sessionStorage.getItem(KEY) || '0', 10) || 0; } catch (err) {}
-    if (now - last < 60000) return;
-    try { sessionStorage.setItem(KEY, String(now)); } catch (err) {}
-    window.__gdSkipBeforeUnloadSave = true;
-    setTimeout(function () { location.reload(); }, 1200);
+      Promise.resolve(performSave()).catch(function (err) {
+        console.error('Failed to save after WebGL context loss:', err);
+      });
+    } catch (err) {
+      console.error('Failed to save after WebGL context loss:', err);
+    }
   });
 })();</script>
 <script>(function () {
@@ -3250,36 +3255,37 @@ document.addEventListener('pointerdown',firstPointerDown,true);
   });
   document.addEventListener('pointerdown', function () { if (isFullscreen()) sync(); }, true);
 })();</script>
-<style id="gd-mobile-pause">
-#gdPauseBtn{position:fixed;right:calc(10px + var(--gd-r));top:calc(10px + var(--gd-t));z-index:30;width:42px;height:42px;border-radius:50%;border:1px solid #555;background:rgba(10,10,10,.55);color:#eee;font:13px/1 monospace;display:none;padding:0;touch-action:manipulation;}
-#gdPauseBtn.on{display:block;}
+<style id="gd-mobile-escape">
+#gdEscBtn{position:fixed;left:calc(10px + var(--gd-l));top:calc(10px + var(--gd-t));z-index:30;box-sizing:border-box;width:44px;height:44px;border-radius:50%;border:1px solid #555;background:rgba(10,10,10,.55);color:#eee;font:400 13px/1 monospace;display:none;align-items:center;justify-content:center;padding:0;touch-action:manipulation;user-select:none;cursor:pointer;}
+@media (pointer:coarse){#gdEscBtn{display:flex;}}
 </style>
 <script>(function () {
   'use strict';
-  /* Phones have no Esc key, and the pause menu is driven by Esc (that is what
-     the auto-pause path above already relies on). A floating button sends the
-     same synthetic Esc, and only appears while a level is actually running. */
-  var b = document.createElement('button');
-  b.id = 'gdPauseBtn';
-  b.type = 'button';
-  b.textContent = '\u23F8';
-  b.setAttribute('aria-label', 'Pause');
+  if (!window.matchMedia('(pointer: coarse)').matches) return;
+  var b = document.createElement('div');
+  b.id = 'gdEscBtn';
+  b.setAttribute('role', 'button');
+  b.setAttribute('tabindex', '0');
+  b.setAttribute('aria-label', 'Escape');
+  var label = document.createElement('span');
+  label.textContent = 'ESC';
+  b.appendChild(label);
   document.body.appendChild(b);
+  function sendEscape() {
+    window.dispatchEvent(new KeyboardEvent('keydown', { key: 'Escape', code: 'Escape', keyCode: 27, which: 27, bubbles: true }));
+    window.dispatchEvent(new KeyboardEvent('keyup', { key: 'Escape', code: 'Escape', keyCode: 27, which: 27, bubbles: true }));
+  }
   b.addEventListener('click', function (e) {
     e.preventDefault();
     e.stopPropagation();
-    window.dispatchEvent(new KeyboardEvent('keydown', { key: 'Escape', code: 'Escape', keyCode: 27, which: 27, bubbles: true }));
-    window.dispatchEvent(new KeyboardEvent('keyup', { key: 'Escape', code: 'Escape', keyCode: 27, which: 27, bubbles: true }));
+    sendEscape();
     b.blur();
   });
-  if (typeof window.__gdWatchInLevel === 'function') {
-    window.__gdWatchInLevel(b, true);
-  } else {
-    /* keyboard-bridge helper not present: fall back to a slow poll */
-    syncPause();
-    setInterval(syncPause, 800);
-    function syncPause() { b.classList.toggle('on', window.gdInLevel === true); }
-  }
+  b.addEventListener('keydown', function (e) {
+    if (e.key !== 'Enter' && e.key !== ' ') return;
+    e.preventDefault();
+    sendEscape();
+  });
 })();</script>
 <script>(function () {
   'use strict';
@@ -3297,7 +3303,9 @@ document.addEventListener('pointerdown',firstPointerDown,true);
     navigator.serviceWorker.register(location.origin + '/sw.js', {
       scope: location.origin + '/',
       updateViaCache: 'none'
-    }).catch(function () {});
+    }).catch(function (error) {
+      console.error('Service worker registration failed:', error);
+    });
   } catch (e) {}
   /* Cache Storage is evictable under disk pressure unless the origin asks for
      persistent storage. Ask once per browser, after the first load so it never

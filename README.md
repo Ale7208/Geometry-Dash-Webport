@@ -67,8 +67,8 @@ mobile-specific behaviours:
 * **Keyboard button (⌨):** the search bar, level names and account login are
   drawn inside the canvas, so mobile browsers never show a keyboard. Tap ⌨ to
   open the system keyboard and type; Backspace, Enter and Escape work as usual.
-* **Pause button (⏸):** phones have no Esc key, so a floating button opens the
-  pause menu while a level is running.
+* **Escape button (ESC):** touch devices can send Escape from any screen,
+  including menus, levels and the editor.
 * **Saving:** progress is also flushed on `pagehide`, which is the only reliable
   hook on iOS Safari.
 * **Recovery:** a lost WebGL context saves the run and reloads once instead of
@@ -82,7 +82,7 @@ mobile-specific behaviours:
 | `?res=med` | 1440x810 render buffer. |
 | `?res=high` | 1920x1080 render buffer (default). |
 | `?res=0.5` | Any scale from 0.25 to 1.0, e.g. `?res=0.5` = 960x540. |
-| `?aa=1` | Keep WebGL antialiasing (MSAA); it is off by default. |
+| `?aa=1` | Re-enable WebGL antialiasing (MSAA); `antialias: false` is now the default on all devices. |
 | `?sw=0` | Do not install the offline shell service worker. |
 
 The buffer size is fixed for the session: the engine scales its world once at
