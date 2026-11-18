@@ -120,7 +120,7 @@ The first one starts with `?`. If you want to use more than one, join them with 
 | `?res=0.5` | Sets the resolution yourself. Use any number from 0.25 to 1, where 1 is full resolution and lower numbers are faster but blurrier. |
 | `?res=auto` | Lets the game choose by itself (this is what happens if you don't add `?res`). |
 | `?noauto` | Turns off the automatic saving that happens every so often. Use it only if you notice small freezes caused by autosave. Be careful: you may lose progress if the page closes. |
-| `?perf` | Shows performance numbers on screen (useful to check how well the game runs on your device). |
+| `?perf` | Shows performance numbers (FPS, frame time, input delay, memory use and more) in a bar at the top of the screen. Useful to check how well the game runs on your device. |
 | `?aa=1` | By default the game turns off edge smoothing (antialiasing) and asks your browser to use your high-performance graphics card, to run faster. This brings back your browser's normal behavior, which can look a bit smoother but may run slower. |
 
 ### Advanced and debugging
