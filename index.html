@@ -3178,6 +3178,7 @@ document.addEventListener('pointerdown',firstPointerDown,true);
       sync();
     }, 1500);
   }
+  window.__gdWatchInLevel = watchInLevel;
   watchInLevel(btn, false);
 })();</script>
 <script>(function () {
@@ -3260,9 +3261,9 @@ document.addEventListener('pointerdown',firstPointerDown,true);
   });
   document.addEventListener('pointerdown', function () { if (isFullscreen()) sync(); }, true);
 })();</script>
-<style id="gd-mobile-escape">
-#gdEscBtn{position:fixed;left:calc(10px + var(--gd-l));top:calc(10px + var(--gd-t));z-index:30;box-sizing:border-box;width:44px;height:44px;border-radius:50%;border:1px solid #555;background:rgba(10,10,10,.55);color:#eee;font:400 13px/1 monospace;display:none;align-items:center;justify-content:center;padding:0;touch-action:manipulation;user-select:none;cursor:pointer;}
-@media (pointer:coarse){#gdEscBtn{display:flex;}}
+<style id="gd-mobile-pause">
+#gdPauseBtn{position:fixed;right:calc(10px + var(--gd-r));top:calc(10px + var(--gd-t));z-index:30;width:42px;height:42px;border-radius:50%;border:1px solid #555;background:rgba(10,10,10,.55);color:#eee;font:13px/1 monospace;display:none;padding:0;touch-action:manipulation;}
+@media (pointer:coarse){#gdPauseBtn.on{display:block;}}
 </style>
 <script>(function () {
   'use strict';
@@ -3271,14 +3272,11 @@ document.addEventListener('pointerdown',firstPointerDown,true);
     : /Android|iPhone|iPad|iPod|Mobile|IEMobile|Windows Phone/i.test(navigator.userAgent) ||
       (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
   if (!isMobile || !window.matchMedia('(pointer: coarse)').matches) return;
-  var b = document.createElement('div');
-  b.id = 'gdEscBtn';
-  b.setAttribute('role', 'button');
-  b.setAttribute('tabindex', '0');
-  b.setAttribute('aria-label', 'Escape');
-  var label = document.createElement('span');
-  label.textContent = 'ESC';
-  b.appendChild(label);
+  var b = document.createElement('button');
+  b.id = 'gdPauseBtn';
+  b.type = 'button';
+  b.textContent = '\u23F8';
+  b.setAttribute('aria-label', 'Pause');
   document.body.appendChild(b);
   function sendEscape() {
     window.dispatchEvent(new KeyboardEvent('keydown', { key: 'Escape', code: 'Escape', keyCode: 27, which: 27, bubbles: true }));
@@ -3290,11 +3288,13 @@ document.addEventListener('pointerdown',firstPointerDown,true);
     sendEscape();
     b.blur();
   });
-  b.addEventListener('keydown', function (e) {
-    if (e.key !== 'Enter' && e.key !== ' ') return;
-    e.preventDefault();
-    sendEscape();
-  });
+  if (typeof window.__gdWatchInLevel === 'function') {
+    window.__gdWatchInLevel(b, true);
+  } else {
+    syncPause();
+    setInterval(syncPause, 800);
+    function syncPause() { b.classList.toggle('on', window.gdInLevel === true); }
+  }
 })();</script>
 <script>(function () {
   'use strict';

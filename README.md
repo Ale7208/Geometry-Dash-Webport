@@ -71,8 +71,8 @@ mobile-specific behaviours:
 * **Keyboard button (⌨):** the search bar, level names and account login are
   drawn inside the canvas, so mobile browsers never show a keyboard. Tap ⌨ to
   open the system keyboard and type; Backspace, Enter and Escape work as usual.
-* **Escape button (ESC):** touch devices can send Escape from any screen,
-  including menus, levels and the editor.
+* **Pause button (⏸):** on mobile, it sends Escape to open the pause menu while
+  a level is running.
 * **Saving:** progress is also flushed on `pagehide`, which is the only reliable
   hook on iOS Safari.
 * **Performance:** MSAA is disabled (the largest avoidable GPU cost at 1080p)
