@@ -133,6 +133,7 @@ The first one starts with `?`. If you want to use more than one, join them with 
 | `?jobs=4` | Sets how many tasks the game runs at the same time, from 1 to 8 (default is 2). For advanced users. |
 | `?noscramjet` | Turns off Scramjet, an extra tool the page can use to route its connections. Only try it if something fails to load. |
 | `?sw=0` | Stops the page from registering its service worker (a background helper that browsers use, for example, to keep files saved for offline use). |
+| `?noescfix` | Turns off a workaround for a crash that can happen when you press Esc on the Level Complete screen of official and online levels. Only try this if Esc behaves strangely. |
 
 If you don't add `?res`, the game picks a resolution by itself depending on your device (devices with 4 GB of RAM or less get a lower one). If the game lags, try `?res=low`.
 

@@ -2,11 +2,18 @@
 <script>
 (function () {
   window.gdInLevel = false;
+  window.gdLevelComplete = false; // true only on LEVEL COMPLETE screen for Main/Online levels
   var soundNames = new WeakMap();
   function setInLevel(value) {
     if (window.gdInLevel === value) return;
     window.gdInLevel = value;
     window.dispatchEvent(new Event('gd-inlevel'));
+  }
+  function setLevelComplete(value) {
+    if (window.gdLevelComplete === value) return;
+    window.gdLevelComplete = value;
+    if (value) window.dispatchEvent(new Event('gd-levelcomplete'));
+    else window.dispatchEvent(new Event('gd-levelcomplete-exit'));
   }
   var prototype = window.AudioBufferSourceNode && window.AudioBufferSourceNode.prototype;
   if (!prototype || typeof prototype.start !== 'function') return;
@@ -33,9 +40,16 @@
           }
           if (name) soundNames.set(buffer, name);
         }
-        if (name === 'playsound_01.ogg') setInLevel(true);
-        else if (name === 'quitsound_01.ogg' || name === 'menuloop.mp3')
+        if (name === 'playsound_01.ogg') {
+          setInLevel(true);
+          setLevelComplete(false); // starting a level clears level complete
+        } else if (name === 'quitsound_01.ogg' || name === 'menuloop.mp3') {
           setInLevel(false);
+          setLevelComplete(false); // leaving to menu clears level complete
+        } else if (name === 'endstart_02.ogg') {
+          // Level complete sound plays ONLY on Main/Online level completion (not editor)
+          setLevelComplete(true);
+        }
       }
     } catch (e) {}
     return original.apply(this, arguments);
@@ -2751,9 +2765,50 @@ gdStart();
   var VK = {Escape:27, Space:32, Enter:13, Backspace:8, Tab:9, ArrowLeft:37, ArrowUp:38, ArrowRight:39, ArrowDown:40};
   var scan = {Escape:1, Space:57, Enter:28, Backspace:14, Tab:15, ArrowLeft:75, ArrowUp:72, ArrowRight:77, ArrowDown:80,
     KeyW:17, KeyA:30, KeyS:31, KeyD:32, KeyQ:16, KeyE:18, KeyR:19, KeyF:33, KeyP:25};
+  // EscFix: intercept Escape on LEVEL COMPLETE for official/online levels
+  // Uses audio signal endStart_02.ogg which plays only on Main/Online level completion (not editor)
+  var escFixEnabled = !/[?&]noescfix(=|&|$)/.test(location.search);
+  var escFixDebug = /[?&]debug(=|&|$)/.test(location.search);
+  function escFixLog() { if (escFixDebug) console.log('[escfix]', ...arguments); }
+  function escFixIsLevelComplete() {
+    return window.gdLevelComplete === true;
+  }
+  function escFixSimulateListClick() {
+    var rect = canvasRect;
+    if (!rect) return false;
+    var canvas = Module.canvas;
+    // List button at 67.5% width, 87.7% height of visible canvas
+    var clientX = rect.left + 0.675 * rect.width;
+    var clientY = rect.top + 0.877 * rect.height;
+    escFixLog('Simulating list button click at client:', Math.round(clientX), Math.round(clientY), 'rect:', rect.left, rect.top, rect.width, rect.height);
+    var downEvent = new PointerEvent('pointerdown', {
+      clientX: clientX, clientY: clientY, button: 0, buttons: 1,
+      pointerType: 'mouse', pointerId: 1, isPrimary: true, bubbles: true, cancelable: true
+    });
+    var upEvent = new PointerEvent('pointerup', {
+      clientX: clientX, clientY: clientY, button: 0, buttons: 0,
+      pointerType: 'mouse', pointerId: 1, isPrimary: true, bubbles: true, cancelable: true
+    });
+    var clickEvent = new MouseEvent('click', {
+      clientX: clientX, clientY: clientY, button: 0, buttons: 0,
+      bubbles: true, cancelable: true
+    });
+    canvas.dispatchEvent(downEvent);
+    canvas.dispatchEvent(upEvent);
+    canvas.dispatchEvent(clickEvent);
+    return true;
+  }
   function key(e, down) {
     if (!ready()) return;
     var vk = VK[e.code] || e.keyCode || 0;
+    // EscFix: intercept Escape on LEVEL COMPLETE for official/online levels
+    if (escFixEnabled && down && e.code === 'Escape' && escFixIsLevelComplete()) {
+      escFixLog('Escape intercepted on LEVEL COMPLETE, simulating list button click');
+      e.preventDefault();
+      e.stopImmediatePropagation();
+      escFixSimulateListClick();
+      return;
+    }
     if (!vk || vk > 255) return;
     if (down && (e.ctrlKey || e.metaKey || e.altKey || e.target.closest && e.target.closest('button,input,textarea,select,a'))) return;
     if (!down && !keys.has(vk)) return;
