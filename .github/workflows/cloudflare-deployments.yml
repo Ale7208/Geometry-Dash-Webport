@@ -3,11 +3,17 @@ name: Sync Cloudflare Pages deployments
 on:
   schedule:
     - cron: "*/5 * * * *"
+  workflow_run:
+    workflows:
+      - Pages build and deployment
+    types:
+      - completed
   workflow_dispatch:
 
 permissions:
   contents: read
   deployments: write
+  actions: read
 
 concurrency:
   group: cloudflare-pages-deployments
@@ -51,7 +57,7 @@ jobs:
             fi
 
             deployment_id="$(echo "${deployment}" | jq -r '.id')"
-            commit_sha="$(echo "${deployment}" | jq -r '.deployment_trigger.metadata.commit_hash // .deployment_trigger.metadata.commit_hash // empty')"
+            commit_sha="$(echo "${deployment}" | jq -r '.deployment_trigger.metadata.commit_hash // empty')"
             environment="$(echo "${deployment}" | jq -r '.environment // "production"')"
             deployment_url="$(echo "${deployment}" | jq -r '.aliases[0] // empty')"
             if [ -z "${deployment_url}" ]; then
