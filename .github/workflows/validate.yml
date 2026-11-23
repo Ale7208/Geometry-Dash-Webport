@@ -1,0 +1,77 @@
+name: Validate project
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    name: Check HTML and required files
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Validate project structure and HTML
+        run: |
+          python3 <<'PY'
+          from html.parser import HTMLParser
+          from pathlib import Path
+          import sys
+
+          required_files = ["index.html", "README.md", "sw.js"]
+          missing = [name for name in required_files if not Path(name).is_file()]
+          if missing:
+              print("Missing required files: " + ", ".join(missing))
+              sys.exit(1)
+
+          class DocumentCheck(HTMLParser):
+              def __init__(self):
+                  super().__init__(convert_charrefs=True)
+                  self.tags = []
+                  self.title_depth = 0
+                  self.has_title_text = False
+
+              def handle_starttag(self, tag, attrs):
+                  self.tags.append(tag)
+                  if tag == "title":
+                      self.title_depth += 1
+
+              def handle_endtag(self, tag):
+                  if tag == "title" and self.title_depth:
+                      self.title_depth -= 1
+
+              def handle_data(self, data):
+                  if self.title_depth and data.strip():
+                      self.has_title_text = True
+
+          html = Path("index.html").read_text(encoding="utf-8")
+          if not html.lstrip().lower().startswith("<!doctype html>"):
+              print("index.html must start with <!DOCTYPE html>.")
+              sys.exit(1)
+
+          parser = DocumentCheck()
+          try:
+              parser.feed(html)
+              parser.close()
+          except Exception as error:
+              print(f"Could not parse index.html: {error}")
+              sys.exit(1)
+
+          for tag in ("html", "head", "body"):
+              if tag not in parser.tags:
+                  print(f"index.html is missing the <{tag}> element.")
+                  sys.exit(1)
+
+          if not parser.has_title_text:
+              print("index.html is missing a non-empty <title>.")
+              sys.exit(1)
+
+          print("Project structure and basic HTML checks passed.")
+          PY
