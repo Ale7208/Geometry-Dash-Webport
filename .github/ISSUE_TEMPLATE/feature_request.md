@@ -4,7 +4,6 @@ about: Suggest a new feature or an improvement to the game
 title: "[Feature]:"
 labels: enhancement
 assignees: ''
-type: Feature
 
 ---
 

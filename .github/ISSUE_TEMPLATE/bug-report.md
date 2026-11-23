@@ -4,7 +4,6 @@ about: Report something that is broken or behaving differently than expected
 title: "[Bug]:"
 labels: bug
 assignees: ''
-type: Bug
 
 ---
 
