@@ -1,7 +1,7 @@
 ---
 name: Feature request
 about: Suggest a new feature or an improvement to the game
-title: "[Feature]:"
+title: ''
 labels: enhancement
 assignees: ''
 

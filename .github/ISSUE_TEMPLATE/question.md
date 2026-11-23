@@ -1,7 +1,7 @@
 ---
 name: Question
 about: Ask for help or clarification about the game
-title: "[Question]:"
+title: ''
 labels: question
 assignees: ''
 
