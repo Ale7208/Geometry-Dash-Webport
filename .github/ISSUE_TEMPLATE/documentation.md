@@ -1,22 +1,28 @@
 ---
 name: Documentation
-about: Report an error or something missing in the README or docs
+about: Report incorrect, outdated, unclear, or missing documentation
 title: "[Docs]:"
 labels: documentation
 assignees: ''
 
 ---
 
-<!-- Use this for mistakes, outdated info or missing explanations in the README. -->
+<!-- Use this template for problems with written information, such as the README, instructions, or descriptions. For problems with the game itself, choose Bug report instead. -->
 
-## Where is the problem?
+## Where did you find the problem?
 
-<!-- README in English, itch.io page, in-game text, other. Add a link if you can -->
+<!-- Name the page or section. For example: README, installation/offline instructions, in-game text, or another documentation page. Add a link if possible. -->
+- Page or file:
+- Section or link:
 
-## What is wrong or missing?
+## What needs to be corrected?
 
-<!-- Describe the mistake or what you could not find -->
+<!-- Explain what is incorrect, outdated, confusing, or missing. If something is hard to understand, tell us which part and why. -->
 
-## Suggested fix
+## What should it say instead?
 
-<!-- Optional. You can write the corrected text here -->
+<!-- If you know the correct information or wording, suggest it here. This is optional; you can also just describe the problem. -->
+
+## Additional context
+
+<!-- Optional: add links, screenshots, or other details that could help us verify the information. -->
