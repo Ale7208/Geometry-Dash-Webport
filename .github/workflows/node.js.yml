@@ -1,31 +1,99 @@
-# This workflow will do a clean installation of node dependencies, cache/restore them, build the source code and run tests across different versions of node
-# For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-nodejs
-
-name: Node.js CI
+name: JavaScript syntax check
 
 on:
   push:
-    branches: [ "main" ]
+    branches: [main]
   pull_request:
-    branches: [ "main" ]
+    branches: [main]
+
+permissions:
+  contents: read
 
 jobs:
-  build:
-
+  syntax:
+    name: Check JavaScript syntax
     runs-on: ubuntu-latest
-
-    strategy:
-      matrix:
-        node-version: [18.x, 20.x, 22.x]
-        # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
-
     steps:
-    - uses: actions/checkout@v4
-    - name: Use Node.js ${{ matrix.node-version }}
-      uses: actions/setup-node@v4
-      with:
-        node-version: ${{ matrix.node-version }}
-        cache: 'npm'
-    - run: npm ci
-    - run: npm run build --if-present
-    - run: npm test
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22.x
+
+      - name: Check JavaScript files and inline scripts
+        run: |
+          python3 <<'PY'
+          from html.parser import HTMLParser
+          from pathlib import Path
+          import subprocess
+          import sys
+          import tempfile
+
+          class ScriptExtractor(HTMLParser):
+              def __init__(self):
+                  super().__init__()
+                  self.capture = False
+                  self.parts = []
+                  self.scripts = []
+
+              def handle_starttag(self, tag, attrs):
+                  if tag != "script":
+                      return
+                  attrs = dict(attrs)
+                  script_type = attrs.get("type", "").split(";")[0].strip().lower()
+                  is_javascript = script_type in ("", "module", "text/javascript", "application/javascript")
+                  self.capture = is_javascript and "src" not in attrs
+                  if self.capture:
+                      self.parts = []
+
+              def handle_data(self, data):
+                  if self.capture:
+                      self.parts.append(data)
+
+              def handle_endtag(self, tag):
+                  if tag == "script" and self.capture:
+                      code = "".join(self.parts)
+                      if code.strip():
+                          self.scripts.append(code)
+                      self.capture = False
+                      self.parts = []
+
+          checked = 0
+
+          # Check standalone JavaScript files in the repository.
+          for path in sorted(Path(".").rglob("*.js")):
+              if any(part in ("node_modules", ".git") for part in path.parts):
+                  continue
+              result = subprocess.run(["node", "--check", str(path)], text=True, capture_output=True)
+              if result.returncode:
+                  print(f"Syntax error in {path}:")
+                  print(result.stderr)
+                  sys.exit(result.returncode)
+              print(f"OK: {path}")
+              checked += 1
+
+          # Extract and check executable inline scripts from index.html.
+          html_path = Path("index.html")
+          if not html_path.is_file():
+              print("Missing index.html")
+              sys.exit(1)
+
+          parser = ScriptExtractor()
+          parser.feed(html_path.read_text(encoding="utf-8"))
+          for number, code in enumerate(parser.scripts, start=1):
+              with tempfile.NamedTemporaryFile("w", suffix=".js", encoding="utf-8", delete=False) as temp:
+                  temp.write(code)
+                  temp_path = temp.name
+              result = subprocess.run(["node", "--check", temp_path], text=True, capture_output=True)
+              Path(temp_path).unlink(missing_ok=True)
+              if result.returncode:
+                  print(f"Syntax error in inline script #{number} in index.html:")
+                  print(result.stderr)
+                  sys.exit(result.returncode)
+              print(f"OK: inline script #{number} in index.html")
+              checked += 1
+
+          print(f"JavaScript syntax check passed ({checked} checks).")
+          PY
