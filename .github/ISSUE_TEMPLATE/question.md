@@ -1,29 +1,37 @@
 ---
 name: Question
-about: Ask something about the game or how to use it
+about: Ask for help or clarification about the game
 title: "[Question]:"
 labels: question
 assignees: ''
 
 ---
 
-> Just so you know, questions are usually asked in [Discussions > Q&A](https://github.com/Ale7208/Geometry-Dash-webport/discussions/categories/q-a). But no worries, go ahead and continue your question here.
+<!-- Questions are usually easier to discuss in Discussions > Q&A:
+https://github.com/Ale7208/Geometry-Dash-webport/discussions/categories/q-a
+You can still submit your question here if you prefer. -->
 
-<!-- Before asking, check the README and the existing issues and discussions. -->
+## What would you like to know?
 
-## Your question
+<!-- Describe your question clearly. Include the part of the game or instructions you are asking about. -->
 
-<!-- Be as specific as you can -->
+## What have you tried so far?
 
-## What have you tried?
-
-<!-- Optional -->
+<!-- Optional: mention any steps you have already taken or solutions you have checked. -->
 
 ## Where are you playing?
 
-<!-- Official site (gd-webport.pages.dev), GitHub Pages, downloaded index.html, itch.io, or a copy by someone else -->
+<!-- For example: the official website, another hosted version, or a downloaded copy of index.html. -->
+- Website or version:
+- Link (if available):
 
 ## Device and browser
 
-- Device (PC, Chromebook, phone):
+<!-- This information can help if your question is related to a technical problem. -->
+- Device (computer, Chromebook, phone, tablet):
+- Operating system:
 - Browser and version:
+
+## Extra details
+
+<!-- Optional: include an error message, screenshot, or anything else that could help us understand your question. Hide personal information before uploading. -->
