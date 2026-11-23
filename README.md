@@ -78,6 +78,8 @@ mobile-specific behaviours:
 * **Performance:** MSAA is disabled (the largest avoidable GPU cost at 1080p)
   and the render buffer can be scaled down before boot.
 
+  Thanks @CloudCompile for contributing and making mobile support possible.
+
 ## Game Information
 
 | Feature               | Details               |
