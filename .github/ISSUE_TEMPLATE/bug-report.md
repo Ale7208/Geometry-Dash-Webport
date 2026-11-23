@@ -8,9 +8,6 @@ type: Bug
 
 ---
 
-<!-- If you need help or have a general question, please use Discussions > Q&A:
-https://github.com/Ale7208/Geometry-Dash-webport/discussions/categories/q-a -->
-
 ## Before reporting
 
 <!-- To mark a checkbox, replace [ ] with [x] after completing the step. Leave it as [ ] if you have not completed it. -->
