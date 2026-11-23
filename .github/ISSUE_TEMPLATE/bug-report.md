@@ -13,6 +13,8 @@ https://github.com/Ale7208/Geometry-Dash-webport/discussions/categories/q-a -->
 
 ## Before reporting
 
+<!-- To mark a checkbox, replace [ ] with [x] after completing the step. Leave it as [ ] if you have not completed it. -->
+
 - [ ] I refreshed the page and checked whether the problem happens again.
 - [ ] I checked the README troubleshooting section for a possible solution.
 
