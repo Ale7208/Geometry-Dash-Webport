@@ -56,6 +56,8 @@ The webport is intended for modern browsers on both desktop and mobile devices.
 | Brave                         | Supported        |
 | Other Chromium-based browsers | Likely supported |
 
+The browser must, without fail, be compatible with the JSPI feature.
+
 The game can also be played on mobile phones. Performance, controls, and compatibility may vary depending on your device and browser.
 
 ## Mobile Support
