@@ -9,8 +9,18 @@ jobs:
       issues: write
       pull-requests: write
     steps:
-    - uses: actions/first-interaction@v1
-      with:
-        repo-token: ${{ secrets.GITHUB_TOKEN }}
-        issue-message: "Message that will be displayed on users' first issue"
-        pr-message: "Message that will be displayed on users' first pull request"
+      - uses: actions/first-interaction@v1
+        with:
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
+          issue-message: |
+            🎉 Congratulations on opening your first issue!
+
+            Thank you for taking the time to report an issue. Your feedback helps the developer identify problems, understand their impact, and work towards possible solutions.
+
+            We appreciate your contribution to Geometry Dash Webport!
+          pr-message: |
+            🎉 Congratulations on opening your first pull request!
+
+            Thank you for contributing to Geometry Dash Webport. Your effort and proposed changes help improve the project.
+
+            The developer will review your contribution as soon as possible. We appreciate your support!
