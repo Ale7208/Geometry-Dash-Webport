@@ -6,6 +6,10 @@ body:
     attributes:
       value: |
         Use this form for the README, instructions, or other written information. For problems with the game itself, use Bug report.
+  - type: markdown
+    attributes:
+      value: |
+        ---
   - type: input
     id: location
     attributes:
@@ -14,6 +18,10 @@ body:
       placeholder: e.g. README - Offline play
     validations:
       required: true
+  - type: markdown
+    attributes:
+      value: |
+        ---
   - type: textarea
     id: problem
     attributes:
@@ -22,6 +30,10 @@ body:
       placeholder: Describe the documentation problem...
     validations:
       required: true
+  - type: markdown
+    attributes:
+      value: |
+        ---
   - type: textarea
     id: suggested-change
     attributes:
@@ -29,6 +41,10 @@ body:
       description: Optional. If you know how it should be written, suggest a correction.
     validations:
       required: false
+  - type: markdown
+    attributes:
+      value: |
+        ---
   - type: textarea
     id: extra-context
     attributes:
