@@ -6,6 +6,10 @@ body:
     attributes:
       value: |
         Before submitting, check whether the problem has already been reported. Please do not include passwords, tokens, or other private information.
+  - type: markdown
+    attributes:
+      value: |
+        ---
   - type: textarea
     id: what-happened
     attributes:
@@ -14,6 +18,10 @@ body:
       placeholder: Describe the problem...
     validations:
       required: true
+  - type: markdown
+    attributes:
+      value: |
+        ---
   - type: dropdown
     id: browser
     attributes:
@@ -28,6 +36,10 @@ body:
         - I don't know
     validations:
       required: true
+  - type: markdown
+    attributes:
+      value: |
+        ---
   - type: dropdown
     id: device
     attributes:
@@ -42,6 +54,10 @@ body:
         - Other
     validations:
       required: true
+  - type: markdown
+    attributes:
+      value: |
+        ---
   - type: dropdown
     id: playing-location
     attributes:
@@ -52,6 +68,10 @@ body:
         - Downloaded HTML file
     validations:
       required: true
+  - type: markdown
+    attributes:
+      value: |
+        ---
   - type: dropdown
     id: game-section
     attributes:
@@ -68,6 +88,10 @@ body:
         - Other / Not sure
     validations:
       required: false
+  - type: markdown
+    attributes:
+      value: |
+        ---
   - type: textarea
     id: reproduction-steps
     attributes:
@@ -79,6 +103,10 @@ body:
         3. ...
     validations:
       required: false
+  - type: markdown
+    attributes:
+      value: |
+        ---
   - type: input
     id: url-parameters
     attributes:
@@ -87,6 +115,10 @@ body:
       placeholder: None
     validations:
       required: false
+  - type: markdown
+    attributes:
+      value: |
+        ---
   - type: textarea
     id: console-errors
     attributes:
@@ -95,6 +127,10 @@ body:
       render: text
     validations:
       required: false
+  - type: markdown
+    attributes:
+      value: |
+        ---
   - type: textarea
     id: media
     attributes:
