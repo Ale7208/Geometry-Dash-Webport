@@ -1,37 +1,72 @@
----
 name: Question
-about: Ask for help or clarification about the game
-title: ''
-labels: question
-assignees: ''
-
----
-
-<!-- Questions are usually easier to discuss in Discussions > Q&A:
-https://github.com/Ale7208/Geometry-Dash-webport/discussions/categories/q-a
-You can still submit your question here if you prefer. -->
-
-## What would you like to know?
-
-<!-- Describe your question clearly. Include the part of the game or instructions you are asking about. -->
-
-## What have you tried so far?
-
-<!-- Optional: mention any steps you have already taken or solutions you have checked. -->
-
-## Where are you playing?
-
-<!-- For example: the official website, another hosted version, or a downloaded copy of index.html. -->
-- Website or version:
-- Link (if available):
-
-## Device and browser
-
-<!-- This information can help if your question is related to a technical problem. -->
-- Device (computer, Chromebook, phone, tablet):
-- Operating system:
-- Browser and version:
-
-## Extra details
-
-<!-- Optional: include an error message, screenshot, or anything else that could help us understand your question. Hide personal information before uploading. -->
+description: Ask for help or clarification about the game.
+title: "[Question]: "
+labels: ["question"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        For general questions, GitHub Discussions > Q&A may be a better place:
+        https://github.com/Ale7208/Geometry-Dash-webport/discussions/categories/q-a
+  - type: textarea
+    id: question
+    attributes:
+      label: What would you like to know?
+      description: Write your question as clearly as you can.
+      placeholder: Your question...
+    validations:
+      required: true
+  - type: textarea
+    id: tried
+    attributes:
+      label: What have you tried so far?
+      description: Optional. Mention any steps or solutions you have already tried.
+    validations:
+      required: false
+  - type: dropdown
+    id: playing-location
+    attributes:
+      label: Where are you playing?
+      description: Optional. Choose how you opened the game.
+      options:
+        - Official website
+        - Downloaded HTML file
+        - Other website or version
+        - I haven't opened the game yet
+    validations:
+      required: false
+  - type: dropdown
+    id: device
+    attributes:
+      label: Device
+      description: Optional.
+      options:
+        - Windows PC
+        - Mac
+        - Chromebook
+        - Android phone or tablet
+        - iPhone or iPad
+        - Other
+    validations:
+      required: false
+  - type: dropdown
+    id: browser
+    attributes:
+      label: Browser
+      description: Optional.
+      options:
+        - Google Chrome
+        - Microsoft Edge
+        - Mozilla Firefox
+        - Safari
+        - Other
+        - I don't know
+    validations:
+      required: false
+  - type: textarea
+    id: extra-details
+    attributes:
+      label: Additional details
+      description: Optional. Include an error message, link, or other context that may help.
+    validations:
+      required: false
