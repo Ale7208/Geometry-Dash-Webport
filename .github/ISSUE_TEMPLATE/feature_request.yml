@@ -6,6 +6,10 @@ body:
     attributes:
       value: |
         Check existing issues first to see whether someone has already suggested the same idea.
+  - type: markdown
+    attributes:
+      value: |
+        ---
   - type: textarea
     id: idea
     attributes:
@@ -14,6 +18,10 @@ body:
       placeholder: Explain your idea...
     validations:
       required: true
+  - type: markdown
+    attributes:
+      value: |
+        ---
   - type: textarea
     id: usefulness
     attributes:
@@ -21,6 +29,10 @@ body:
       description: Explain what problem it would solve or how it would improve the game.
     validations:
       required: true
+  - type: markdown
+    attributes:
+      value: |
+        ---
   - type: textarea
     id: examples
     attributes:
@@ -28,6 +40,10 @@ body:
       description: Optional. Add links or attach screenshots that help explain your idea.
     validations:
       required: false
+  - type: markdown
+    attributes:
+      value: |
+        ---
   - type: textarea
     id: alternatives
     attributes:
