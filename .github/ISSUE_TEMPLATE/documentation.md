@@ -1,28 +1,39 @@
----
 name: Documentation
-about: Report incorrect, outdated, unclear, or missing documentation
-title: ''
-labels: documentation
-assignees: ''
-
----
-
-<!-- Use this template for problems with written information, such as the README, instructions, or descriptions. For problems with the game itself, choose Bug report instead. -->
-
-## Where did you find the problem?
-
-<!-- Name the page or section. For example: README, installation/offline instructions, in-game text, or another documentation page. Add a link if possible. -->
-- Page or file:
-- Section or link:
-
-## What needs to be corrected?
-
-<!-- Explain what is incorrect, outdated, confusing, or missing. If something is hard to understand, tell us which part and why. -->
-
-## What should it say instead?
-
-<!-- If you know the correct information or wording, suggest it here. This is optional; you can also just describe the problem. -->
-
-## Additional context
-
-<!-- Optional: add links, screenshots, or other details that could help us verify the information. -->
+description: Report incorrect, outdated, unclear, or missing information.
+title: "[Docs]: "
+labels: ["documentation"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Use this form for the README, instructions, or other written information. For problems with the game itself, use Bug report.
+  - type: input
+    id: location
+    attributes:
+      label: Where did you find the problem?
+      description: Name the page, file, or section. Add a link if possible.
+      placeholder: e.g. README - Offline play
+    validations:
+      required: true
+  - type: textarea
+    id: problem
+    attributes:
+      label: What is incorrect or missing?
+      description: Explain what is confusing, outdated, incorrect, or missing.
+      placeholder: Describe the documentation problem...
+    validations:
+      required: true
+  - type: textarea
+    id: suggested-change
+    attributes:
+      label: Suggested correction
+      description: Optional. If you know how it should be written, suggest a correction.
+    validations:
+      required: false
+  - type: textarea
+    id: extra-context
+    attributes:
+      label: Additional context
+      description: Optional. Add links, screenshots, or other details that could help.
+    validations:
+      required: false
