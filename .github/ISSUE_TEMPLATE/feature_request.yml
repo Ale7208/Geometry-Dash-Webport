@@ -1,10 +1,12 @@
 name: Feature request
-description: Suggest a new feature or an improvement.
-labels: ["enhancement"]
+description: Suggest a completely new feature that does not exist yet.
+labels: ["feature"]
 body:
   - type: markdown
     attributes:
       value: |
+        Use this form to suggest something new. If you want to improve an existing feature, use Enhancement request instead.
+
         Check existing issues first to see whether someone has already suggested the same idea.
   - type: markdown
     attributes:
@@ -13,7 +15,7 @@ body:
   - type: textarea
     id: idea
     attributes:
-      label: What would you like to add or improve?
+      label: What new feature would you like to add?
       description: Describe your idea and how you imagine it working.
       placeholder: Explain your idea...
     validations:
@@ -25,7 +27,7 @@ body:
   - type: textarea
     id: usefulness
     attributes:
-      label: Why would this be useful?
+      label: Why would this feature be useful?
       description: Explain what problem it would solve or how it would improve the game.
     validations:
       required: true
