@@ -1,30 +1,38 @@
----
 name: Feature request
-about: Suggest a new feature or an improvement to the game
-title: ''
-labels: enhancement
-assignees: ''
-
----
-
-<!-- Before suggesting an idea, you can check the existing issues to see whether someone has already suggested it. -->
-
-## What would you like to improve?
-
-<!-- Describe the feature or change you would like to see. Try to explain it in simple terms. -->
-
-## Why would it be useful?
-
-<!-- What problem would it solve? How would it make the game better or easier to use? -->
-
-## How do you imagine it working?
-
-<!-- Explain how you think the feature should behave. A short example is welcome. -->
-
-## Have you considered another solution?
-
-<!-- Optional: mention any alternatives you thought about, or explain why this idea would work best. -->
-
-## Examples or references
-
-<!-- Optional: add screenshots, links, or examples from other projects. Please explain what part of the example you would like to see here. -->
+description: Suggest a new feature or an improvement.
+title: "[Feature]: "
+labels: ["enhancement"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Check existing issues first to see whether someone has already suggested the same idea.
+  - type: textarea
+    id: idea
+    attributes:
+      label: What would you like to add or improve?
+      description: Describe your idea and how you imagine it working.
+      placeholder: Explain your idea...
+    validations:
+      required: true
+  - type: textarea
+    id: usefulness
+    attributes:
+      label: Why would this be useful?
+      description: Explain what problem it would solve or how it would improve the game.
+    validations:
+      required: true
+  - type: textarea
+    id: examples
+    attributes:
+      label: Examples or references
+      description: Optional. Add links or attach screenshots that help explain your idea.
+    validations:
+      required: false
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Other suggestions
+      description: Optional. Mention any alternative solutions or extra details.
+    validations:
+      required: false
