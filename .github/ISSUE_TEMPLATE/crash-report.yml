@@ -1,6 +1,5 @@
 name: Crash report
 description: Report a crash, freeze, or unexpected game shutdown.
-title: "[Crash]: "
 labels: ["crash"]
 body:
   - type: markdown
@@ -61,14 +60,6 @@ body:
         - Downloaded HTML file
     validations:
       required: true
-  - type: input
-    id: downloaded-version
-    attributes:
-      label: Version (if you downloaded the HTML file)
-      description: If you selected "Downloaded HTML file", enter the version if you know it. Otherwise, leave this blank.
-      placeholder: e.g. 1.1.0
-    validations:
-      required: false
   - type: dropdown
     id: crash-stage
     attributes:
