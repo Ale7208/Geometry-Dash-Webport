@@ -1,11 +1,11 @@
 name: Feature request
-description: Suggest a completely new feature that does not exist yet.
+description: Request a new feature or functionality that does not exist in the game yet.
 labels: ["feature"]
 body:
   - type: markdown
     attributes:
       value: |
-        Use this form to suggest something new. If you want to improve an existing feature, use Enhancement request instead.
+        Use this form to suggest a completely new feature or functionality that the game does not currently have. If you want to improve something that already exists, use Enhancement request instead.
 
         Check existing issues first to see whether someone has already suggested the same idea.
   - type: markdown
