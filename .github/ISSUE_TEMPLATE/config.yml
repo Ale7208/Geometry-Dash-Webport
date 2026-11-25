@@ -1,4 +1,4 @@
-blank_issues_enabled: false
+blank_issues_enabled: true
 contact_links:
   - name: Questions and help
     url: https://github.com/Ale7208/Geometry-Dash-webport/discussions/categories/q-a
