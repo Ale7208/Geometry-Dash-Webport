@@ -1,5 +1,5 @@
 blank_issues_enabled: true
 contact_links:
   - name: Questions and help
-    url: https://github.com/Ale7208/Geometry-Dash-webport/discussions/categories/q-a
+    url: https://github.com/Ale7208/Geometry-Dash-webport/discussions/new?category=q-a
     about: Ask general questions in GitHub Discussions.
