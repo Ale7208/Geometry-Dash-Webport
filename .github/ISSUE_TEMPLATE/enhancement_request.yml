@@ -1,11 +1,11 @@
 name: Enhancement request
-description: Suggest an improvement to an existing feature or part of the game.
+description: Request an improvement or change to a feature or functionality that already exists.
 labels: ["enhancement"]
 body:
   - type: markdown
     attributes:
       value: |
-        Use this form to improve something that already exists. If you want to suggest something completely new, use Feature request instead.
+        Use this form to request an improvement, adjustment, or change to something that already exists in the game. If you want to suggest a completely new feature or functionality, use Feature request instead.
 
         Check existing issues first to see whether someone has already suggested the same improvement.
   - type: markdown
