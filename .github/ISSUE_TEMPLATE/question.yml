@@ -1,6 +1,5 @@
 name: Question
 description: Ask for help or clarification about the game.
-title: "[Question]: "
 labels: ["question"]
 body:
   - type: markdown
