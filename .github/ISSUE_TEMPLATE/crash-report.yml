@@ -6,6 +6,10 @@ body:
     attributes:
       value: |
         Use this form when the game closes unexpectedly, freezes, or stops responding. Please include the exact error message. If no message appeared, write "No error message was displayed".
+  - type: markdown
+    attributes:
+      value: |
+        ---
   - type: textarea
     id: what-happened
     attributes:
@@ -14,6 +18,10 @@ body:
       placeholder: Describe what happened...
     validations:
       required: true
+  - type: markdown
+    attributes:
+      value: |
+        ---
   - type: textarea
     id: error-message
     attributes:
@@ -22,6 +30,10 @@ body:
       placeholder: Paste the full error message here, or write "No error message was displayed".
     validations:
       required: true
+  - type: markdown
+    attributes:
+      value: |
+        ---
   - type: dropdown
     id: browser
     attributes:
@@ -36,6 +48,10 @@ body:
         - I don't know
     validations:
       required: true
+  - type: markdown
+    attributes:
+      value: |
+        ---
   - type: dropdown
     id: device
     attributes:
@@ -50,6 +66,10 @@ body:
         - Other
     validations:
       required: true
+  - type: markdown
+    attributes:
+      value: |
+        ---
   - type: dropdown
     id: playing-location
     attributes:
@@ -60,6 +80,10 @@ body:
         - Downloaded HTML file
     validations:
       required: true
+  - type: markdown
+    attributes:
+      value: |
+        ---
   - type: dropdown
     id: crash-stage
     attributes:
@@ -75,6 +99,10 @@ body:
         - Other / Not sure
     validations:
       required: false
+  - type: markdown
+    attributes:
+      value: |
+        ---
   - type: textarea
     id: console-errors
     attributes:
@@ -83,6 +111,10 @@ body:
       render: text
     validations:
       required: false
+  - type: markdown
+    attributes:
+      value: |
+        ---
   - type: textarea
     id: media
     attributes:
