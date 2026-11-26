@@ -1037,10 +1037,37 @@ button,input,textarea{touch-action:manipulation;}
     } finally { release(); }
   }
   var wasmModulePromise;
+  function wasmFilenameFromManifest(m) {
+    try { return new URL(m.wasm.url, document.baseURI).pathname.split('/').pop(); } catch (e) { return m.wasm.url.split('/').pop(); }
+  }
+  async function cleanupOldWasmCache(currentFilename) {
+    var cache = await assetCache();
+    if (!cache) return;
+    try {
+      var keys = await cache.keys();
+      var hasCurrent = false;
+      for (var i = 0; i < keys.length; i++) {
+        var key = keys[i];
+        var url = typeof key === 'string' ? key : key.url;
+        var filename = url.split('/').pop();
+        if (filename === currentFilename) { hasCurrent = true; break; }
+      }
+      if (!hasCurrent) return;
+      for (var i = 0; i < keys.length; i++) {
+        var key = keys[i];
+        var url = typeof key === 'string' ? key : key.url;
+        var filename = url.split('/').pop();
+        if (/^wasm-[a-f0-9]{20,}\.gz$/.test(filename) && filename !== currentFilename) {
+          await cache.delete(key);
+        }
+      }
+    } catch (e) { /* ignore cleanup errors */ }
+  }
   function loadWasmModule(m) {
     if (!wasmModulePromise) wasmModulePromise = retry(async function (attempt) {
       await acquire();
       var released = false;
+      var currentWasmFilename = wasmFilenameFromManifest(m);
       function finish() { if (!released) { released = true; release(); } }
       try {
         var r;
@@ -1057,6 +1084,7 @@ button,input,textarea{touch-action:manipulation;}
           headers: {'Content-Type': 'application/wasm'}
         }));
         finish();
+        await cleanupOldWasmCache(currentWasmFilename);
         return module;
       } catch (e) { finish(); throw e; }
     }, undefined, isNetworkError).catch(function (e) {
