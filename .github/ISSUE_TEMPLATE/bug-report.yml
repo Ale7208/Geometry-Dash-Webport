@@ -76,7 +76,7 @@ body:
     id: page-url
     attributes:
       label: Page URL
-      description: The page URL where the problem occurred. This may be filled in automatically when you open the bug report from the game.
+      description: "Opcional. Este campo se completa automáticamente al usar el botón «Report bug» de la página oficial. Si estás leyendo esto y no utilizaste ese botón, puedes dejarlo vacío."
       placeholder: https://...
     validations:
       required: false
