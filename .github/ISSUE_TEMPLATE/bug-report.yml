@@ -76,7 +76,7 @@ body:
     id: page-url
     attributes:
       label: Page URL
-      description: "Opcional. Este campo se completa automáticamente al usar el botón «Report bug» de la página oficial. Si estás leyendo esto y no utilizaste ese botón, puedes dejarlo vacío."
+      description: "Optional. This field is filled in automatically when using the Report bug button on the official website. If you are reading this and did not use the Report bug button, you can leave it blank."
       placeholder: https://...
     validations:
       required: false
