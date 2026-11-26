@@ -93,6 +93,10 @@ window.__gdProxyBases=(function(){var d=["https://boomlings.ale7208.workers.dev/
 window.__gdProxyBase=window.__gdProxyBases[0];
 window.__gdAccountProxyBases=["https://boomlings.ale7208.workers.dev/?url=","https://boomlings.ale728.workers.dev/?url=","https://boomlings.ale720.workers.dev/?url="];
 window.__gdProxyPass=["googletagmanager","cloudflareinsights","jsdelivr","raw.githubusercontent.com","gstatic","googleapis","corsfix","corsproxy","allorigins","workers.dev","google-analytics","analytics.google","doubleclick"];
+window.__gdRawFallbackState={jsdelivrFailures:0,preferRaw:false};
+function __gdToRawUrl(u){try{var url=new URL(u,document.baseURI);if(url.hostname==='cdn.jsdelivr.net'&&url.pathname.startsWith('/gh/Ale7208/geometry-dash-wasm/')){var path=url.pathname.slice('/gh/Ale7208/geometry-dash-wasm/'.length);return 'https://raw.githubusercontent.com/Ale7208/geometry-dash-wasm/main/'+path;}}catch(e){}return null;}
+function __gdIsRetryableResponse(r){if(!r)return true;var st=r.status;return st===0||st===403||st===404||st===429||(st>=500&&st<600);}
+async function __gdFetchWithRawFallback(originalUrl,init,attemptedRaw){var rawUrl=__gdToRawUrl(originalUrl);var state=window.__gdRawFallbackState;var useRawFirst=state.preferRaw&&rawUrl;var lastErr=null;var jsdFailed=false;if(useRawFirst&&!attemptedRaw){try{var r=await fetch(rawUrl,init);if(r.ok)return r;attemptedRaw=true;lastErr=null;}catch(e){if(e&&e.name==='AbortError')throw e;lastErr=e;attemptedRaw=true;}}try{var r=await fetch(originalUrl,init);if(r.ok){state.jsdelivrFailures=0;state.preferRaw=false;return r;}jsdFailed=true;lastErr=null;}catch(e){if(e&&e.name==='AbortError')throw e;jsdFailed=true;lastErr=e;}var retryable=lastErr!==null||__gdIsRetryableResponse(r)||!r.body;if(retryable&&rawUrl&&!attemptedRaw){try{var r2=await fetch(rawUrl,init);if(r2.ok){if(jsdFailed){state.jsdelivrFailures++;if(state.jsdelivrFailures>=3)state.preferRaw=true;}return r2;}state.jsdelivrFailures++;if(state.jsdelivrFailures>=3)state.preferRaw=true;lastErr=null;}catch(e){if(e&&e.name==='AbortError')throw e;state.jsdelivrFailures++;if(state.jsdelivrFailures>=3)state.preferRaw=true;lastErr=e;}}else if(!retryable){state.jsdelivrFailures=0;state.preferRaw=false;}else{state.jsdelivrFailures++;if(state.jsdelivrFailures>=3)state.preferRaw=true;}if(lastErr)throw lastErr;return r;}
 window.__gdProxyTarget=function(u){var k="/__proxy?url=";if(typeof u!=="string")return null;for(var b=0;b<window.__gdProxyBases.length;b++)if(u.indexOf(window.__gdProxyBases[b])===0)return null;var i=u.indexOf(k);if(i>=0){if(i>0){try{var o=new URL(u.slice(0,i)).origin;if(o!==location.origin&&o!==new URL(document.baseURI).origin)return null;}catch(e){return null;}}var s=u.slice(i+k.length);try{return decodeURIComponent(s);}catch(e){return s;}}if(/^https?:\/\//i.test(u)){try{var w=new URL(u);if(w.origin===location.origin)return null;for(var p=0;p<window.__gdProxyPass.length;p++)if(w.hostname.indexOf(window.__gdProxyPass[p])>=0)return null;return u;}catch(e){return null;}}return null;};
 window.__gdProxyBuild=function(base,target){if(base.indexOf("corsfix")>=0)return base+target;return base+encodeURIComponent(target);};
 (function(){
@@ -189,7 +193,7 @@ button,input,textarea{touch-action:manipulation;}
       return get.call(this, type, attrs);
     };
   } catch (e) {}
-})();</script></head><body><div id="gdLoad"><i></i><span id="gdLoadPct"></span></div><div id="errOverlay" role="alert"></div><div id="app"><div id="stage"><canvas id="canvas" width="1920" height="1080"></canvas></div><div id="midbar"><div id="bars"><div class="abrow"><span class="ablabel" id="wasmLabel">WASM</span><div class="abtrack"><div class="abfill" id="wasmFill"></div></div><span class="abpct" id="wasmPct">0%</span></div><div class="abrow"><span class="ablabel" id="dataLabel">DATA</span><div class="abtrack"><div class="abfill" id="dataFill"></div></div><span class="abpct" id="dataPct">0%</span></div></div><div id="bootbars"><div class="abtrack"><div class="abfill" id="bootFill"></div></div><span class="abpct" id="bootPct">0%</span></div><div id="fps"><svg width="13" height="13" viewBox="0 0 16 16" aria-hidden="true"><rect x="1.2" y="2" width="13.6" height="9" rx="1.6" fill="none" stroke="#888" stroke-width="1.4"/><rect x="6.5" y="12" width="3" height="2" fill="#888"/><rect x="4.5" y="14.2" width="7" height="1.3" rx="0.6" fill="#888"/></svg><span id="fpsval">-- fps</span></div><span id="perfval" style="font-size:10px" title="Queue delay is event-to-game polling, not total display latency"></span><button id="fsBtn" type="button">Fullscreen</button><button id="saveBtn" type="button" title="Save game progress and local levels">Save progress</button><button id="clearBtn" type="button" title="Delete saved progress and login">Reset progress</button></div><div id="console"></div></div><script>(function(){var WASM_URL="https://raw.githubusercontent.com/Ale7208/geometry-dash-wasm/main/payload/wasm-523d9362955eba27a8ce64ec.gz";var f=window.fetch;function fixed(r){return r.clone().json().then(function(j){if(WASM_URL&&j&&j.wasm)j.wasm.url=WASM_URL;return new Response(JSON.stringify(j),{status:200,headers:{"Content-Type":"application/json"}});});}window.fetch=function(i,o){var u=typeof i==='string'?i:(i&&i.url)||'';if(u.indexOf('gd_assets.json')<0)return f.apply(this,arguments);var k=new URL(u,document.baseURI).href.split('?')[0];return f.apply(this,arguments).then(function(r){if(!r.ok)return r;return fixed(r).then(function(n){var copy=n.clone();if(window.caches)caches.open('gdwasm-assets').then(function(c){return c.put(k,copy);}).catch(function(){});return n;});}).catch(function(e){if(!window.caches)throw e;return caches.open('gdwasm-assets').then(function(c){return c.match(k);}).then(function(r){if(r)return r;throw e;});});};})();</script><script>
+})();</script></head><body><div id="gdLoad"><i></i><span id="gdLoadPct"></span></div><div id="errOverlay" role="alert"></div><div id="app"><div id="stage"><canvas id="canvas" width="1920" height="1080"></canvas></div><div id="midbar"><div id="bars"><div class="abrow"><span class="ablabel" id="wasmLabel">WASM</span><div class="abtrack"><div class="abfill" id="wasmFill"></div></div><span class="abpct" id="wasmPct">0%</span></div><div class="abrow"><span class="ablabel" id="dataLabel">DATA</span><div class="abtrack"><div class="abfill" id="dataFill"></div></div><span class="abpct" id="dataPct">0%</span></div></div><div id="bootbars"><div class="abtrack"><div class="abfill" id="bootFill"></div></div><span class="abpct" id="bootPct">0%</span></div><div id="fps"><svg width="13" height="13" viewBox="0 0 16 16" aria-hidden="true"><rect x="1.2" y="2" width="13.6" height="9" rx="1.6" fill="none" stroke="#888" stroke-width="1.4"/><rect x="6.5" y="12" width="3" height="2" fill="#888"/><rect x="4.5" y="14.2" width="7" height="1.3" rx="0.6" fill="#888"/></svg><span id="fpsval">-- fps</span></div><span id="perfval" style="font-size:10px" title="Queue delay is event-to-game polling, not total display latency"></span><button id="fsBtn" type="button">Fullscreen</button><button id="saveBtn" type="button" title="Save game progress and local levels">Save progress</button><button id="clearBtn" type="button" title="Delete saved progress and login">Reset progress</button></div><div id="console"></div></div><script>(function(){var WASM_URL="https://raw.githubusercontent.com/Ale7208/geometry-dash-wasm/main/payload/wasm-523d9362955eba27a8ce64ec.gz";var f=window.fetch;function fixed(r){return r.clone().json().then(function(j){if(WASM_URL&&j&&j.wasm)j.wasm.url=WASM_URL;return new Response(JSON.stringify(j),{status:200,headers:{"Content-Type":"application/json"}});});}async function fetchWithFallback(url,opts){var rawUrl=null;try{var u=new URL(url,document.baseURI);if(u.hostname==='cdn.jsdelivr.net'&&u.pathname.startsWith('/gh/Ale7208/geometry-dash-wasm/')){var path=u.pathname.slice('/gh/Ale7208/geometry-dash-wasm/'.length);rawUrl='https://raw.githubusercontent.com/Ale7208/geometry-dash-wasm/main/'+path;}}catch(e){}var state=window.__gdRawFallbackState||{jsdelivrFailures:0,preferRaw:false};var useRawFirst=state.preferRaw&&rawUrl;var lastErr=null;var jsdFailed=false;if(useRawFirst){try{var r2=await f(rawUrl,opts);if(r2.ok)return r2;lastErr=null;}catch(e){if(e&&e.name==='AbortError')throw e;lastErr=e;}}try{var r=await f(url,opts);if(r.ok){state.jsdelivrFailures=0;state.preferRaw=false;return r;}jsdFailed=true;lastErr=null;}catch(e){if(e&&e.name==='AbortError')throw e;jsdFailed=true;lastErr=e;}var retryable=lastErr!==null||!r.ok||(r.status===0)||r.status===403||r.status===404||r.status===429||(r.status>=500&&r.status<600);if(retryable&&rawUrl){try{var r2=await f(rawUrl,opts);if(r2.ok){if(jsdFailed){state.jsdelivrFailures++;if(state.jsdelivrFailures>=3)state.preferRaw=true;}return r2;}state.jsdelivrFailures++;if(state.jsdelivrFailures>=3)state.preferRaw=true;lastErr=null;}catch(e){if(e&&e.name==='AbortError')throw e;state.jsdelivrFailures++;if(state.jsdelivrFailures>=3)state.preferRaw=true;lastErr=e;}}else if(!retryable){state.jsdelivrFailures=0;state.preferRaw=false;}else{state.jsdelivrFailures++;if(state.jsdelivrFailures>=3)state.preferRaw=true;}if(lastErr)throw lastErr;return r;}window.fetch=function(i,o){var u=typeof i==='string'?i:(i&&i.url)||'';if(u.indexOf('gd_assets.json')<0)return f.apply(this,arguments);var k=new URL(u,document.baseURI).href.split('?')[0];return fetchWithFallback(u,o).then(function(r){if(!r.ok)return r;return fixed(r).then(function(n){var copy=n.clone();if(window.caches)caches.open('gdwasm-assets').then(function(c){return c.put(k,copy);}).catch(function(){});return n;});}).catch(function(e){if(!window.caches)throw e;return caches.open('gdwasm-assets').then(function(c){return c.match(k);}).then(function(r){if(r)return r;throw e;});});};})();</script><script>
 (function () {
   'use strict';
   var menuOpen = false;
@@ -447,13 +451,7 @@ button,input,textarea{touch-action:manipulation;}
     return reloadWithParameter('aa', enabled ? '1' : '0', 'antialiasing');
   }
   function reportBug() {
-    var body = 'Page URL: ' + location.href +
-      '\nBrowser: ' + navigator.userAgent +
-      '\nResolution: ' + currentResolution() +
-      '\n\nDescribe the bug:\n';
-    var url = 'https://github.com/Ale7208/Geometry-Dash-webport/issues/new?body=' +
-      encodeURIComponent(body);
-    window.open(url, '_blank', 'noopener,noreferrer');
+    window.open('https://github.com/Ale7208/Geometry-Dash-webport/issues/new/choose', '_blank', 'noopener,noreferrer');
   }
   function openDatabase(name) {
     return new Promise(function (resolve, reject) {
@@ -958,7 +956,7 @@ button,input,textarea{touch-action:manipulation;}
       try { r = await cache.match(entry.url); } catch (e) { r = null; }
     }
     if (!r) {
-      r = await fetch(entry.url, {cache: attempt ? 'reload' : 'force-cache', signal: signal});
+      r = await __gdFetchWithRawFallback(entry.url, {cache: attempt ? 'reload' : 'force-cache', signal: signal}, false);
       if (!r.ok) throw new Error(entry.url + ': HTTP ' + r.status);
       if (!r.body) throw new Error('This browser cannot stream game assets.');
       if (cache) {
@@ -1023,7 +1021,7 @@ button,input,textarea{touch-action:manipulation;}
   async function rawData(url, expectedSize) {
     await acquire();
     try {
-      var r = await fetch(url, {cache: 'force-cache'});
+      var r = await __gdFetchWithRawFallback(url, {cache: 'force-cache'}, false);
       if (!r.ok) throw new Error('Game data HTTP ' + r.status);
       var out = new Uint8Array(expectedSize), offset = 0;
       var reader = r.body.getReader();
@@ -1047,7 +1045,7 @@ button,input,textarea{touch-action:manipulation;}
       try {
         var r;
         if (typeof DecompressionStream === 'undefined') {
-          r = await fetch('gd_web.wasm?v=' + version(), {cache: attempt ? 'reload' : 'force-cache'});
+          r = await __gdFetchWithRawFallback('gd_web.wasm?v=' + version(), {cache: attempt ? 'reload' : 'force-cache'}, false);
           if (!r.ok) throw new Error('Game WASM HTTP ' + r.status);
         } else r = await compressedResponse(m.wasm, undefined, attempt);
         var loaded = 0;
@@ -1103,7 +1101,7 @@ button,input,textarea{touch-action:manipulation;}
       await acquire();
       try {
         var responsePromise = typeof DecompressionStream === 'undefined'
-          ? fetch('gd_web.js?v=' + version(), {cache: 'force-cache'})
+          ? __gdFetchWithRawFallback('gd_web.js?v=' + version(), {cache: 'force-cache'}, false)
           : compressedResponse(m.loader);
         preloadAssets(m);
         var response = await responsePromise;
