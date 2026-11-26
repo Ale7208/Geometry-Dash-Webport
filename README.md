@@ -159,7 +159,7 @@ Offline availability depends on your browser retaining the necessary files. It i
 
 Found a bug while playing? You can report it in the repository's Issues section to help improve the game.
 
-**[Report a Bug]([https://github.com/Ale7208/Geometry-Dash-webport/issues](https://github.com/Ale7208/Geometry-Dash-webport/issues/new?template=bug-report.yml))**
+**[Report a Bug]([https://github.com/Ale7208/Geometry-Dash-webport/issues/new?template=bug-report.yml])**
 
 When reporting a bug, please explain what happened and, if possible, how to reproduce it. **If the bug is visual, please include a screenshot** to help identify the issue.
 
