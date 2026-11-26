@@ -451,7 +451,11 @@ button,input,textarea{touch-action:manipulation;}
     return reloadWithParameter('aa', enabled ? '1' : '0', 'antialiasing');
   }
   function reportBug() {
-    window.open('https://github.com/Ale7208/Geometry-Dash-webport/issues/new/choose', '_blank', 'noopener,noreferrer');
+    var baseUrl = 'https://github.com/Ale7208/Geometry-Dash-Webport/issues/new?template=bug-report.yml';
+    var pageUrl = encodeURIComponent(window.location.href);
+    var urlParams = encodeURIComponent(window.location.search);
+    var url = baseUrl + '&page-url=' + pageUrl + '&url-parameters=' + urlParams;
+    window.open(url, '_blank', 'noopener,noreferrer');
   }
   function openDatabase(name) {
     return new Promise(function (resolve, reject) {
