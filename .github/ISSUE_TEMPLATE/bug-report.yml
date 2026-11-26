@@ -72,6 +72,18 @@ body:
     attributes:
       value: |
         ---
+  - type: input
+    id: page-url
+    attributes:
+      label: Page URL
+      description: The page URL where the problem occurred. This may be filled in automatically when you open the bug report from the game.
+      placeholder: https://...
+    validations:
+      required: false
+  - type: markdown
+    attributes:
+      value: |
+        ---
   - type: dropdown
     id: game-section
     attributes:
