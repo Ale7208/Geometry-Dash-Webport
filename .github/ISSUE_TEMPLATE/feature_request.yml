@@ -6,8 +6,7 @@ body:
     attributes:
       value: |
         Use this form to suggest a completely new feature or functionality that the game does not currently have. If you want to improve something that already exists, use Enhancement request instead.
-
-        Check existing issues first to see whether someone has already suggested the same idea.
+        
   - type: markdown
     attributes:
       value: |
