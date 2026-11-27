@@ -7,7 +7,6 @@ body:
       value: |
         Use this form to request an improvement, adjustment, or change to something that already exists in the game. If you want to suggest a completely new feature or functionality, use Feature request instead.
 
-        Check existing issues first to see whether someone has already suggested the same improvement.
   - type: markdown
     attributes:
       value: |
