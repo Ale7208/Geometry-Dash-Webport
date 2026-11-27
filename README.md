@@ -43,6 +43,7 @@ You can delete older downloaded copies once you've switched to the new version.
 * JavaScript enabled.
 * A compatible computer, tablet, or smartphone.
 * An Internet connection for the initial load and online features.
+* A browser with WebAssembly JavaScript Promise Integration (JSPI)
 
 ## Browser Compatibility
 
@@ -56,9 +57,17 @@ The webport is intended for modern browsers on both desktop and mobile devices.
 | Brave                         | Supported        |
 | Other Chromium-based browsers | Likely supported |
 
-The browser must, without fail, be compatible with the JSPI feature.
-
 The game can also be played on mobile phones. Performance, controls, and compatibility may vary depending on your device and browser.
+
+## Game Information
+
+| Feature               | Details               |
+| --------------------- | --------------------- |
+| Name                  | Geometry Dash Webport |
+| Type                  | Webport / HTML        |
+| Geometry Dash version | 2.2091                |
+| Platform              | Web browser           |
+| Technologies          | HTML5, JavaScript     |
 
 ## Mobile Support
 
@@ -81,16 +90,6 @@ mobile-specific behaviours:
   and the render buffer can be scaled down before boot.
 
   Thanks @CloudCompile for contributing and making mobile support possible.
-
-## Game Information
-
-| Feature               | Details               |
-| --------------------- | --------------------- |
-| Name                  | Geometry Dash Webport |
-| Type                  | Webport / HTML        |
-| Geometry Dash version | 2.2091                |
-| Platform              | Web browser           |
-| Technologies          | HTML5, JavaScript     |
 
 ## Troubleshooting
 
@@ -175,25 +174,10 @@ If you don't have access to a paid tool, you can use a capable AI specialized in
 
 All contributions are appreciated and will be reviewed before being merged into the project.
 
-### Response times
-
-I usually take about 1 day to reply to issues. If you posted one and it's been more than a day without an answer, it could be for a few reasons: I might be inactive for a while, or I may have already read it and added it to my list of issues to fix later.
-
-Fixing an issue can take me up to 2 weeks at most. I love seeing people enjoy my modded version of Bog's port, so every report matters, even if I don't reply right away.
-
-**Note:** I speak Spanish, so if your issue is written in another language, I will use a translator to understand and review it. However, reports in Spanish are preferred.
-### Response times
-
-I usually take about 1 day to reply to issues. If you posted one and it's been more than a day without an answer, it could be for a few reasons: I might be inactive for a while, or I may have already read it and added it to my list of issues to fix later.
-
-Fixing an issue can take me up to 2 weeks at most. I love seeing people enjoy my modded version of Bog's port, so every report matters, even if I don't reply right away.
-
-**Note:** I speak Spanish, so if your issue is written in another language, I will use a translator to understand and review it. However, reports in Spanish are preferred.
-
 ## Credits
 
 * **RobTop Games:** Creator of the original Geometry Dash.
 * **Bog:** Creator of the web port.
 * **Ale7208:** Improvements and bug fixes.
 
-Geometry Dash belongs to its respective creator. This is an unofficial fan port and is not affiliated with or endorsed by RobTop Games.
+Geometry Dash belongs to its respective creator. This is an unofficial port and is not affiliated with or endorsed by RobTop Games.
