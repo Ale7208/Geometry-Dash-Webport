@@ -43,6 +43,7 @@ You can delete older downloaded copies once you've switched to the new version.
 * JavaScript enabled.
 * A compatible computer, tablet, or smartphone.
 * An Internet connection for the initial load and online features.
+* A browser with WebAssembly JavaScript Promise Integration (JSPI)
 
 ## Browser Compatibility
 
@@ -55,8 +56,6 @@ The webport is intended for modern browsers on both desktop and mobile devices.
 | Mozilla Firefox               | Supported        |
 | Brave                         | Supported        |
 | Other Chromium-based browsers | Likely supported |
-
-The browser must, without fail, be compatible with the JSPI feature.
 
 The game can also be played on mobile phones. Performance, controls, and compatibility may vary depending on your device and browser.
 
