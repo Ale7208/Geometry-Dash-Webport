@@ -180,4 +180,4 @@ All contributions are appreciated and will be reviewed before being merged into 
 * **Bog:** Creator of the web port.
 * **Ale7208:** Improvements and bug fixes.
 
-Geometry Dash belongs to its respective creator. This is an unofficial fan port and is not affiliated with or endorsed by RobTop Games.
+Geometry Dash belongs to its respective creator. This is an unofficial port and is not affiliated with or endorsed by RobTop Games.
