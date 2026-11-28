@@ -2643,6 +2643,54 @@ window.__gdLoadStarted = true;
 resetProgress();
 function loadModule() {
 GDAssets.loadScript().then(function (code) {
+try {
+(function () {
+var wrapper = '(function(){var orig=gd_js_audio;var chMap={};gd_js_audio=function(op,a,b,f,s){var now=performance.now();if(op===8){var ret=orig.apply(this,arguments);chMap[ret]={t:now,s:a};return ret;}if(op===9){var info=chMap[a];delete chMap[a];if(info){var dt=now-info.t;if(dt<200){var dur=orig(2,info.s,0,0,0);if(dur>0&&dur<2000){return 0;}}}return orig.apply(this,arguments);}var ret=orig.apply(this,arguments);for(var k in chMap){if(now-chMap[k].t>1000)delete chMap[k];}return ret;};})();';
+var patterns = [
+'function gd_js_audio(',
+'var gd_js_audio=function(',
+'let gd_js_audio=function(',
+'const gd_js_audio=function(',
+'gd_js_audio=function('
+];
+var patched = false;
+for (var i = 0; i < patterns.length; i++) {
+var idx = code.indexOf(patterns[i]);
+if (idx >= 0) {
+var after = code.slice(idx);
+var braceIdx = after.indexOf('{');
+if (braceIdx >= 0) {
+var braceCount = 0;
+var funcEnd = -1;
+for (var j = braceIdx; j < after.length; j++) {
+if (after[j] === '{') braceCount++;
+else if (after[j] === '}') {
+braceCount--;
+if (braceCount === 0) {
+funcEnd = j;
+break;
+}
+}
+}
+if (funcEnd >= 0) {
+var fullFunc = after.slice(0, funcEnd + 1);
+var rest = after.slice(funcEnd + 1);
+if (code.indexOf(fullFunc, idx + 1) === -1) {
+code = code.slice(0, idx) + fullFunc + '\n' + wrapper + rest;
+patched = true;
+break;
+}
+}
+}
+}
+}
+if (!patched) {
+console.warn('[audio-fix] gd_js_audio not found or ambiguous; skipping patch');
+}
+})();
+} catch (e) {
+console.warn('[audio-fix] patch error:', e);
+}
 var s = document.createElement('script');
 s.textContent = code;
 document.body.appendChild(s);
